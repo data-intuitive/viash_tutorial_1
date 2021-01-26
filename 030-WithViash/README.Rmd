@@ -36,8 +36,8 @@ Then, you can:
 
 ``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
 mkdir -p bin/
-# wget https://github.com/data-intuitive/viash/releases/download/v0.3.0/viash -O bin/viash
-# chmod +x bin/viash
+wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO bin/viash
+chmod +x bin/viash
 ```
 
 Let's see if this works:
@@ -46,15 +46,34 @@ Let's see if this works:
 bin/viash -h
 ```
 
-## Silly example
+## Silly example 1
 
-But before we do that, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.
+Before we actually start to make the first viash component for the civilization postgame video, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.
 
 Let us start with a very rudimentary example. Consider the following file:
 
 ``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
-cat src/silly_example/config.vsh.yaml
+cat src/silly_example1.vsh.yaml
 ```
+
+If we run [viash] without any options, we get:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example1.vsh.yaml
+```
+
+Perhaps unsurprisingly, this performs an `ls` in the _current_ directory which in this case is where [viash] is running. This example, while illustrative, does not capture what [viash] is and can be used for. It's just a wrapper around the `ls` command.
+
+Let's go one step further:
+
+## Silly example 2
+
+Not only is this another silly example, it even has a silly name. Most commands or tools can be configured using arguments, options, flags. Let us take a look at how this can be done:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+cat src/silly_example2.vsh.yaml
+```
+
 
 
 

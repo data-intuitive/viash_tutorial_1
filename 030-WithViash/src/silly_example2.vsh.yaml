@@ -1,0 +1,10 @@
+functionality:
+  name: silly_example2
+  arguments:
+    - name: "-l"
+      type: boolean_true
+    - name: "-a"
+      type: boolean_true
+  resources:
+    - type: executable
+      path: ls

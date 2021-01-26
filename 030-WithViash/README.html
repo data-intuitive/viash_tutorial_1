@@ -226,7 +226,8 @@
 <li><a href="#introducing-viash">Introducing Viash</a>
 <ul>
 <li><a href="#installing-viash">Installing viash</a></li>
-<li><a href="#silly-example">Silly example</a></li>
+<li><a href="#silly-example-1">Silly example 1</a></li>
+<li><a href="#silly-example-2">Silly example 2</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -247,8 +248,8 @@
 </ul>
 <p>Then, you can:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">mkdir</span> -p bin/</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> # wget https://github.com/data-intuitive/viash/releases/download/v0.3.0/viash -O bin/viash</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> # chmod +x bin/viash</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO bin/viash</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> chmod +x bin/viash</span></code></pre></div>
 <p>Let’s see if this works:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/viash</span> -h</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">viash</span> 0.3.0 (c) <span class="ex">2020</span> Data Intuitive, All Rights Reserved</span>
@@ -274,20 +275,39 @@
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">build</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="bu">test</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ns</span></span></code></pre></div>
-<h2 id="silly-example">Silly example</h2>
-<p>But before we do that, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.</p>
+<h2 id="silly-example-1">Silly example 1</h2>
+<p>Before we actually start to make the first viash component for the civilization postgame video, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.</p>
 <p>Let us start with a very rudimentary example. Consider the following file:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/silly_example/config.vsh.yaml</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/silly_example1.vsh.yaml</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: combine_plots1</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;--input&quot;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: file</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;--output&quot;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: file</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: silly_example1</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
+<p>If we run [viash] without any options, we get:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example1.vsh.yaml</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Makefile</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">README.Rmd</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">README.html</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">README.md</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">README_cache</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">bin</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
+<p>Perhaps unsurprisingly, this performs an <code>ls</code> in the <em>current</em> directory which in this case is where [viash] is running. This example, while illustrative, does not capture what [viash] is and can be used for. It’s just a wrapper around the <code>ls</code> command.</p>
+<p>Let’s go one step further:</p>
+<h2 id="silly-example-2">Silly example 2</h2>
+<p>Not only is this another silly example, it even has a silly name. Most commands or tools can be configured using arguments, options, flags. Let us take a look at how this can be done:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/silly_example2.vsh.yaml</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: silly_example2</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-l&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-a&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
 <p>We start by creating a directory</p>
 </body>
 </html>
