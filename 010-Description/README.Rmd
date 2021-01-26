@@ -1,20 +1,51 @@
 ---
-author: Toni Verbeiren, Data Intuitive
+author: Toni Verbeiren & Robrecht Cannoodt, Data Intuitive
 date: Tuesday - January 26, 2021
 mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workshop 1 - Civilization postgame video
+title: viash Workshop 1 - Civilization postgame video
 ---
 
-# Setting the stage
+# Setting the stage for viash
 
-> Civilization and the frustration of some players that a postgame video is not a feature anymore.
+The application domain of [viash] is not limited to just biomedical research. For the purposes of this workshop, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
 
-> The urge of users to workaround this by creating a custom solution that does not necessarily require lots of development skills to develop let aside run.
+## Background on Civilization
+Civilization is a series of six video strategy games where players oversee the development of a civilization, starting from the dawn of civilizations until present times.
 
-# The tools
+Not only is the series famous for having defined a lot of the game mechanics in the 4X genre (eXplore, eXpand, eXploit, and eXterminate), it is also frequently associated with the "One More Turn Syndrome".
 
+![Comic by Mart Virkus, https://arcaderage.co/2016/10/18/civilization-vi/](img/mart_virkus_every_civilization_game_ever.jpg)
 
+## Post-game replay map in Civilization V
+At the end of a game of Civilization V, the players would be able to watch a video of when each player owned which tile at any given point in time. 
 
+<!--![](img/civ5_victory_.webm)-->
+
+<video style="display:block; max-width:100%; height:auto;" src="img/civ5_victory_.webm" controls loop="loop" preload autoplay></video>
+
+## Post-game replay map in Civilization VI
+However, for whatever reason, this feature was not included in Civilization VI. This made a lot of people very angry and been widely regarded as a bad move. <!-- quoting Douglas Adams here -->
+
+![](img/civ6_rant_.png)
+
+## Creating custom post-game replay maps
+At Data Intuitive, we're all about alleviating people's suffering, so we developed a few scripts for rendering a postgame video for Civilization VI using open-source tools.
+
+![A workflow for rendering a postgame video for Civilization VI](img/workflow.png)
+
+The way this works is as follows. First, we configure Civilization VI such that it creates an autosave of the current progress at each turn in the game. 
+For every save, we extract various pieces of information using two JavaScript scripts. We combine this information in R and render a visualisation of the world map as a PDF.
+We use ImageMagick to convert the PDF to a PNG.
+Finally, we collect all PNGs and use ffmpeg to convert them into a webm movie file. 
+
+## Sharing the postgame pipeline
+While we at Data Intuitive can now happily churn out postgame videos of all of our Civilization VI, installing the requirements on a different system is a hassle.
+
+Because of the complicated software requirements, and because of its pipeline-like workflow, this application is serves as a perfect example of why and how to use [viash].
+
+In the next section, we will explain how to generate a postgame video from Civilization VI autosaves _without_ using [viash].
+
+[viash]: https://www.data-intuitive.com/[viash]_docs
