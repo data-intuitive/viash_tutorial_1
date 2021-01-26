@@ -5,5 +5,59 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workflow - Part 1
+title: Viash Workshop 1 - With Viash
 ---
+
+# What constitutes a step?
+
+A step in the rendering of the video contains of one aspect that can be considered on its own. Understanding the logic of a step, however, is not sufficient as we have seen before. We also need to define the environment in which the step has to be performed.
+
+In other words, we need to understand _what_ needs to run and _how_ it should run.
+
+`combine_plots`, for instance, takes as input a number of plots (`png` images) and combines them into a plot. As introduced earlier, we can use [`ffmpeg`] for this and it's then just a matter of getting the proper arguments for the tool right. That's basically what we did in the previous section. But it did not stop there, we had to explicitly install the tool in order to run it.
+
+Let us see if we can shortcut some of this work using viash.
+
+# Introducing Viash
+
+Viash allows to do exactly this: specify the _what_ and the _how_.
+
+## Installing viash
+
+Installation of [viash] is explained in [here](http://www.data-intuitive.com/viash_docs/getting_started/installation/).
+
+Since we want to keep this tutorial self-contained, we will download and install the latest (binary) release and install it locally. You'll need the following for htis:
+
+- Access to a Linux, UNIX, Mac system or Windows with WSL(2)
+- A terminal application
+- Java 8 or higher installed
+
+Then, you can:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+mkdir -p bin/
+# wget https://github.com/data-intuitive/viash/releases/download/v0.3.0/viash -O bin/viash
+# chmod +x bin/viash
+```
+
+Let's see if this works:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+bin/viash -h
+```
+
+## Silly example
+
+But before we do that, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.
+
+Let us start with a very rudimentary example. Consider the following file:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+cat src/silly_example/config.vsh.yaml
+```
+
+
+
+We start by creating a directory
+
+[`ffmpeg`]: 

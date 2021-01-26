@@ -1,0 +1,10 @@
+functionality:
+  name: combine_plots1
+  arguments:
+    - name: "--input"
+      type: file
+    - name: "--output"
+      type: file
+  resources:
+    - type: executable
+      path: ls
