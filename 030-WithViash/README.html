@@ -226,8 +226,14 @@
 <li><a href="#introducing-viash">Introducing Viash</a>
 <ul>
 <li><a href="#installing-viash">Installing viash</a></li>
+<li><a href="#silly-examples">Silly examples</a>
+<ul>
 <li><a href="#silly-example-1">Silly example 1</a></li>
 <li><a href="#silly-example-2">Silly example 2</a></li>
+<li><a href="#silly-example-3">Silly example 3</a></li>
+<li><a href="#providing-documentation">Providing documentation</a></li>
+</ul></li>
+<li><a href="#building-binaries">Building <em>binaries</em></a></li>
 </ul></li>
 </ul>
 </nav>
@@ -275,8 +281,9 @@
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">build</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="bu">test</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ns</span></span></code></pre></div>
-<h2 id="silly-example-1">Silly example 1</h2>
+<h2 id="silly-examples">Silly examples</h2>
 <p>Before we actually start to make the first viash component for the civilization postgame video, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.</p>
+<h3 id="silly-example-1">Silly example 1</h3>
 <p>Let us start with a very rudimentary example. Consider the following file:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/silly_example1.vsh.yaml</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
@@ -295,7 +302,7 @@
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
 <p>Perhaps unsurprisingly, this performs an <code>ls</code> in the <em>current</em> directory which in this case is where [viash] is running. This example, while illustrative, does not capture what [viash] is and can be used for. It’s just a wrapper around the <code>ls</code> command.</p>
 <p>Let’s go one step further:</p>
-<h2 id="silly-example-2">Silly example 2</h2>
+<h3 id="silly-example-2">Silly example 2</h3>
 <p>Not only is this another silly example, it even has a silly name. Most commands or tools can be configured using arguments, options, flags. Let us take a look at how this can be done:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/silly_example2.vsh.yaml</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
@@ -308,6 +315,153 @@
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
+<p>We added two arguments to the <code>arguments</code> list. The arguments are flags and if we specify for <code>-l</code> it means <em>long listing</em> is one which corresponds to <code>boolean_true</code>.</p>
+<p>This is what happens when you run viash in a few different scenarios:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example2.vsh.yaml</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Makefile</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">README.Rmd</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">README.html</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">README.md</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">README_cache</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">bin</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
+<p>There is no difference with the previous version of <code>silly_example</code>. Now, let us pass the argument <code>-l</code> to <code>silly_example2</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example2.vsh.yaml -- -l</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 72</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff    310 Jan 26 12:14 Makefile</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   6004 Jan 26 14:21 README.Rmd</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span> 1 toni  staff  17001 Jan 26 13:15 README.html</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   3777 Jan 26 13:14 README.md</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  3 toni  staff     96 Jan 26 11:49 README_cache</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  3 toni  staff     96 Jan 26 12:07 bin</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  6 toni  staff    192 Jan 26 14:18 src</span></code></pre></div>
+<p>Please note that options <em>before</em> the <code>--</code> are considered for <code>viash</code> while options after the <code>--</code> are for the tool that is wrapped (in this case <code>ls</code>). We can now also run:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example2.vsh.yaml -- -a</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">..</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Makefile</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">README.Rmd</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">README.html</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">README.md</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">README_cache</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">bin</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
+<p>Or even:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example2.vsh.yaml -- -a -l</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 72</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   9 toni  staff    288 Jan 26 13:14 .</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  20 toni  staff    640 Jan 26 13:47 ..</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff    310 Jan 26 12:14 Makefile</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff   6004 Jan 26 14:21 README.Rmd</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span>  1 toni  staff  17001 Jan 26 13:15 README.html</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff   3777 Jan 26 13:14 README.md</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 toni  staff     96 Jan 26 11:49 README_cache</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 toni  staff     96 Jan 26 12:07 bin</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   6 toni  staff    192 Jan 26 14:18 src</span></code></pre></div>
+<p>For completeness, we also add these arguments to the first silly example:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example1.vsh.yaml -- -a -l</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Makefile</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">README.Rmd</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">README.html</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">README.md</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">README_cache</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ex">bin</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
+<p>As you might have expected, since <code>silly_example1</code> does not know about any arguments this does not change its behaviour.</p>
+<h3 id="silly-example-3">Silly example 3</h3>
+<p>In this (silly) example, we add an extra argument that corresponds to the path which we want to <em>list</em>. The default is the current directory (just like before) but optionally we can provide a different path.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/silly_example3.vsh.yaml</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: silly_example2</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-l&quot;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-a&quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;path&quot;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: file</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">default</span>: .</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
+<p>Examples:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example3.vsh.yaml -- ./ -a -l</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 72</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   9 toni  staff    288 Jan 26 13:14 .</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  20 toni  staff    640 Jan 26 13:47 ..</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff    310 Jan 26 12:14 Makefile</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff   6004 Jan 26 14:21 README.Rmd</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span>  1 toni  staff  17001 Jan 26 13:15 README.html</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff   3777 Jan 26 13:14 README.md</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 toni  staff     96 Jan 26 11:49 README_cache</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 toni  staff     96 Jan 26 12:07 bin</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   6 toni  staff    192 Jan 26 14:18 src</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example3.vsh.yaml -- src/ -a</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">..</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">silly_example1.vsh.yaml</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">silly_example2.vsh.yaml</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="ex">silly_example3.vsh.yaml</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="ex">silly_example4.vsh.yaml</span></span></code></pre></div>
+<p>You can always retrieve information about the wrapped script/tool/executable by requesting the included help:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example3.vsh.yaml -- -h</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span></code></pre></div>
+<h3 id="providing-documentation">Providing documentation</h3>
+<p>The help from the last <code>silly_example3</code> does not show a lot of useful information (yet). This can be improved:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example4.vsh.yaml -- -h</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> is a silly example that wraps the underlying ls command</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">and</span> add some mildly useful functionality to it to list</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">the</span> contents of a directory.</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Long</span> format</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Show</span> all</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        <span class="ex">The</span> path to list</span></code></pre></div>
+<h2 id="building-binaries">Building <em>binaries</em></h2>
+<p>Suppose <code>silly_example4</code> from above is exactly what we need as standalone tool for ourselves or other people to use. Obviously, providing everyone access to [viash] first and then letting them access the <code>silly_example4.vsh.yaml</code> file in order to run the above commands. This can be greatly simplified as follows:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/silly_example4.vsh.yaml -o bin</span></code></pre></div>
+<p>This will <em>build</em> an <em>executable</em> (script) that contains all the functionality that we saw in the above examples. Just to give a few examples:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/silly_example2</span> -h</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> is a silly example that wraps the underlying ls command</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">and</span> add some mildly useful functionality to it to list</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">the</span> contents of a directory.</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Long</span> format</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Show</span> all</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        <span class="ex">The</span> path to list</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/silly_example2</span> src/ -l</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 32</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  105 Jan 26 13:14 silly_example1.vsh.yaml</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  186 Jan 26 13:13 silly_example2.vsh.yaml</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  239 Jan 26 14:13 silly_example3.vsh.yaml</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  514 Jan 26 14:20 silly_example4.vsh.yaml</span></code></pre></div>
 <p>We start by creating a directory</p>
 </body>
 </html>

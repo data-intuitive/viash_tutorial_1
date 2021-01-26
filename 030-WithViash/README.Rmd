@@ -46,9 +46,11 @@ Let's see if this works:
 bin/viash -h
 ```
 
-## Silly example 1
+## Silly examples
 
 Before we actually start to make the first viash component for the civilization postgame video, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.
+
+### Silly example 1
 
 Let us start with a very rudimentary example. Consider the following file:
 
@@ -66,7 +68,7 @@ Perhaps unsurprisingly, this performs an `ls` in the _current_ directory which i
 
 Let's go one step further:
 
-## Silly example 2
+### Silly example 2
 
 Not only is this another silly example, it even has a silly name. Most commands or tools can be configured using arguments, options, flags. Let us take a look at how this can be done:
 
@@ -74,7 +76,137 @@ Not only is this another silly example, it even has a silly name. Most commands 
 cat src/silly_example2.vsh.yaml
 ```
 
+We added two arguments to the `arguments` list. The arguments are flags and if we specify for `-l` it means _long listing_ is one which corresponds to `boolean_true`.
 
+This is what happens when you run viash in a few different scenarios:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example2.vsh.yaml
+```
+
+There is no difference with the previous version of `silly_example`. Now, let us pass the argument `-l` to `silly_example2`:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example2.vsh.yaml -- -l
+```
+
+Please note that options _before_ the `--` are considered for `viash` while options after the `--` are for the tool that is wrapped (in this case `ls`). We can now also run:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example2.vsh.yaml -- -a
+```
+
+Or even:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example2.vsh.yaml -- -a -l
+```
+
+For completeness, we also add these arguments to the first silly example:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example1.vsh.yaml -- -a -l
+```
+
+As you might have expected, since `silly_example1` does not know about any arguments this does not change its behaviour.
+
+### Silly example 3
+
+In this (silly) example, we add an extra argument that corresponds to the path which we want to _list_. The default is the current directory (just like before) but optionally we can provide a different path.
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+cat src/silly_example3.vsh.yaml
+```
+
+Examples:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example3.vsh.yaml -- ./ -a -l
+```
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example3.vsh.yaml -- src/ -a
+```
+
+You can always retrieve information about the wrapped script/tool/executable by requesting the included help:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example3.vsh.yaml -- -h
+```
+
+### Providing documentation
+
+The help from the last `silly_example3` does not show a lot of useful information (yet). This can be improved:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example4.vsh.yaml -- -h
+```
+
+## Building _binaries_
+
+Suppose `silly_example4` from above is exactly what we need as standalone tool for ourselves or other people to use. Obviously, providing everyone access to [viash] first and then letting them access the `silly_example4.vsh.yaml` file in order to run the above commands would not simplify things at all! However, consider the following:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash build src/silly_example4.vsh.yaml -o bin
+```
+
+This _builds_ an _executable_ (script) `bin/silly_example2` that contains all the functionality that we saw in the above examples. Just to give a few examples:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+bin/silly_example4 -h
+```
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+bin/silly_example2 src/ -l
+```
+
+## Platforms
+
+In the above examples, we ran the tools on our local system. This is simple as long as the wrapped tool at hand (`ls` in this case) is always available on the local system. Viash supports running wrapped tools inside a container as well, supporting at present Docker as a container system. Let us illustrate how simple this can be by building a new binary:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash build src/silly_example5.vsh.yaml -o bin
+```
+
+However, if we list the differences between the previous version of silly example and this one, we note the following:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+diff bin/silly_example4 bin/silly_example5
+```
+
+There is only a difference in the name of the binary, so what does that mean?
+
+It means that we defined 2 platforms: a _native_ one (local machine) and a _docker_ one. By default, if no platform is specified on the CLI, [viash] will take the first one in the list of `platforms`. And since `native` is the first, this is the one that gets selected.
+
+If we specify the platform explicitly:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash build src/silly_example5.vsh.yaml -o bin -p docker
+```
+
+We get a binary `bin/silly_example5` that automatically runs inside Docker:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+bin/silly_example5 / -l
+```
+
+If the `alpine` image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.
+
+In what follows, we will come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.
+
+We finish up the part about platforms here with noting that multiple platforms of the same `type` can coexist with each other. Below is an example of this:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash build src/silly_example6.vsh.yaml -o bin -p docker2
+```
+
+By specifying `-p docker2`, [viash] _knows_ it has to select the corresponding entry from the `platforms` list.
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+bin/silly_example6 / -l
+```
+
+## 
 
 
 We start by creating a directory

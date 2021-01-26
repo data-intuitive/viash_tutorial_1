@@ -1,0 +1,28 @@
+functionality:
+  name: silly_example6
+  description: |
+    This is a silly example that wraps the underlying ls command
+    and add some mildly useful functionality to it to list
+    the contents of a directory.
+  arguments:
+    - name: "-l"
+      type: boolean_true
+      description: "Long format"
+    - name: "-a"
+      type: boolean_true
+      description: "Show all"
+    - name: "path"
+      type: file
+      description: "The path to list"
+      default: .
+  resources:
+    - type: executable
+      path: ls
+platforms:
+  - type: native
+  - type: docker
+    id: docker1
+    image: alpine:latest
+  - type: docker
+    id: docker2
+    image: ubuntu:latest
