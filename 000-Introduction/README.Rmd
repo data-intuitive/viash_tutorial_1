@@ -5,5 +5,7 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workflow - Part 1
+title: Viash Workshop 1 - Introduction
 ---
+
+

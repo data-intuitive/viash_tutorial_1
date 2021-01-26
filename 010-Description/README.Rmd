@@ -5,5 +5,16 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workflow - Part 1
+title: Viash Workshop 1 - Civilization postgame video
 ---
+
+# Setting the stage
+
+> Civilization and the frustration of some players that a postgame video is not a feature anymore.
+
+> The urge of users to workaround this by creating a custom solution that does not necessarily require lots of development skills to develop let aside run.
+
+# The tools
+
+
+
