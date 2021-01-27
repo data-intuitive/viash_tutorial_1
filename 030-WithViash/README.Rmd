@@ -8,6 +8,18 @@ monobackgroundcolor: lightgrey
 title: Viash Workshop 1 - Viash Primer
 ---
 
+```{r setup, include = FALSE}
+# set default chunk options
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "", 
+  results = "hold", 
+  collapse = TRUE,
+  prompt = TRUE, 
+  cache = TRUE
+)
+```
+
 # What constitutes a step?
 
 A step in the rendering of the video contains of one aspect that can be considered on its own. Understanding the logic of a step, however, is not sufficient as we have seen before. We also need to define the environment in which the step has to be performed.
@@ -16,9 +28,9 @@ In other words, we need to understand _what_ needs to run and _how_ it should ru
 
 `combine_plots`, for instance, takes as input a number of plots (`png` images) and combines them into a plot. As introduced earlier, we can use [`ffmpeg`] for this and it's then just a matter of getting the proper arguments for the tool right. That's basically what we did in the previous section. But it did not stop there, we had to explicitly install the tool in order to run it.
 
-Let us see if we can shortcut some of this work using viash, but first with some generic examples.
+Let us see if we can shortcut some of this work using [viash], but first with some generic examples..
 
-# Introducing Viash
+# Introducing viash
 
 Viash allows to do exactly this: specify the _what_ and the _how_.
 
@@ -34,33 +46,33 @@ Since we want to keep this tutorial self-contained, we will download and install
 
 Then, you can:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
-mkdir -p bin/
-wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO bin/viash
-chmod +x bin/viash
+```sh
+mkdir -p ~/bin/
+wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO ~/bin/viash
+chmod +x ~/bin/viash
 ```
 
 Let's see if this works:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
-bin/viash -h
+```{sh}
+viash -h
 ```
 
 ## Silly examples
 
-Before we actually start to make the first viash component for the civilization postgame video, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.
+Before we actually start to make the first [viash] component for the civilization postgame video, we want to gradually build up some understanding of [viash] which will allow us to introduce some more advanced aspects along the way.
 
 ### Silly example 1
 
 Let us start with a very rudimentary example. Consider the following file:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 cat src/silly_example1.vsh.yaml
 ```
 
 If we run [viash] without any options, we get:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example1.vsh.yaml
 ```
 
@@ -72,39 +84,39 @@ Let's go one step further:
 
 Not only is this another silly example, it even has a silly name. Most commands or tools can be configured using arguments, options, flags. Let us take a look at how this can be done:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 cat src/silly_example2.vsh.yaml
 ```
 
 We added two arguments to the `arguments` list. The arguments are flags and if we specify for `-l` it means _long listing_ is one which corresponds to `boolean_true`.
 
-This is what happens when you run viash in a few different scenarios:
+This is what happens when you run [viash] in a few different scenarios:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example2.vsh.yaml
 ```
 
 There is no difference with the previous version of `silly_example`. Now, let us pass the argument `-l` to `silly_example2`:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example2.vsh.yaml -- -l
 ```
 
-Please note that options _before_ the `--` are considered for `viash` while options after the `--` are for the tool that is wrapped (in this case `ls`). We can now also run:
+Please note that options _before_ the `--` are considered for [viash] while options after the `--` are for the tool that is wrapped (in this case `ls`). We can now also run:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example2.vsh.yaml -- -a
 ```
 
 Or even:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example2.vsh.yaml -- -a -l
 ```
 
 For completeness, we also add these arguments to the first silly example:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example1.vsh.yaml -- -a -l
 ```
 
@@ -114,23 +126,23 @@ As you might have expected, since `silly_example1` does not know about any argum
 
 In this (silly) example, we add an extra argument that corresponds to the path which we want to _list_. The default is the current directory (just like before) but optionally we can provide a different path.
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 cat src/silly_example3.vsh.yaml
 ```
 
 Examples:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example3.vsh.yaml -- ./ -a -l
 ```
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example3.vsh.yaml -- src/ -a
 ```
 
 You can always retrieve information about the wrapped script/tool/executable by requesting the included help:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example3.vsh.yaml -- -h
 ```
 
@@ -138,7 +150,7 @@ viash run src/silly_example3.vsh.yaml -- -h
 
 The help from the last `silly_example3` does not show a lot of useful information (yet). This can be improved:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example4.vsh.yaml -- -h
 ```
 
@@ -146,17 +158,17 @@ viash run src/silly_example4.vsh.yaml -- -h
 
 Suppose `silly_example4` from above is exactly what we need as standalone tool for ourselves or other people to use. Obviously, providing everyone access to [viash] first and then letting them access the `silly_example4.vsh.yaml` file in order to run the above commands would not simplify things at all! However, consider the following:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash build src/silly_example4.vsh.yaml -o bin
 ```
 
-This _builds_ an _executable_ (script) `bin/silly_example2` that contains all the functionality that we saw in the above examples. Just to give a few examples:
+This _builds_ an _executable_ (script) `bin/silly_example2` that contains all the functionality that we saw in the above examples. Just to give two examples:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 bin/silly_example4 -h
 ```
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 bin/silly_example4 src/ -l
 ```
 
@@ -164,13 +176,13 @@ bin/silly_example4 src/ -l
 
 In the above examples, we ran the tools on our local system. This is simple as long as the wrapped tool at hand (`ls` in this case) is always available on the local system. Viash supports running wrapped tools inside a container as well, supporting at present Docker as a container system. Let us illustrate how simple this can be by building a new binary:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash build src/silly_example5.vsh.yaml -o bin
 ```
 
 However, if we list the differences between the previous version of silly example and this one, we note the following:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE, error=TRUE}
+``` {sh, error=TRUE}
 diff bin/silly_example4 bin/silly_example5
 ```
 
@@ -180,13 +192,13 @@ It means that we defined 2 platforms: a _native_ one (local machine) and a _dock
 
 If we specify the platform explicitly:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash build src/silly_example5.vsh.yaml -o bin -p docker
 ```
 
 We get a binary `bin/silly_example5` that automatically runs inside Docker:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 bin/silly_example5 / -l
 ```
 
@@ -194,7 +206,7 @@ If the `alpine` image is not yet available on your system, this command will aut
 
 Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction like
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 docker run -i alpine:latest ls / -l
 ```
 
@@ -203,43 +215,42 @@ In what follows, we will also come back not only to running inside a container b
 
 We finish up the part about platforms here with noting that multiple platforms of the same `type` can coexist with each other. Below is an example of this:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash build src/silly_example6.vsh.yaml -o bin -p docker2
 ```
 
 By specifying `-p docker2`, [viash] _knows_ it has to select the corresponding entry from the `platforms` list.
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 bin/silly_example6 / -l
 ```
 
 ## Wrapping a script
 
-While running a command wrapped as a viash component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. Say you want to run the `silly_example6` component from above but this time filtering out certain files/directories based on their name. We could do just that by means of a simple CLI instruction that we put in a script:
+While running a command wrapped as a [viash] component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. Say you want to run the `silly_example6` component from above but this time filtering out certain files/directories based on their name. We could do just that by means of a simple CLI instruction that we put in a script:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 cat src/script.sh
 ```
 
-In combination with the following viash config:
+In combination with the following [viash] config:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 cat src/silly_example7.vsh.yaml
 ```
 
 We get results like this:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+```{sh}
 viash run src/silly_example7.vsh.yaml -p docker2 -- /etc --filter "^h.*"
 ```
 
-A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run `viash run` on on the viash spec. This spec contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the viash spec and are automatically resolved and parsed when running the wrapped viash version of the script. The `docker2` platform is defined in the viash spec as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it's is simply passed to `grep` in `script.sh`.
+A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run `viash run` on on the [viash] spec. This spec contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the [viash] spec and are automatically resolved and parsed when running the wrapped [viash] version of the script. The `docker2` platform is defined in the [viash] spec as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it's is simply passed to `grep` in `script.sh`.
 
 Please note that when we decide to _build_ a `silly_example7` binary (for a specific platform), again this binary is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.
 
-If you would want to achieve something similar with just Docker without Viash, you are in for some serious bash development. But it does not stop here, because as well as having a bash script we can have Python, R, Javascript, Scala in the current version. Other environments are possible as well.
+If you would want to achieve something similar with just Docker without [viash], you are in for some serious bash development. But it does not stop here, because as well as having a bash script we can have Python, R, Javascript, Scala in the current version. Other environments are possible as well.
 
-
-
+- - -
 
 [viash]: https://github.com/data-intuitive/viash
