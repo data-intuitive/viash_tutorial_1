@@ -1,5 +1,5 @@
 functionality:
-  name: silly_example1
+  name: intro_example1
   arguments: []
   resources:
     - type: executable

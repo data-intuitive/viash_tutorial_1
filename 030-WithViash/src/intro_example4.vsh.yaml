@@ -1,5 +1,5 @@
 functionality:
-  name: silly_example5
+  name: intro_example4
   description: |
     List information about the files (the current directory by default) 
     in alphabetical order.
@@ -17,7 +17,3 @@ functionality:
   resources:
     - type: executable
       path: ls
-platforms:
-  - type: native
-  - type: docker
-    image: alpine:latest
