@@ -28,9 +28,9 @@ In other words, we need to understand _what_ needs to run and _how_ it should ru
 
 `combine_plots`, for instance, takes as input a number of plots (`png` images) and combines them into a plot. As introduced earlier, we can use [`ffmpeg`] for this and it's then just a matter of getting the proper arguments for the tool right. That's basically what we did in the previous section. But it did not stop there, we had to explicitly install the tool in order to run it.
 
-Let us see if we can shortcut some of this work using viash.
+Let us see if we can shortcut some of this work using [viash].
 
-# Introducing Viash
+# Introducing viash
 
 Viash allows to do exactly this: specify the _what_ and the _how_.
 
@@ -60,7 +60,7 @@ bin/viash -h
 
 ## Silly examples
 
-Before we actually start to make the first viash component for the civilization postgame video, we want to gradually build up some understanding of viash which will allow us to introduce some more advanced aspects along the way.
+Before we actually start to make the first [viash] component for the civilization postgame video, we want to gradually build up some understanding of [viash] which will allow us to introduce some more advanced aspects along the way.
 
 ### Silly example 1
 
@@ -90,7 +90,7 @@ cat src/silly_example2.vsh.yaml
 
 We added two arguments to the `arguments` list. The arguments are flags and if we specify for `-l` it means _long listing_ is one which corresponds to `boolean_true`.
 
-This is what happens when you run viash in a few different scenarios:
+This is what happens when you run [viash] in a few different scenarios:
 
 ```{sh}
 viash run src/silly_example2.vsh.yaml
@@ -102,7 +102,7 @@ There is no difference with the previous version of `silly_example`. Now, let us
 viash run src/silly_example2.vsh.yaml -- -l
 ```
 
-Please note that options _before_ the `--` are considered for `viash` while options after the `--` are for the tool that is wrapped (in this case `ls`). We can now also run:
+Please note that options _before_ the `--` are considered for [viash] while options after the `--` are for the tool that is wrapped (in this case `ls`). We can now also run:
 
 ```{sh}
 viash run src/silly_example2.vsh.yaml -- -a
@@ -227,13 +227,13 @@ bin/silly_example6 / -l
 
 ## Wrapping a script
 
-While running a command wrapped as a viash component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. Say you want to run the `silly_example6` component from above but this time filtering out certain files/directories based on their name. We could do just that by means of a simple CLI instruction that we put in a script:
+While running a command wrapped as a [viash] component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. Say you want to run the `silly_example6` component from above but this time filtering out certain files/directories based on their name. We could do just that by means of a simple CLI instruction that we put in a script:
 
 ```{sh}
 cat src/script.sh
 ```
 
-In combination with the following viash config:
+In combination with the following [viash] config:
 
 ```{sh}
 cat src/silly_example7.vsh.yaml
@@ -245,15 +245,15 @@ We get results like this:
 viash run src/silly_example7.vsh.yaml -p docker2 -- /etc --filter "^h.*"
 ```
 
-A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run `viash run` on on the viash spec. This spec contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the viash spec and are automatically resolved and parsed when running the wrapped viash version of the script. The `docker2` platform is defined in the viash spec as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it's is simply passed to `grep` in `script.sh`.
+A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run `viash run` on on the [viash] spec. This spec contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the [viash] spec and are automatically resolved and parsed when running the wrapped [viash] version of the script. The `docker2` platform is defined in the [viash] spec as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it's is simply passed to `grep` in `script.sh`.
 
 Please note that when we decide to _build_ a `silly_example7` binary (for a specific platform), again this binary is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.
 
-If you would want to achieve something similar with just Docker without Viash, you are in for some serious bash development. But it does not stop here, because as well as having a bash script we can have Python, R, Javascript, Scala in the current version. Other environments are possible as well.
+If you would want to achieve something similar with just Docker without [viash], you are in for some serious bash development. But it does not stop here, because as well as having a bash script we can have Python, R, Javascript, Scala in the current version. Other environments are possible as well.
 
 
 
 
-[`ffmpeg`]: 
+[`ffmpeg`]: https://ffmpeg.org
 
 [viash]: https://github.com/data-intuitive/viash
