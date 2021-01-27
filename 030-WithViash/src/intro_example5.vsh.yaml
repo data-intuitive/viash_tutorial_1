@@ -1,5 +1,6 @@
 functionality:
   name: intro_example5
+  version: 0.5
   description: |
     List information about the files (the current directory by default) 
     in alphabetical order.
@@ -20,4 +21,4 @@ functionality:
 platforms:
   - type: native
   - type: docker
-    image: alpine:latest
+    image: ubuntu:latest

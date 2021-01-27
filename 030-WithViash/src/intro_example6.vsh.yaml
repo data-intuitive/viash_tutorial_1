@@ -1,27 +1,22 @@
 functionality:
   name: intro_example6
+  version: 0.6
   description: |
     List information about the files (the current directory by default) 
-    in alphabetical order.
+    in alphabetical order, filtered by a regular expression.
   arguments:
-    - name: "-l"
-      type: boolean_true
-      description: "Use a long listing format."
-    - name: "-a"
-      type: boolean_true
-      description: "Do not ignore entries starting with '.'."
     - name: "path"
       type: file
       description: "Which directory to list the contents of."
       default: .
+    - name: "--filter"
+      type: string
+      description: "A regular expression to filter the listed files."
+      default: '.*'
   resources:
-    - type: executable
-      path: ls
+    - type: bash_script
+      path: script.sh
 platforms:
   - type: native
   - type: docker
-    id: docker1
-    image: alpine:latest
-  - type: docker
-    id: docker2
     image: ubuntu:latest
