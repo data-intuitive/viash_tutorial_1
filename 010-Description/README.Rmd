@@ -1,5 +1,5 @@
 ---
-author: Toni Verbeiren & Robrecht Cannoodt, Data Intuitive
+author: Data Intuitive
 date: Tuesday - January 26, 2021
 mainfont: Roboto Condensed
 monofont: Source Code Pro

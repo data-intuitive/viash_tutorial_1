@@ -1,5 +1,5 @@
 ---
-author: Toni Verbeiren, Data Intuitive
+author: Data Intuitive
 date: Tuesday - January 26, 2021
 mainfont: Roboto Condensed
 monofont: Source Code Pro
@@ -229,7 +229,6 @@ Please note that when we decide to _build_ a `intro_example6` executable (for a 
 If you would want to achieve something similar with just Docker without [viash], you are in for some serious Bash development. But it does not stop here, because in addition to support for wrapping Bash scripts, [viash] also supports wrapping Python, R, JavaScript, and Scala scripts. 
 
 
-## Additional links
 
 [viash]: https://github.com/data-intuitive/viash
 [`viash run`]: https://www.data-intuitive.com/viash_docs/commands/run
