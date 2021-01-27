@@ -46,16 +46,16 @@ Since we want to keep this tutorial self-contained, we will download and install
 
 Then, you can:
 
-```{sh}
-mkdir -p bin/
-wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO bin/viash
-chmod +x bin/viash
+```sh
+mkdir -p ~/bin/
+wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO ~/bin/viash
+chmod +x ~/bin/viash
 ```
 
 Let's see if this works:
 
 ```{sh}
-bin/viash -h
+viash -h
 ```
 
 ## Silly examples
