@@ -1,6 +1,5 @@
 functionality:
   name: intro_example1
-  arguments: []
   resources:
     - type: executable
       path: ls
