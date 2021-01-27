@@ -24,15 +24,14 @@ knitr::opts_chunk$set(
 
 A step in the rendering of the video contains of one aspect that can be considered on its own. Understanding the logic of a step, however, is not sufficient as we have seen before. We also need to define the environment in which the step has to be performed.
 
-In other words, we need to understand _what_ needs to run and _how_ it should run.
+In other words, we need to understand _what_ needs to run and _how_ it should run. `combine_plots`, for instance, takes as input a number of plots (`png` images) and combines them into a plot. As introduced earlier, we can use [`ffmpeg`] for this and it's then just a matter of getting the proper arguments for the tool right. That's basically what we did in the previous section. But it did not stop there, we had to explicitly install the tool in order to run it. [viash] allows to do exactly this: specify the _what_ and the _how_.
 
-`combine_plots`, for instance, takes as input a number of plots (`png` images) and combines them into a plot. As introduced earlier, we can use [`ffmpeg`] for this and it's then just a matter of getting the proper arguments for the tool right. That's basically what we did in the previous section. But it did not stop there, we had to explicitly install the tool in order to run it.
+Before actually porting the Civilization postgame scripts to viash, let's first look at some small examples to gradually demonstrate how [viash] works. Let's start by installing the latest release of [viash]!
 
+<!--
 Let us see if we can shortcut some of this work using [viash].
+-->
 
-# Introducing viash
-
-Viash allows to do exactly this: specify the _what_ and the _how_.
 
 ## Installing viash
 
@@ -41,10 +40,10 @@ Installation of [viash] is explained in [here](http://www.data-intuitive.com/via
 Since we want to keep this tutorial self-contained, we will download and install the latest (binary) release and install it locally. You'll need the following for htis:
 
 - Access to a Linux, UNIX, Mac system or Windows with WSL(2)
-- A terminal application
+- A terminal application with a Bash shell
 - Java 8 or higher installed
 
-Then, you can:
+You can install [viash] for your current user by downloading it and placing it in the 'bin' directory in your home folder.
 
 ```sh
 mkdir -p ~/bin/
@@ -52,17 +51,14 @@ wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO 
 chmod +x ~/bin/viash
 ```
 
-Let's see if this works:
+If [viash] is installed correctly, you should be able to invoke the help message by executing the following:
 
 ```{sh}
 viash -h
 ```
 
-## Silly examples
 
-Before we actually start to make the first [viash] component for the civilization postgame video, we want to gradually build up some understanding of [viash] which will allow us to introduce some more advanced aspects along the way.
-
-### Silly example 1
+## Silly example 1
 
 Let us start with a very rudimentary example. Consider the following file:
 
@@ -80,7 +76,7 @@ Perhaps unsurprisingly, this performs an `ls` in the _current_ directory which i
 
 Let's go one step further:
 
-### Silly example 2
+## Silly example 2
 
 Not only is this another silly example, it even has a silly name. Most commands or tools can be configured using arguments, options, flags. Let us take a look at how this can be done:
 
@@ -122,7 +118,7 @@ viash run src/silly_example1.vsh.yaml -- -a -l
 
 As you might have expected, since `silly_example1` does not know about any arguments this does not change its behaviour.
 
-### Silly example 3
+## Silly example 3
 
 In this (silly) example, we add an extra argument that corresponds to the path which we want to _list_. The default is the current directory (just like before) but optionally we can provide a different path.
 
@@ -146,10 +142,15 @@ You can always retrieve information about the wrapped script/tool/executable by 
 viash run src/silly_example3.vsh.yaml -- -h
 ```
 
-### Providing documentation
+## Providing documentation
 
-The help from the last `silly_example3` does not show a lot of useful information (yet). This can be improved:
+The help from the last `silly_example3` does not show a lot of useful information. Let's some documentation regarding the component and its parameters.
 
+```{sh}
+cat src/silly_example4.vsh.yaml
+```
+
+In doing so, the help message becomes a lot more useful in reminding yourself and other users how to use the components.
 ```{sh}
 viash run src/silly_example4.vsh.yaml -- -h
 ```

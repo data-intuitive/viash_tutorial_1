@@ -1,19 +1,18 @@
 functionality:
   name: silly_example4
   description: |
-    This is a silly example that wraps the underlying ls command
-    and add some mildly useful functionality to it to list
-    the contents of a directory.
+    List information about the files (the current directory by default) 
+    in alphabetical order.
   arguments:
     - name: "-l"
       type: boolean_true
-      description: "Long format"
+      description: "Use a long listing format."
     - name: "-a"
       type: boolean_true
-      description: "Show all"
+      description: "Do not ignore entries starting with '.'."
     - name: "path"
       type: file
-      description: "The path to list"
+      description: "Which directory to list the contents of."
       default: .
   resources:
     - type: executable

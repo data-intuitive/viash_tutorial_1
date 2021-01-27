@@ -1,17 +1,16 @@
 functionality:
   name: silly_example7
   description: |
-    This is a silly example that wraps the underlying ls command
-    and add some mildly useful functionality to it to list
-    the contents of a directory.
+    List information about the files (the current directory by default) 
+    in alphabetical order, filtered by a regular expression.
   arguments:
     - name: "path"
       type: file
-      description: "The path to list"
+      description: "Which directory to list the contents of."
       default: .
     - name: "--filter"
       type: string
-      description: "A filter to apply"
+      description: "A regular expression to filter the listed files."
       default: '.*'
   resources:
     - type: bash_script
