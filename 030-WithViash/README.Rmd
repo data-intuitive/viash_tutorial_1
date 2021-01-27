@@ -169,7 +169,7 @@ bin/silly_example4 -h
 ```
 
 ```{sh}
-bin/silly_example2 src/ -l
+bin/silly_example4 src/ -l
 ```
 
 ## Platforms
