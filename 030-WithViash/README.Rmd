@@ -5,7 +5,7 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workshop 1 - With Viash
+title: Viash Workshop 1 - Viash Primer
 ---
 
 # What constitutes a step?
@@ -16,7 +16,7 @@ In other words, we need to understand _what_ needs to run and _how_ it should ru
 
 `combine_plots`, for instance, takes as input a number of plots (`png` images) and combines them into a plot. As introduced earlier, we can use [`ffmpeg`] for this and it's then just a matter of getting the proper arguments for the tool right. That's basically what we did in the previous section. But it did not stop there, we had to explicitly install the tool in order to run it.
 
-Let us see if we can shortcut some of this work using viash.
+Let us see if we can shortcut some of this work using viash, but first with some generic examples.
 
 # Introducing Viash
 
@@ -157,7 +157,7 @@ bin/silly_example4 -h
 ```
 
 ``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
-bin/silly_example2 src/ -l
+bin/silly_example4 src/ -l
 ```
 
 ## Platforms
@@ -241,7 +241,5 @@ If you would want to achieve something similar with just Docker without Viash, y
 
 
 
-
-[`ffmpeg`]: 
 
 [viash]: https://github.com/data-intuitive/viash
