@@ -51,13 +51,13 @@ If [viash] is installed correctly, you should be able to invoke the help message
 viash -h
 ```
 
-
 ## Example 1: a minimal viash config file
 
 A core concept in [viash] is the [viash config], which is a YAML file containing
 information on software component, such as its parameters, its requirements, and some documentation.
 
 Let us start with the smallest possible [viash config], which is an almost trivial wrapper around `ls`. `ls` is a Unix command used to list all files in a directory.
+
 ```{sh}
 cat src/intro_example1.vsh.yaml
 ```
@@ -221,8 +221,7 @@ We get results like this:
 viash run src/intro_example6.vsh.yaml -p docker -- /etc --filter "^h.*"
 ```
 
-A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run [`viash run`] on on the [viash config]. 
-This config contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the [viash config] and are automatically resolved and parsed when running the wrapped [viash] version of the script. The `docker` platform is defined in the [viash config] as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it is simply passed to `grep` in `script.sh`.
+A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run [`viash run`] on on the [viash config]. This config contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the [viash config] and are automatically resolved and parsed when running the wrapped [viash] version of the script. The `docker` platform is defined in the [viash config] as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it is simply passed to `grep` in `script.sh`.
 
 Please note that when we decide to _build_ a `intro_example6` executable (for a specific platform), again this executable is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.
 
