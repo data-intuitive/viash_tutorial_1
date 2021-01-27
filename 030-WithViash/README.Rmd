@@ -170,7 +170,7 @@ viash build src/silly_example5.vsh.yaml -o bin
 
 However, if we list the differences between the previous version of silly example and this one, we note the following:
 
-``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE, error=TRUE}
 diff bin/silly_example4 bin/silly_example5
 ```
 
@@ -192,7 +192,14 @@ bin/silly_example5 / -l
 
 If the `alpine` image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.
 
-In what follows, we will come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.
+Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction like
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+docker run -i alpine:latest ls / -l
+```
+
+While this is all still manageable, it could quickly become more complicated, but that is for a later section.
+In what follows, we will also come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.
 
 We finish up the part about platforms here with noting that multiple platforms of the same `type` can coexist with each other. Below is an example of this:
 
@@ -206,9 +213,35 @@ By specifying `-p docker2`, [viash] _knows_ it has to select the corresponding e
 bin/silly_example6 / -l
 ```
 
-## 
+## Wrapping a script
+
+While running a command wrapped as a viash component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. Say you want to run the `silly_example6` component from above but this time filtering out certain files/directories based on their name. We could do just that by means of a simple CLI instruction that we put in a script:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+cat src/script.sh
+```
+
+In combination with the following viash config:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+cat src/silly_example7.vsh.yaml
+```
+
+We get results like this:
+
+``` {sh eval=TRUE, echo=TRUE, comment="", results="hold", collapse=TRUE, prompt=TRUE, cache=TRUE}
+viash run src/silly_example7.vsh.yaml -p docker2 -- /etc --filter "^h.*"
+```
+
+A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run `viash run` on on the viash spec. This spec contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the viash spec and are automatically resolved and parsed when running the wrapped viash version of the script. The `docker2` platform is defined in the viash spec as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it's is simply passed to `grep` in `script.sh`.
+
+Please note that when we decide to _build_ a `silly_example7` binary (for a specific platform), again this binary is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.
+
+If you would want to achieve something similar with just Docker without Viash, you are in for some serious bash development. But it does not stop here, because as well as having a bash script we can have Python, R, Javascript, Scala in the current version. Other environments are possible as well.
 
 
-We start by creating a directory
+
 
 [`ffmpeg`]: 
+
+[viash]: https://github.com/data-intuitive/viash

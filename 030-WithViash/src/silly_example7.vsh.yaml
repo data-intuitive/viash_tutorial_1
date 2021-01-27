@@ -1,0 +1,26 @@
+functionality:
+  name: silly_example7
+  description: |
+    This is a silly example that wraps the underlying ls command
+    and add some mildly useful functionality to it to list
+    the contents of a directory.
+  arguments:
+    - name: "path"
+      type: file
+      description: "The path to list"
+      default: .
+    - name: "--filter"
+      type: string
+      description: "A filter to apply"
+      default: '.*'
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: native
+  - type: docker
+    id: docker1
+    image: alpine:latest
+  - type: docker
+    id: docker2
+    image: ubuntu:latest

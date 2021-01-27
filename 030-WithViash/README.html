@@ -234,6 +234,8 @@
 <li><a href="#providing-documentation">Providing documentation</a></li>
 </ul></li>
 <li><a href="#building-binaries">Building <em>binaries</em></a></li>
+<li><a href="#platforms">Platforms</a></li>
+<li><a href="#wrapping-a-script">Wrapping a script</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -245,7 +247,7 @@
 <h1 id="introducing-viash">Introducing Viash</h1>
 <p>Viash allows to do exactly this: specify the <em>what</em> and the <em>how</em>.</p>
 <h2 id="installing-viash">Installing viash</h2>
-<p>Installation of [viash] is explained in <a href="http://www.data-intuitive.com/viash_docs/getting_started/installation/">here</a>.</p>
+<p>Installation of <a href="https://github.com/data-intuitive/viash">viash</a> is explained in <a href="http://www.data-intuitive.com/viash_docs/getting_started/installation/">here</a>.</p>
 <p>Since we want to keep this tutorial self-contained, we will download and install the latest (binary) release and install it locally. You’ll need the following for htis:</p>
 <ul>
 <li>Access to a Linux, UNIX, Mac system or Windows with WSL(2)</li>
@@ -291,7 +293,7 @@
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
-<p>If we run [viash] without any options, we get:</p>
+<p>If we run <a href="https://github.com/data-intuitive/viash">viash</a> without any options, we get:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example1.vsh.yaml</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Makefile</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">README.Rmd</span></span>
@@ -300,7 +302,7 @@
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">README_cache</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">bin</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
-<p>Perhaps unsurprisingly, this performs an <code>ls</code> in the <em>current</em> directory which in this case is where [viash] is running. This example, while illustrative, does not capture what [viash] is and can be used for. It’s just a wrapper around the <code>ls</code> command.</p>
+<p>Perhaps unsurprisingly, this performs an <code>ls</code> in the <em>current</em> directory which in this case is where <a href="https://github.com/data-intuitive/viash">viash</a> is running. This example, while illustrative, does not capture what <a href="https://github.com/data-intuitive/viash">viash</a> is and can be used for. It’s just a wrapper around the <code>ls</code> command.</p>
 <p>Let’s go one step further:</p>
 <h3 id="silly-example-2">Silly example 2</h3>
 <p>Not only is this another silly example, it even has a silly name. Most commands or tools can be configured using arguments, options, flags. Let us take a look at how this can be done:</p>
@@ -436,10 +438,10 @@
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        <span class="ex">The</span> path to list</span></code></pre></div>
 <h2 id="building-binaries">Building <em>binaries</em></h2>
-<p>Suppose <code>silly_example4</code> from above is exactly what we need as standalone tool for ourselves or other people to use. Obviously, providing everyone access to [viash] first and then letting them access the <code>silly_example4.vsh.yaml</code> file in order to run the above commands. This can be greatly simplified as follows:</p>
+<p>Suppose <code>silly_example4</code> from above is exactly what we need as standalone tool for ourselves or other people to use. Obviously, providing everyone access to <a href="https://github.com/data-intuitive/viash">viash</a> first and then letting them access the <code>silly_example4.vsh.yaml</code> file in order to run the above commands would not simplify things at all! However, consider the following:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/silly_example4.vsh.yaml -o bin</span></code></pre></div>
-<p>This will <em>build</em> an <em>executable</em> (script) that contains all the functionality that we saw in the above examples. Just to give a few examples:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/silly_example2</span> -h</span>
+<p>This <em>builds</em> an <em>executable</em> (script) <code>bin/silly_example2</code> that contains all the functionality that we saw in the above examples. Just to give a few examples:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/silly_example4</span> -h</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> is a silly example that wraps the underlying ls command</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">and</span> add some mildly useful functionality to it to list</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">the</span> contents of a directory.</span>
@@ -462,6 +464,131 @@
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  186 Jan 26 13:13 silly_example2.vsh.yaml</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  239 Jan 26 14:13 silly_example3.vsh.yaml</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  514 Jan 26 14:20 silly_example4.vsh.yaml</span></code></pre></div>
-<p>We start by creating a directory</p>
+<h2 id="platforms">Platforms</h2>
+<p>In the above examples, we ran the tools on our local system. This is simple as long as the wrapped tool at hand (<code>ls</code> in this case) is always available on the local system. Viash supports running wrapped tools inside a container as well, supporting at present Docker as a container system. Let us illustrate how simple this can be by building a new binary:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/silly_example5.vsh.yaml -o bin</span></code></pre></div>
+<p>However, if we list the differences between the previous version of silly example and this one, we note the following:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">diff</span> bin/silly_example4 bin/silly_example5</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">4c4</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span> #    <span class="ex">silly_example4</span>    #</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> #    <span class="ex">silly_example5</span>    #</span></code></pre></div>
+<p>There is only a difference in the name of the binary, so what does that mean?</p>
+<p>It means that we defined 2 platforms: a <em>native</em> one (local machine) and a <em>docker</em> one. By default, if no platform is specified on the CLI, <a href="https://github.com/data-intuitive/viash">viash</a> will take the first one in the list of <code>platforms</code>. And since <code>native</code> is the first, this is the one that gets selected.</p>
+<p>If we specify the platform explicitly:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/silly_example5.vsh.yaml -o bin -p docker</span></code></pre></div>
+<p>We get a binary <code>bin/silly_example5</code> that automatically runs inside Docker:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/silly_example5</span> / -l</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 60</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 bin</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    5 root     root           340 Jan 27 08:40 dev</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    1 root     root          4096 Jan 27 08:40 etc</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 home</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    3 root     root          4096 Jan 27 08:40 host_mnt</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    7 root     root          4096 Jan 14 11:49 lib</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    5 root     root          4096 Jan 14 11:49 media</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 mnt</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 opt</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>  187 root     root             0 Jan 27 08:40 proc</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="ex">drwx------</span>    2 root     root          4096 Jan 14 11:49 root</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 run</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 sbin</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 srv</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>   13 root     root             0 Jan 26 14:00 sys</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxrwt</span>    2 root     root          4096 Jan 14 11:49 tmp</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    7 root     root          4096 Jan 14 11:49 usr</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   12 root     root          4096 Jan 14 11:49 var</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    1 root     root          1380 Jan 19 14:29 viash_automount</span></code></pre></div>
+<p>If the <code>alpine</code> image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.</p>
+<p>Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction like</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">docker</span> run -i alpine:latest ls / -l</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 56</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 bin</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    5 root     root           340 Jan 27 08:41 dev</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    1 root     root          4096 Jan 27 08:41 etc</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 home</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    7 root     root          4096 Jan 14 11:49 lib</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    5 root     root          4096 Jan 14 11:49 media</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 mnt</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 opt</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>  191 root     root             0 Jan 27 08:41 proc</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="ex">drwx------</span>    2 root     root          4096 Jan 14 11:49 root</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 run</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 sbin</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    2 root     root          4096 Jan 14 11:49 srv</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>   13 root     root             0 Jan 26 14:00 sys</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxrwt</span>    2 root     root          4096 Jan 14 11:49 tmp</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>    7 root     root          4096 Jan 14 11:49 usr</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   12 root     root          4096 Jan 14 11:49 var</span></code></pre></div>
+<p>While this is all still manageable, it could quickly become more complicated, but that is for a later section. In what follows, we will also come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.</p>
+<p>We finish up the part about platforms here with noting that multiple platforms of the same <code>type</code> can coexist with each other. Below is an example of this:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/silly_example6.vsh.yaml -o bin -p docker2</span></code></pre></div>
+<p>By specifying <code>-p docker2</code>, <a href="https://github.com/data-intuitive/viash">viash</a> <em>knows</em> it has to select the corresponding entry from the <code>platforms</code> list.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/silly_example6</span> / -l</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 52</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    7 Jul 29 01:29 bin -<span class="op">&gt;</span> usr/bin</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Apr 15  2020 boot</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   5 root root  340 Jan 27 08:41 dev</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jan 27 08:41 etc</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Apr 15  2020 home</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 root root 4096 Jan 27 08:41 host_mnt</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    7 Jul 29 01:29 lib -<span class="op">&gt;</span> usr/lib</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    9 Jul 29 01:29 lib32 -<span class="op">&gt;</span> usr/lib32</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    9 Jul 29 01:29 lib64 -<span class="op">&gt;</span> usr/lib64</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   10 Jul 29 01:29 libx32 -<span class="op">&gt;</span> usr/libx32</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29 01:29 media</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29 01:29 mnt</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29 01:29 opt</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span> 190 root root    0 Jan 27 08:41 proc</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="ex">drwx------</span>   2 root root 4096 Jul 29 01:33 root</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Aug 19 21:14 run</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    8 Jul 29 01:29 sbin -<span class="op">&gt;</span> usr/sbin</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29 01:29 srv</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>  13 root root    0 Jan 26 14:00 sys</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxrwt</span>   2 root root 4096 Jul 29 01:33 tmp</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jul 29 01:29 usr</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jul 29 01:33 var</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 1380 Jan 19 14:29 viash_automount</span></code></pre></div>
+<h2 id="wrapping-a-script">Wrapping a script</h2>
+<p>While running a command wrapped as a viash component could be useful in <em>some</em> form or another, we will usually want to run something a bit more custom or elaborate. Say you want to run the <code>silly_example6</code> component from above but this time filtering out certain files/directories based on their name. We could do just that by means of a simple CLI instruction that we put in a script:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/script.sh</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">&quot;ls &quot;</span><span class="va">$par_path</span><span class="st">&quot; | grep &#39;</span><span class="va">$par_filter</span><span class="st">&#39;&quot;</span></span></code></pre></div>
+<p>In combination with the following viash config:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/silly_example7.vsh.yaml</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: silly_example7</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span>: <span class="kw">|</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">This</span> is a silly example that wraps the underlying ls command</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">and</span> add some mildly useful functionality to it to list</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">the</span> contents of a directory.</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;path&quot;</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: file</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;The path to list&quot;</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>      <span class="ex">default</span>: .</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;--filter&quot;</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: string</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;A filter to apply&quot;</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>      <span class="ex">default</span>: <span class="st">&#39;.*&#39;</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: bash_script</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: script.sh</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="ex">platforms</span>:</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: native</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: docker</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">id</span>: docker1</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">image</span>: alpine:latest</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: docker</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">id</span>: docker2</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">image</span>: ubuntu:latest</span></code></pre></div>
+<p>We get results like this:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/silly_example7.vsh.yaml -p docker2 -- /etc --filter <span class="st">&quot;^h.*&quot;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hosts</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hosts.equiv</span></span></code></pre></div>
+<p>A lot is happening here at once, so let’s unwrap this. We did not <em>build</em> the executable in this example, but just run <code>viash run</code> on on the viash spec. This spec contains a pointer (relative path) to the <code>script.sh</code> file that contains parameters. Those parameters are defined in the viash spec and are automatically resolved and parsed when running the wrapped viash version of the script. The <code>docker2</code> platform is defined in the viash spec as well, so we can just run it inside the respective container. The <code>--filter</code> argument takes a regular expression, it’s is simply passed to <code>grep</code> in <code>script.sh</code>.</p>
+<p>Please note that when we decide to <em>build</em> a <code>silly_example7</code> binary (for a specific platform), again this binary is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.</p>
+<p>If you would want to achieve something similar with just Docker without Viash, you are in for some serious bash development. But it does not stop here, because as well as having a bash script we can have Python, R, Javascript, Scala in the current version. Other environments are possible as well.</p>
 </body>
 </html>

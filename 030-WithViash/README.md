@@ -33,7 +33,8 @@ Viash allows to do exactly this: specify the *what* and the *how*.
 
 ## Installing viash
 
-Installation of \[viash\] is explained in
+Installation of [viash](https://github.com/data-intuitive/viash) is
+explained in
 [here](http://www.data-intuitive.com/viash_docs/getting_started/installation/).
 
 Since we want to keep this tutorial self-contained, we will download and
@@ -102,7 +103,8 @@ functionality:
       path: ls
 ```
 
-If we run \[viash\] without any options, we get:
+If we run [viash](https://github.com/data-intuitive/viash) without any
+options, we get:
 
 ``` {.sh}
 > viash run src/silly_example1.vsh.yaml
@@ -116,8 +118,10 @@ src
 ```
 
 Perhaps unsurprisingly, this performs an `ls` in the *current* directory
-which in this case is where \[viash\] is running. This example, while
-illustrative, does not capture what \[viash\] is and can be used for.
+which in this case is where
+[viash](https://github.com/data-intuitive/viash) is running. This
+example, while illustrative, does not capture what
+[viash](https://github.com/data-intuitive/viash) is and can be used for.
 It's just a wrapper around the `ls` command.
 
 Let's go one step further:
@@ -320,20 +324,22 @@ Options:
 
 Suppose `silly_example4` from above is exactly what we need as
 standalone tool for ourselves or other people to use. Obviously,
-providing everyone access to \[viash\] first and then letting them
-access the `silly_example4.vsh.yaml` file in order to run the above
-commands. This can be greatly simplified as follows:
+providing everyone access to
+[viash](https://github.com/data-intuitive/viash) first and then letting
+them access the `silly_example4.vsh.yaml` file in order to run the above
+commands would not simplify things at all! However, consider the
+following:
 
 ``` {.sh}
 > viash build src/silly_example4.vsh.yaml -o bin
 ```
 
-This will *build* an *executable* (script) that contains all the
-functionality that we saw in the above examples. Just to give a few
-examples:
+This *builds* an *executable* (script) `bin/silly_example2` that
+contains all the functionality that we saw in the above examples. Just
+to give a few examples:
 
 ``` {.sh}
-> bin/silly_example2 -h
+> bin/silly_example4 -h
 This is a silly example that wraps the underlying ls command
 and add some mildly useful functionality to it to list
 the contents of a directory.
@@ -361,4 +367,221 @@ total 32
 -rw-r--r--  1 toni  staff  514 Jan 26 14:20 silly_example4.vsh.yaml
 ```
 
-We start by creating a directory
+## Platforms
+
+In the above examples, we ran the tools on our local system. This is
+simple as long as the wrapped tool at hand (`ls` in this case) is always
+available on the local system. Viash supports running wrapped tools
+inside a container as well, supporting at present Docker as a container
+system. Let us illustrate how simple this can be by building a new
+binary:
+
+``` {.sh}
+> viash build src/silly_example5.vsh.yaml -o bin
+```
+
+However, if we list the differences between the previous version of
+silly example and this one, we note the following:
+
+``` {.sh}
+> diff bin/silly_example4 bin/silly_example5
+4c4
+< #    silly_example4    #
+---
+> #    silly_example5    #
+```
+
+There is only a difference in the name of the binary, so what does that
+mean?
+
+It means that we defined 2 platforms: a *native* one (local machine) and
+a *docker* one. By default, if no platform is specified on the CLI,
+[viash](https://github.com/data-intuitive/viash) will take the first one
+in the list of `platforms`. And since `native` is the first, this is the
+one that gets selected.
+
+If we specify the platform explicitly:
+
+``` {.sh}
+> viash build src/silly_example5.vsh.yaml -o bin -p docker
+```
+
+We get a binary `bin/silly_example5` that automatically runs inside
+Docker:
+
+``` {.sh}
+> bin/silly_example5 / -l
+total 60
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 bin
+drwxr-xr-x    5 root     root           340 Jan 27 08:40 dev
+drwxr-xr-x    1 root     root          4096 Jan 27 08:40 etc
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 home
+drwxr-xr-x    3 root     root          4096 Jan 27 08:40 host_mnt
+drwxr-xr-x    7 root     root          4096 Jan 14 11:49 lib
+drwxr-xr-x    5 root     root          4096 Jan 14 11:49 media
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 mnt
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 opt
+dr-xr-xr-x  187 root     root             0 Jan 27 08:40 proc
+drwx------    2 root     root          4096 Jan 14 11:49 root
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 run
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 sbin
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 srv
+dr-xr-xr-x   13 root     root             0 Jan 26 14:00 sys
+drwxrwxrwt    2 root     root          4096 Jan 14 11:49 tmp
+drwxr-xr-x    7 root     root          4096 Jan 14 11:49 usr
+drwxr-xr-x   12 root     root          4096 Jan 14 11:49 var
+drwxr-xr-x    1 root     root          1380 Jan 19 14:29 viash_automount
+```
+
+If the `alpine` image is not yet available on your system, this command
+will automatically fetch it before running the tool. You can verify for
+yourself that the result of this listing is not the same as what you
+would have if you ran on your local system.
+
+Please note that if you wanted to do this exact thing by using Docker
+itself, you would have to use a CLI instruction like
+
+``` {.sh}
+> docker run -i alpine:latest ls / -l
+total 56
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 bin
+drwxr-xr-x    5 root     root           340 Jan 27 08:41 dev
+drwxr-xr-x    1 root     root          4096 Jan 27 08:41 etc
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 home
+drwxr-xr-x    7 root     root          4096 Jan 14 11:49 lib
+drwxr-xr-x    5 root     root          4096 Jan 14 11:49 media
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 mnt
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 opt
+dr-xr-xr-x  191 root     root             0 Jan 27 08:41 proc
+drwx------    2 root     root          4096 Jan 14 11:49 root
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 run
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 sbin
+drwxr-xr-x    2 root     root          4096 Jan 14 11:49 srv
+dr-xr-xr-x   13 root     root             0 Jan 26 14:00 sys
+drwxrwxrwt    2 root     root          4096 Jan 14 11:49 tmp
+drwxr-xr-x    7 root     root          4096 Jan 14 11:49 usr
+drwxr-xr-x   12 root     root          4096 Jan 14 11:49 var
+```
+
+While this is all still manageable, it could quickly become more
+complicated, but that is for a later section. In what follows, we will
+also come back not only to running inside a container but also
+generating a container (based on a base image), tagging and versioning.
+
+We finish up the part about platforms here with noting that multiple
+platforms of the same `type` can coexist with each other. Below is an
+example of this:
+
+``` {.sh}
+> viash build src/silly_example6.vsh.yaml -o bin -p docker2
+```
+
+By specifying `-p docker2`,
+[viash](https://github.com/data-intuitive/viash) *knows* it has to
+select the corresponding entry from the `platforms` list.
+
+``` {.sh}
+> bin/silly_example6 / -l
+total 52
+lrwxrwxrwx   1 root root    7 Jul 29 01:29 bin -> usr/bin
+drwxr-xr-x   2 root root 4096 Apr 15  2020 boot
+drwxr-xr-x   5 root root  340 Jan 27 08:41 dev
+drwxr-xr-x   1 root root 4096 Jan 27 08:41 etc
+drwxr-xr-x   2 root root 4096 Apr 15  2020 home
+drwxr-xr-x   3 root root 4096 Jan 27 08:41 host_mnt
+lrwxrwxrwx   1 root root    7 Jul 29 01:29 lib -> usr/lib
+lrwxrwxrwx   1 root root    9 Jul 29 01:29 lib32 -> usr/lib32
+lrwxrwxrwx   1 root root    9 Jul 29 01:29 lib64 -> usr/lib64
+lrwxrwxrwx   1 root root   10 Jul 29 01:29 libx32 -> usr/libx32
+drwxr-xr-x   2 root root 4096 Jul 29 01:29 media
+drwxr-xr-x   2 root root 4096 Jul 29 01:29 mnt
+drwxr-xr-x   2 root root 4096 Jul 29 01:29 opt
+dr-xr-xr-x 190 root root    0 Jan 27 08:41 proc
+drwx------   2 root root 4096 Jul 29 01:33 root
+drwxr-xr-x   1 root root 4096 Aug 19 21:14 run
+lrwxrwxrwx   1 root root    8 Jul 29 01:29 sbin -> usr/sbin
+drwxr-xr-x   2 root root 4096 Jul 29 01:29 srv
+dr-xr-xr-x  13 root root    0 Jan 26 14:00 sys
+drwxrwxrwt   2 root root 4096 Jul 29 01:33 tmp
+drwxr-xr-x   1 root root 4096 Jul 29 01:29 usr
+drwxr-xr-x   1 root root 4096 Jul 29 01:33 var
+drwxr-xr-x   1 root root 1380 Jan 19 14:29 viash_automount
+```
+
+## Wrapping a script
+
+While running a command wrapped as a viash component could be useful in
+*some* form or another, we will usually want to run something a bit more
+custom or elaborate. Say you want to run the `silly_example6` component
+from above but this time filtering out certain files/directories based
+on their name. We could do just that by means of a simple CLI
+instruction that we put in a script:
+
+``` {.sh}
+> cat src/script.sh
+#!/bin/bash
+
+eval "ls "$par_path" | grep '$par_filter'"
+```
+
+In combination with the following viash config:
+
+``` {.sh}
+> cat src/silly_example7.vsh.yaml
+functionality:
+  name: silly_example7
+  description: |
+    This is a silly example that wraps the underlying ls command
+    and add some mildly useful functionality to it to list
+    the contents of a directory.
+  arguments:
+    - name: "path"
+      type: file
+      description: "The path to list"
+      default: .
+    - name: "--filter"
+      type: string
+      description: "A filter to apply"
+      default: '.*'
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: native
+  - type: docker
+    id: docker1
+    image: alpine:latest
+  - type: docker
+    id: docker2
+    image: ubuntu:latest
+```
+
+We get results like this:
+
+``` {.sh}
+> viash run src/silly_example7.vsh.yaml -p docker2 -- /etc --filter "^h.*"
+hosts
+hosts.equiv
+```
+
+A lot is happening here at once, so let's unwrap this. We did not
+*build* the executable in this example, but just run `viash run` on on
+the viash spec. This spec contains a pointer (relative path) to the
+`script.sh` file that contains parameters. Those parameters are defined
+in the viash spec and are automatically resolved and parsed when running
+the wrapped viash version of the script. The `docker2` platform is
+defined in the viash spec as well, so we can just run it inside the
+respective container. The `--filter` argument takes a regular
+expression, it's is simply passed to `grep` in `script.sh`.
+
+Please note that when we decide to *build* a `silly_example7` binary
+(for a specific platform), again this binary is self-contained. It
+includes the necessary Docker information, command line parsing logic
+and the script itself. So there is not need for additional
+customization.
+
+If you would want to achieve something similar with just Docker without
+Viash, you are in for some serious bash development. But it does not
+stop here, because as well as having a bash script we can have Python,
+R, Javascript, Scala in the current version. Other environments are
+possible as well.
