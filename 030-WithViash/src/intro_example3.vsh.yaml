@@ -1,5 +1,5 @@
 functionality:
-  name: silly_example3
+  name: intro_example3
   arguments:
     - name: "-l"
       type: boolean_true

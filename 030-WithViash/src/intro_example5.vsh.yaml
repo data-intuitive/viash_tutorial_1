@@ -1,0 +1,24 @@
+functionality:
+  name: intro_example5
+  version: 0.5
+  description: |
+    List information about the files (the current directory by default) 
+    in alphabetical order.
+  arguments:
+    - name: "-l"
+      type: boolean_true
+      description: "Use a long listing format."
+    - name: "-a"
+      type: boolean_true
+      description: "Do not ignore entries starting with '.'."
+    - name: "path"
+      type: file
+      description: "Which directory to list the contents of."
+      default: .
+  resources:
+    - type: executable
+      path: ls
+platforms:
+  - type: native
+  - type: docker
+    image: ubuntu:latest
