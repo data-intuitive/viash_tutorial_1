@@ -1,0 +1,20 @@
+---
+author: Data Intuitive
+date: Tuesday - January 26, 2021
+mainfont: Roboto Condensed
+monofont: Source Code Pro
+monofontoptions: Scale=0.7
+monobackgroundcolor: lightgrey
+title: Viash Workshop 1 - With Viash
+---
+
+# Introduction
+
+With the information from the previous section, we are now ready to start turning `combine_plots` into a [viash] component.
+
+The transformation is based on [`ffmpeg`] 
+
+
+[`ffmpeg`]: 
+
+[viash]: https://github.com/data-intuitive/viash
