@@ -15,8 +15,7 @@ knitr::opts_chunk$set(
   comment = "", 
   results = "hold", 
   collapse = TRUE,
-  prompt = TRUE, 
-  cache = TRUE
+  prompt = TRUE
 )
 ```
 
@@ -24,14 +23,9 @@ knitr::opts_chunk$set(
 
 A step in the rendering of the video contains of one aspect that can be considered on its own. Understanding the logic of a step, however, is not sufficient as we have seen before. We also need to define the environment in which the step has to be performed.
 
-In other words, we need to understand _what_ needs to run and _how_ it should run. `combine_plots`, for instance, takes as input a number of plots (`png` images) and combines them into a plot. As introduced earlier, we can use [`ffmpeg`] for this and it's then just a matter of getting the proper arguments for the tool right. That's basically what we did in the previous section. But it did not stop there, we had to explicitly install the tool in order to run it. [viash] allows to do exactly this: specify the _what_ and the _how_.
+In other words, we need to understand _what_ needs to run and _how_ it should run. `combine_plots`, for instance, takes as input a number of plots (`png` images) and combines them into a plot. As introduced earlier, we can use `ffmpeg` for this and it's then just a matter of getting the proper arguments for the tool right. That's basically what we did in the previous section. But it did not stop there, we had to explicitly install the tool in order to run it. [viash] allows to do exactly this: specify the _what_ and the _how_.
 
 Before actually porting the Civilization postgame scripts to viash, let's first look at some small examples to gradually demonstrate how [viash] works. Let's start by installing the latest release of [viash]!
-
-<!--
-Let us see if we can shortcut some of this work using [viash].
--->
-
 
 ## Installing viash
 
@@ -58,27 +52,31 @@ viash -h
 ```
 
 
-## Intro example 1
+## Example 1: a minimal viash config file
 
-Let us start with a very rudimentary example. Consider the following file:
+A core concept in [viash] is the [viash config], which is a YAML file containing
+information on software component, such as its parameters, its requirements, and some documentation.
 
+Let us start with the smallest possible [viash config], which is an almost trivial wrapper around `ls`. `ls` is a Unix command used to list all files in a directory.
 ```{sh}
 cat src/intro_example1.vsh.yaml
 ```
 
-If we run [viash] without any options, we get:
+[`viash run`] is a command for running a component as defined by the [viash config].
+You can run it as follows:
 
 ```{sh}
 viash run src/intro_example1.vsh.yaml
 ```
 
-Perhaps unsurprisingly, this performs an `ls` in the _current_ directory which in this case is where [viash] is running. This example, while illustrative, does not capture what [viash] is and can be used for. It's just a wrapper around the `ls` command.
+Perhaps unsurprisingly, this performs an `ls` in the _current_ directory which in this case is where [viash] is running. 
+This example, while illustrative, does not capture what [viash] is and can be used for. It's just a wrapper around the `ls` command.
 
-Let's go one step further:
+Let's go one step further.
 
-## Intro example 2
+## Example 2: adding some arguments
 
-Not only is this another intro example, it even has a intro name. Most commands or tools can be configured using arguments, options, flags. Let us take a look at how this can be done:
+Software components are (usually) not useful unless they have some arguments which you can specify and change.
 
 ```{sh}
 cat src/intro_example2.vsh.yaml
@@ -92,59 +90,49 @@ This is what happens when you run [viash] in a few different scenarios:
 viash run src/intro_example2.vsh.yaml
 ```
 
-There is no difference with the previous version of `intro_example`. Now, let us pass the argument `-l` to `intro_example2`:
+There is no difference with the previous version of the component. Now, let us pass the argument `-l` to `intro_example2`:
 
 ```{sh}
 viash run src/intro_example2.vsh.yaml -- -l
 ```
 
-Please note that options _before_ the `--` are considered for [viash] while options after the `--` are for the tool that is wrapped (in this case `ls`). We can now also run:
+Please note that options _before_ the `--` are considered for [viash] while options after the `--` are for the tool that is wrapped (in this case `ls`).
 
-```{sh}
-viash run src/intro_example2.vsh.yaml -- -a
-```
 
-Or even:
+## Example 3: setting different argument types
 
-```{sh}
-viash run src/intro_example2.vsh.yaml -- -a -l
-```
+Not all arguments are boolean flags such as specified in the previous example. 
+In this [viash config], we added an extra argument that corresponds to the path which we want to _list_. 
 
-For completeness, we also add these arguments to the first intro example:
-
-```{sh}
-viash run src/intro_example1.vsh.yaml -- -a -l
-```
-
-As you might have expected, since `intro_example1` does not know about any arguments this does not change its behaviour.
-
-## Intro example 3
-
-In this (intro) example, we add an extra argument that corresponds to the path which we want to _list_. The default is the current directory (just like before) but optionally we can provide a different path.
 
 ```{sh}
 cat src/intro_example3.vsh.yaml
 ```
 
-Examples:
+Running this component will still list the contents of the current directory (like before).
 
 ```{sh}
-viash run src/intro_example3.vsh.yaml -- ./ -a -l
+viash run src/intro_example3.vsh.yaml -- -l
 ```
 
+However, we can now also list the contents of a different directory.
 ```{sh}
-viash run src/intro_example3.vsh.yaml -- src/ -a
+viash run src/intro_example3.vsh.yaml -- src/ -l
 ```
 
-You can always retrieve information about the wrapped script/tool/executable by requesting the included help:
+You can always retrieve information about the component by requesting the included help.
 
 ```{sh}
 viash run src/intro_example3.vsh.yaml -- -h
 ```
 
-## Providing documentation
+Note that there are many more argument types than a flag or a file. These are not very useful for now,
+but come in handy when wrapping R/Python/JavaScript scripts. 
+For more information, see the documentation regarding the [functionality] specifications.
 
-The help from the last `intro_example3` does not show a lot of useful information. Let's some documentation regarding the component and its parameters.
+## Example 4: adding documentation
+
+The help from the last `intro_example3` does not show a lot of useful information. Let's add some documentation regarding the component and its parameters.
 
 ```{sh}
 cat src/intro_example4.vsh.yaml
@@ -155,15 +143,17 @@ In doing so, the help message becomes a lot more useful in reminding yourself an
 viash run src/intro_example4.vsh.yaml -- -h
 ```
 
-## Building _binaries_
+## Example 4 part 2: building an _executable_
 
-Suppose `intro_example4` from above is exactly what we need as standalone tool for ourselves or other people to use. Obviously, providing everyone access to [viash] first and then letting them access the `intro_example4.vsh.yaml` file in order to run the above commands would not simplify things at all! However, consider the following:
+Suppose `intro_example4` from above is exactly what we need as standalone tool for ourselves or other people to use. Obviously, providing everyone access to [viash] and then letting them access the `intro_example4.vsh.yaml` file in order to run the above commands would not simplify things at all!
+
+Time to introduce a second [viash] command, namely [`viash build`]. This command takes a [viash config] as input, and generates an executable as output.
 
 ```{sh}
 viash build src/intro_example4.vsh.yaml -o bin
 ```
 
-This _builds_ an _executable_ (script) `bin/intro_example2` that contains all the functionality that we saw in the above examples. Just to give a few examples:
+After running the above command, viash will have generated a file at `bin/intro_example4`. It contains all the functionality that we saw in the above examples:
 
 ```{sh}
 bin/intro_example4 -h
@@ -173,88 +163,76 @@ bin/intro_example4 -h
 bin/intro_example4 src/ -l
 ```
 
-## Platforms
+You can now share this `bin/intro_example4` file with others, or add it to your `~/bin` directory to turn it into a system-wide command.
 
-In the above examples, we ran the tools on our local system. This is simple as long as the wrapped tool at hand (`ls` in this case) is always available on the local system. Viash supports running wrapped tools inside a container as well, supporting at present Docker as a container system. Let us illustrate how simple this can be by building a new binary:
+## Example 5: running the component inside a Docker container
+
+In the above examples, we ran the components on our local system. This is simple as long as the wrapped tool at hand (`ls` in this case) is always available on the local system. However, this assumption generally does not hold true. [viash] not only supports running components on the native system, but can also run components inside a Docker container.
+
+To make use of this functionality, we need to get into the the 'platforms' section of the [viash config], which can contain one or more execution platforms. In this case, we defined platforms: a _native_ one (local machine) and a _docker_ one.
 
 ```{sh}
-viash build src/intro_example5.vsh.yaml -o bin
+cat src/intro_example5.vsh.yaml
 ```
 
-However, if we list the differences between the previous version of intro example and this one, we note the following:
-
-``` {sh, error=TRUE}
-diff bin/intro_example4 bin/intro_example5
-```
-
-There is only a difference in the name of the binary, so what does that mean?
-
-It means that we defined 2 platforms: a _native_ one (local machine) and a _docker_ one. By default, if no platform is specified on the CLI, [viash] will take the first one in the list of `platforms`. And since `native` is the first, this is the one that gets selected.
-
-If we specify the platform explicitly:
+By default, [viash] will use the first platform specified in the [viash config], which in this case the native platform. In order to build an executable which uses Docker in the backend, we need to pass this information as follows:
 
 ```{sh}
 viash build src/intro_example5.vsh.yaml -o bin -p docker
 ```
 
-We get a binary `bin/intro_example5` that automatically runs inside Docker:
+The executable `bin/intro_example5` now automatically runs inside Docker.
 
 ```{sh}
 bin/intro_example5 / -l
 ```
 
-If the `alpine` image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.
+If the `ubuntu` image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.
 
 Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction like
 
 ```{sh}
-docker run -i alpine:latest ls / -l
+docker run --rm -v /:/mount ubuntu:latest ls /mount/ -l
 ```
 
 While this is all still manageable, it could quickly become more complicated, but that is for a later section.
 In what follows, we will also come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.
 
-We finish up the part about platforms here with noting that multiple platforms of the same `type` can coexist with each other. Below is an example of this:
 
-```{sh}
-viash build src/intro_example6.vsh.yaml -o bin -p docker2
-```
+## Example 6: Wrapping a script
 
-By specifying `-p docker2`, [viash] _knows_ it has to select the corresponding entry from the `platforms` list.
-
-```{sh}
-bin/intro_example6 / -l
-```
-
-## Wrapping a script
-
-While running a command wrapped as a [viash] component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. Say you want to run the `intro_example6` component from above but this time filtering out certain files/directories based on their name. We could do just that by means of a simple CLI instruction that we put in a script:
+While running a command wrapped as a [viash] component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. 
+Say you want to run the `intro_example5` component from above but this time filtering out certain files/directories based on their name.
+We could do just that by means of a simple CLI instruction that we put in a script:
 
 ```{sh}
 cat src/script.sh
 ```
 
-In combination with the following [viash] config:
+In combination with the following [viash config]:
 
 ```{sh}
-cat src/intro_example7.vsh.yaml
+cat src/intro_example6.vsh.yaml
 ```
 
 We get results like this:
 
 ```{sh}
-viash run src/intro_example7.vsh.yaml -p docker2 -- /etc --filter "^h.*"
+viash run src/intro_example6.vsh.yaml -p docker -- /etc --filter "^h.*"
 ```
 
-A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run `viash run` on on the [viash] spec. This spec contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the [viash] spec and are automatically resolved and parsed when running the wrapped [viash] version of the script. The `docker2` platform is defined in the [viash] spec as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it's is simply passed to `grep` in `script.sh`.
+A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run [`viash run`] on on the [viash config]. 
+This config contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the [viash config] and are automatically resolved and parsed when running the wrapped [viash] version of the script. The `docker` platform is defined in the [viash config] as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it is simply passed to `grep` in `script.sh`.
 
-Please note that when we decide to _build_ a `intro_example7` binary (for a specific platform), again this binary is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.
+Please note that when we decide to _build_ a `intro_example6` executable (for a specific platform), again this executable is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.
 
-If you would want to achieve something similar with just Docker without [viash], you are in for some serious bash development. But it does not stop here, because as well as having a bash script we can have Python, R, Javascript, Scala in the current version. Other environments are possible as well.
-
-
+If you would want to achieve something similar with just Docker without [viash], you are in for some serious Bash development. But it does not stop here, because in addition to support for wrapping Bash scripts, [viash] also supports wrapping Python, R, JavaScript, and Scala scripts. 
 
 
-[`ffmpeg`]: https://ffmpeg.org
+## Additional links
 
 [viash]: https://github.com/data-intuitive/viash
+[`viash run`]: https://www.data-intuitive.com/viash_docs/commands/run
+[`viash build`]: https://www.data-intuitive.com/viash_docs/commands/run
+[viash config]: https://www.data-intuitive.com/viash_docs/config
+[functionality]: https://www.data-intuitive.com/viash_docs/config/functionality
