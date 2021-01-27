@@ -18,3 +18,5 @@ casts: $(FILE).Rmd
 	$(SED) -i 's|/\([/a-zA-Z0-9]*\)/work| <...>/work|g' casts/*.cast
 	# base64 encode
 	../scripts/encode.sh
+	# generate gifs
+	../scripts/togif.sh
