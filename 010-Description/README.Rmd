@@ -89,33 +89,8 @@ node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple
 
 Alright, so we know which games are playing the game, but which tiles do they own? As there are no ready to use npm packages available to do this specific task, we had to write this functionality in JavaScript ourselves. The scripts `helper.js` and `script.js` are based on work by Lucien "lucienmaloney" Maloney on GitHub. 
 
-`script.js`:
-```js
-let par = {
-  'input': 'data/AutoSave_0159.Civ6Save',
-  'output': 'data/AutoSave_0159.tsv'
-}
+Some helper functions are defined in [`helper.js`](src/civ6_save_renderer/parse_map/helper.js) (some code is omitted for the sake of clarity). The `decompress()` function reads in the binary data, while the `savetomap()` function responsible is for parsing the relevant data about each time in a tabular format.
 
-// read helper libraries & functions
-const fs = require("fs");
-const helper = require("helper.js");
-
-// read data from file
-const json = helper.savetomap(fs.readFileSync(par["input"]));
-
-// convert to tsv
-const headers = Object.keys(json.tiles[0]);
-const header = headers.join("\t") + "\n";
-const lines = json.tiles.map(o => {
-  return Object.values(o).map(b => JSON.stringify(b)).join("\t") + "\n";
-});
-const tsvLines = header + lines.join('')
-
-// save to file
-fs.writeFileSync(par["output"], tsvLines);
-```
-
-`helper.js`:
 ```js
 const zlib = require('zlib');
 
@@ -143,24 +118,80 @@ module.exports = {
 }
 ```
 
+Reading in the map data and saving it as a tsv (tab-separated values) table can be done by executing the scropt [`script.js`](src/civ6_save_renderer/parse_map/script.js).
+```js
+let par = {
+  'input': 'data/AutoSave_0159.Civ6Save',
+  'output': 'data/AutoSave_0159.tsv'
+}
+
+// read helper libraries & functions
+const fs = require("fs");
+const helper = require("helper.js");
+
+// read data from file
+const json = helper.savetomap(fs.readFileSync(par["input"]));
+
+// convert to tsv
+const headers = Object.keys(json.tiles[0]);
+const header = headers.join("\t") + "\n";
+const lines = json.tiles.map(o => {
+  return Object.values(o).map(b => JSON.stringify(b)).join("\t") + "\n";
+});
+const tsvLines = header + lines.join('')
+
+// save to file
+fs.writeFileSync(par["output"], tsvLines);
+```
+
+Note that at this stage, the imported data looks very raw. These are the first 10 rows and 10 columns of the generated tsv.
+```{r, echo=FALSE}
+tab <- readr::read_tsv("010-Description/img/AutoSave_0159.tsv", col_types = readr::cols(.default = "f", buffer1 = "c", buffer2 = "c"))
+knitr::kable(tab[1:10, 1:10])
+```
 
 ## `plot_map`: Generate map visualisation
 
+With both the game metadata in the yaml file and the map information in the tsv file, we can finally go ahead and generate our first map visualisation.
+The map is being generated with a software package called 'ggplot2' in R, but first we need to download all the required software for it. 
+Provided that you already have R installed, we need to run the following code to install all of the dependencies.
 Setup:
 ```R
 install.packages(c("ggforce", "yaml", "bit64", "ggnewscale", "cowplot", "devtools"))
 devtools::install("rcannood/civ6saves")
 ```
 
-Execute:
+Some helper functions are defined in [`helper.R`](src/civ6_save_renderer/plot_map/helper.R) (some code is omitted for the sake of clarity). The `read_header()` and `read_map()` functions respectively read in the yaml and tsv files outputted in the previous steps. The `make_map_plot()` function uses those two data objects and generates a map view of the data provided.
 ```R
 library(tidyverse)
-library(ggforce)
-library(civ6saves)
-library(bit64)
+requireNamespace("ggforce", quietly = TRUE)
+requireNamespace("civ6saves", quietly = TRUE)
+requireNamespace("bit64", quietly = TRUE)
+requireNamespace("yaml", quietly = TRUE)
+requireNamespace("ggnewscale", quietly = TRUE)
+
+read_header <- function(yaml_file) {
+  # read yaml file
+  # ... omitted for the sake of clarity ...
+}
+
+read_map <- function(tsv_file) {
+  # read tsv file
+  # ... omitted for the sake of clarity ...
+}
+
+make_map_plot <- function(game_data, map_data) {
+  # plot map with ggplot2
+  # ... omitted for the sake of clarity ...
+}
+```
+
+With [`script.R`](src/civ6_save_renderer/plot_map/script.R) we tie all data inputs and helper functies to generate a PDF file of turn 159 of the game we played for you.
+```R
+library(tidyverse)
 library(cowplot)
-library(yaml)
-library(ggnewscale)
+
+source("helper.R"))
 
 par <- list(
   yaml = "data/AutoSave_0159.yaml",
@@ -168,36 +199,22 @@ par <- list(
   output = "data/AutoSave_0159.pdf"
 )
 
-# read header information
-map_data <- readr::read_lines(par$yaml)
+# read data
+game_data <- read_header(par$yaml)
+map_data <- read_map(par$tsv)
 
-# read map information
-map_data$MAP <- read_tsv(par$tsv, col_types = cols(.default = "c")) 
-
-# do some in between processing (omitted for the sake of this tutorial)
-... 
-
-# create plot
-plot <-
-  plot_empty_map(map_data) +
-  ggforce::geom_regon(aes(fill = terrain_name), alpha = alpha) +
-  geom_text(aes(label = "^"), tab_static %>% filter(terrain_form == "Hill"), alpha = alpha) +
-  geom_text(aes(label = "^"), tab_static %>% filter(terrain_form == "Mountain"), fontface = "bold", alpha = alpha) +
-  geom_segment(aes(x = xa, xend = xb, y = ya, yend = yb), colour = feature_palette[["River"]], rivers, size = 1, alpha = alpha) +
-  ggforce::geom_regon(aes(r = civ6saves:::xy_ratio * .9), tab %>% filter(feature_name == "Ice"), fill = feature_palette[["Ice"]], alpha = .4) +
-  labs(
-    title = paste0("Turn ", map_data$GAME_TURN, " - ", tolower(gsub("MAPSIZE_", "", map_data$MAP_SIZE))),
-    subtitle = paste0(players$leader_name, collapse = ", "),
-    fill = "Terrain"
-  )
+# make visualisation
+g <- make_map_plot(game_data, map_data)
 
 # save map to file
-ggsave(par$output, plot, width = 24, height = 13)
+gleg <- cowplot::get_legend(g)
+gnoleg <- g + theme(legend.position = "none")
+gout <- cowplot::plot_grid(gnoleg, gleg, rel_widths = c(8, 1))
+ggsave(par$output, gout, width = 24, height = 13)
 ```
 
-Some (actually, a lot) of code was omitted from the above script. You can view the full script [here](src/civ6_save_renderer/plot_map/script.R).
-
-
+This is what the generated PDF file looks like.
+![](img/AutoSave_0159.png)
 
 ## `convert_plot`: Convert PDF to PNG
 
