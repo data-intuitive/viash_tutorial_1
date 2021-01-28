@@ -1,10 +1,9 @@
 // read helper libraries & functions
 const fs = require("fs");
-const decompress = require(resources_dir + "/library.js").decompress;
-const savetomap = require(resources_dir + "/library.js").savetomap;
+const helper = require(resources_dir + "/helper.js");
 
 // read data from file
-const json = savetomap(fs.readFileSync(par["input"]));
+const json = helper.savetomap(fs.readFileSync(par["input"]));
 
 // convert to tsv
 const headers = Object.keys(json.tiles[0]);

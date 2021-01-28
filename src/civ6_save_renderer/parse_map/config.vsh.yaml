@@ -20,7 +20,7 @@ functionality:
   resources:
     - type: javascript_script
       path: script.js
-    - path: library.js
+    - path: helper.js
 platforms:
   - type: docker
     image: node
