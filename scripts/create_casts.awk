@@ -20,7 +20,7 @@ BEGIN {
   next
 }
 
-/^viash/ || /^nextflow/ && !/awk/ {
+/^viash/ || /^nextflow/ || /^bin\// && !/awk/ {
   if (start_code == 1) {
     cli=$0
     sub(/-q/, "")

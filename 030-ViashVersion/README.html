@@ -232,6 +232,9 @@
 <li><a href="#platforms">Platforms</a></li>
 </ul></li>
 <li><a href="#building-the-executable">Building the executable</a></li>
+<li><a href="#running-the-executable">Running the executable</a></li>
+<li><a href="#without-viash">Without viash</a></li>
+<li><a href="#combine_plots"><code>combine_plots</code></a></li>
 </ul></li>
 </ul>
 </nav>
@@ -307,24 +310,545 @@
 <p>Two platforms are defined in the present case: a Docker one and a native one. We point the Docker platform to an <a href="https://hub.docker.com/r/dpokidov/imagemagick/">existing Docker image</a> available on Docker Hub.</p>
 <h2 id="building-the-executable">Building the executable</h2>
 <p>Building an executable can be done just like before. We assume ImageMagic is not installed on the local system and thus build the Docker version:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/convert_plot/config.vsh.yaml -o bin/ -p docker</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> bin/convert_plot ---setup</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span> bin/convert_plot -h</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">docker</span> pull dpokidov/imagemagick</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> default tag: latest</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">latest</span>: Pulling from dpokidov/imagemagick</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Digest</span>: sha256:6749db04ffa5eac1cbe77566af02463f040028fef525b767dc98e06023e6cdf8</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Status</span>: Image is up to date for dpokidov/imagemagick:latest</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ex">docker.io/dpokidov</span>/imagemagick:<span class="ex">latest</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Convert</span> a plot from pdf to png.</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-i</span> file, --input=file</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, required parameter, default: input.pdf</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">A</span> PDF input file.</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-o</span> file, --output=file</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, required parameter, default: output.png</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Output</span> path.</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/convert_plot/config.vsh.yaml -o bin/ -p docker</span></code></pre></div>
+<p>We specify the <code>docker</code> platform explicitly although that is not really necessary because of the order of the platforms in the viash config. The resulting script is stored under <code>bin</code> relative to the current working directory.</p>
+<p>A second file is written next to the executable: <code>viash.yaml</code>. This file contains (almost) all information contained in the original config file, including a serialized version of the script to run. <code>viash.yaml</code> aims at providing the ability to reproduce the original viash configuration but also to actually <code>viash run</code> that <code>viash.yaml</code> file. Such functionality is called <a href="https://en.wikipedia.org/wiki/Idempotence">idempotence</a>.</p>
+<p><code>bin/viash.yaml</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;convert_plot&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;file&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">alternatives</span><span class="kw">:</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-i&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A PDF input file.&quot;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;input.pdf&quot;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Input&quot;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">multiple</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">multiple_sep</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;:&quot;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;file&quot;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">alternatives</span><span class="kw">:</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-o&quot;</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Output path.&quot;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.png&quot;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Output&quot;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">multiple</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">multiple_sep</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;:&quot;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;bash_script&quot;</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="fu">    text</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>      #!/usr/bin/env bash</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>      ######################</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>      #    convert_plot    #</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>      ######################</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>      # This wrapper script is auto-generated by viash 0.3.1 and is thus a derivative</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>      # work thereof. This software comes with ABSOLUTELY NO WARRANTY from Data</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>      # Intuitive.  The component may contain files which fall under a different</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>      # license. The authors of this component should specify the license in the</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>      # header of such files, or include a separate license file detailing the</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>      # licenses of all included files.</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>      set -e</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>      if [ -z &quot;$VIASH_TEMP&quot; ]; then</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        VIASH_TEMP=/tmp</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>      fi</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>      # define helper functions</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>      # ViashQuote: put quotes around non flag values</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>      # $1     : unquoted string</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>      # return : possibly quoted string</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>      #   ViashQuote --foo      # returns --foo</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>      #   ViashQuote bar        # returns &#39;bar&#39;</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>      #   Viashquote --foo=bar  # returns --foo=&#39;bar&#39;</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>      function ViashQuote {</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>        if [[ &quot;$1&quot; =~ ^-+[a-zA-Z0-9_\-]+=.+$ ]]; then</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>          echo &quot;$1&quot; | sed &quot;s#=\(.*\)#=&#39;\1&#39;#&quot;</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>        elif [[ &quot;$1&quot; =~ ^-+[a-zA-Z0-9_\-]+$ ]]; then</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>          echo &quot;$1&quot;</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>        else</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>          echo &quot;&#39;$1&#39;&quot;</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>        fi</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>      # ViashRemoveFlags: Remove leading flag</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>      # $1     : string with a possible leading flag</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>      # return : string without possible leading flag</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>      #   ViashRemoveFlags --foo=bar  # returns bar</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>      function ViashRemoveFlags {</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>        echo &quot;$1&quot; | sed &#39;s/^--*[a-zA-Z0-9_\-]*=//&#39;</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>      # ViashSourceDir: return the path of a bash file, following symlinks</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>      # usage   : ViashSourceDir ${BASH_SOURCE[0]}</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>      # $1      : Should always be set to ${BASH_SOURCE[0]}</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>      # returns : The absolute path of the bash file</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>      function ViashSourceDir {</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>        SOURCE=&quot;$1&quot;</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>        while [ -h &quot;$SOURCE&quot; ]; do</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>          DIR=&quot;$( cd -P &quot;$( dirname &quot;$SOURCE&quot; )&quot; &gt;/dev/null 2&gt;&amp;1 &amp;&amp; pwd )&quot;</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>          SOURCE=&quot;$(readlink &quot;$SOURCE&quot;)&quot;</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>          [[ $SOURCE != /* ]] &amp;&amp; SOURCE=&quot;$DIR/$SOURCE&quot;</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>        done</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>        cd -P &quot;$( dirname &quot;$SOURCE&quot; )&quot; &gt;/dev/null 2&gt;&amp;1 &amp;&amp; pwd</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>      # find source folder of this component</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>      VIASH_RESOURCES_DIR=`ViashSourceDir ${BASH_SOURCE[0]}`</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>      VIASH_EXEC_MODE=&quot;run&quot;</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>      # ViashDockerFile: print the dockerfile to stdout</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>      # return : dockerfile required to run this component</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerFile</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>      function ViashDockerfile {</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>        :</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>      # ViashDockerBuild: ...</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>      function ViashDockerBuild {</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>        ViashDockerPull $1</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>      # ViashSetup: ...</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>      function ViashSetup {</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>        ViashDockerSetup dpokidov/imagemagick $VIASH_DOCKER_SETUP_STRATEGY</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>      # ViashHelp: Display helpful explanation about this executable</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>      function ViashHelp {</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>         echo &quot;Convert a plot from pdf to png.&quot;</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>         echo</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>         echo &quot;Options:&quot;</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>          echo &quot;    -i file, --input=file&quot;</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>          echo &quot;        type: file, required parameter, default: input.pdf&quot;</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>          echo &quot;        A PDF input file.&quot;</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>          echo &quot;&quot;</span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>          echo &quot;    -o file, --output=file&quot;</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>          echo &quot;        type: file, required parameter, default: output.png&quot;</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>          echo &quot;        Output path.&quot;</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>          echo &quot;&quot;</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>      ######## Helper functions for setting up Docker images for viash ########</span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>      # ViashDockerRemoteTagCheck: check whether a Docker image is available </span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>      # on a remote. Assumes `docker login` has been performed, if relevant.</span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>      #</span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>      # $1                  : image identifier with format `[registry/]image[:tag]`</span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>      # exit code $?        : whether or not the image was found</span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerRemoteTagCheck python:latest</span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>      #   echo $?                                     # returns &#39;0&#39;</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerRemoteTagCheck sdaizudceahifu</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>      #   echo $?                                     # returns &#39;1&#39;</span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>      function ViashDockerRemoteTagCheck {</span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>        docker manifest inspect $1 &gt; /dev/null 2&gt; /dev/null</span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>      # ViashDockerLocalTagCheck: check whether a Docker image is available locally</span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>      #</span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>      # $1                  : image identifier with format `[registry/]image[:tag]`</span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>      # exit code $?        : whether or not the image was found</span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>      #   docker pull python:latest</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerLocalTagCheck python:latest</span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>      #   echo $?                                     # returns &#39;0&#39;</span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerLocalTagCheck sdaizudceahifu</span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>      #   echo $?                                     # returns &#39;1&#39;</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>      function ViashDockerLocalTagCheck {</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>        [ -n &quot;$(docker images -q $1)&quot; ]</span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>      # ViashDockerPull: pull a Docker image</span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>      #</span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>      # $1                  : image identifier with format `[registry/]image[:tag]`</span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>      # exit code $?        : whether or not the image was found</span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerPull python:latest</span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>      #   echo $?                                     # returns &#39;0&#39;</span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerPull sdaizudceahifu</span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>      #   echo $?                                     # returns &#39;1&#39;</span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>      function ViashDockerPull {</span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>        echo &quot;&gt; docker pull $1&quot;</span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a>        docker pull $1 &amp;&amp; return 0 || return 1</span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>      # ViashDockerPullElseBuild: pull a Docker image, else build it</span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>      #</span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>      # $1                  : image identifier with format `[registry/]image[:tag]`</span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerPullElseBuild mynewcomponent</span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>      function ViashDockerPullElseBuild {</span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a>        set +e</span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a>        ViashDockerPull $1</span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a>        out=$?</span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a>        set -e</span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a>        if [ $out -ne 0 ]; then</span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a>          ViashDockerBuild $@</span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a>        fi</span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>      # ViashDockerSetup: create a Docker image, according to specified docker setup strategy</span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>      #</span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>      # $1                  : image identifier with format `[registry/]image[:tag]`</span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>      # $2                  : docker setup strategy, see DockerSetupStrategy.scala</span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>      # ViashDockerBuild    : a Bash function which builds a docker image, takes image identifier as argument.</span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>      #   ViashDockerPullElseBuild mynewcomponent alwaysbuild</span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a>      function ViashDockerSetup {</span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>        VSHD_ID=&quot;$1&quot;</span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a>        VSHD_STRAT=&quot;$2&quot;</span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a>        if [ &quot;$VSHD_STRAT&quot; == &quot;alwaysbuild&quot; -o &quot;$VSHD_STRAT&quot; == &quot;build&quot; ]; then</span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a>          ViashDockerBuild $VSHD_ID --no-cache</span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a>        elif [ &quot;$VSHD_STRAT&quot; == &quot;alwayspull&quot; -o &quot;$VSHD_STRAT&quot; == &quot;pull&quot; ]; then</span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a>          ViashDockerPull $VSHD_ID</span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>        elif [ &quot;$VSHD_STRAT&quot; == &quot;alwayspullelsebuild&quot; -o &quot;$VSHD_STRAT&quot; == &quot;pullelsebuild&quot; ]; then</span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a>          ViashDockerPullElseBuild $VSHD_ID --no-cache</span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>        elif [ &quot;$VSHD_STRAT&quot; == &quot;alwayspullelsecachedbuild&quot; -o &quot;$VSHD_STRAT&quot; == &quot;pullelsecachedbuild&quot; ]; then</span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>          ViashDockerPullElseBuild $VSHD_ID</span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>        elif [ &quot;$VSHD_STRAT&quot; == &quot;alwayscachedbuild&quot; -o &quot;$VSHD_STRAT&quot; == &quot;cachedbuild&quot; ]; then</span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>          ViashDockerBuild $VSHD_ID</span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a>        elif [ &quot;$VSHD_STRAT&quot; == &quot;donothing&quot; -o &quot;$VSHD_STRAT&quot; == &quot;meh&quot; ]; then</span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>          echo &quot;Skipping setup.&quot;</span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>        elif [[ &quot;$VSHD_STRAT&quot; =~ ^ifneedbe ]]; then</span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>          ViashDockerLocalTagCheck $VSHD_ID</span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a>          if [ $? -eq 0 ]; then</span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>            echo &quot;Image $VSHD_ID already exists&quot;</span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>          elif [ &quot;$VSHD_STRAT&quot; == &quot;ifneedbebuild&quot; ]; then</span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a>            ViashDockerBuild $VSHD_ID --no-cache</span>
+<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a>          elif [ &quot;$VSHD_STRAT&quot; == &quot;ifneedbecachedbuild&quot; ]; then</span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>            ViashDockerBuild $VSHD_ID</span>
+<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a>          elif [ &quot;$VSHD_STRAT&quot; == &quot;ifneedbepull&quot; ]; then</span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a>            ViashDockerPull $VSHD_ID</span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>          elif [ &quot;$VSHD_STRAT&quot; == &quot;ifneedbepullelsebuild&quot; ]; then</span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a>            ViashDockerPullElseBuild $VSHD_ID --no-cache</span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a>          elif [ &quot;$VSHD_STRAT&quot; == &quot;ifneedbepullelsecachedbuild&quot; ]; then</span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a>            ViashDockerPullElseBuild $VSHD_ID</span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>          else</span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a>            echo &quot;Unrecognised Docker strategy: $VSHD_STRAT&quot;</span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a>          fi</span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a>        else</span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>          echo &quot;Unrecognised Docker strategy: $VSHD_STRAT&quot;</span>
+<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a>        fi</span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>      ######## End of helper functions for setting up Docker images for viash ########</span>
+<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a>      # initialise variables</span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a>      VIASH_DOCKER_SETUP_STRATEGY=&#39;alwaysbuild&#39;</span>
+<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a>      # ViashAbsolutePath: generate absolute path from relative path</span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a>      # borrowed from https://stackoverflow.com/a/21951256</span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>      # $1     : relative filename</span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>      # return : absolute path</span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>      #   ViashAbsolutePath some_file.txt   # returns /path/to/some_file.txt</span>
+<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>      #   ViashAbsolutePath /foo/bar/..     # returns /foo</span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>      function ViashAbsolutePath {</span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>        local thePath</span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>        if [[ ! &quot;$1&quot; =~ ^/ ]]; then</span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>          thePath=&quot;$PWD/$1&quot;</span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>        else</span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>          thePath=&quot;$1&quot;</span>
+<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>        fi</span>
+<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>        echo &quot;$thePath&quot; | (</span>
+<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a>          IFS=/</span>
+<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>          read -a parr</span>
+<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>          declare -a outp</span>
+<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>          for i in &quot;${parr[@]}&quot;; do</span>
+<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a>            case &quot;$i&quot; in</span>
+<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a>            &#39;&#39;|.) continue ;;</span>
+<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a>            ..)</span>
+<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a>              len=${#outp[@]}</span>
+<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a>              if ((len==0)); then</span>
+<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a>                continue</span>
+<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a>              else</span>
+<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a>                unset outp[$((len-1))]</span>
+<span id="cb6-258"><a href="#cb6-258" aria-hidden="true" tabindex="-1"></a>              fi</span>
+<span id="cb6-259"><a href="#cb6-259" aria-hidden="true" tabindex="-1"></a>              ;;</span>
+<span id="cb6-260"><a href="#cb6-260" aria-hidden="true" tabindex="-1"></a>            *)</span>
+<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a>              len=${#outp[@]}</span>
+<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a>              outp[$len]=&quot;$i&quot;</span>
+<span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>            ;;</span>
+<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>            esac</span>
+<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>          done</span>
+<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>          echo /&quot;${outp[*]}&quot;</span>
+<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>      # ViashAutodetectMount: auto configuring docker mounts from parameters</span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>      # $1                  : The parameter value</span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>      # returns             : New parameter</span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>      # $VIASH_EXTRA_MOUNTS : Added another parameter to be passed to docker</span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>      #   ViashAutodetectMount /path/to/bar      # returns &#39;/viash_automount/path/to/bar&#39;</span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>      #   ViashAutodetectMountArg /path/to/bar   # returns &#39;-v /path/to:/viash_automount/path/to&#39;</span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a>      function ViashAutodetectMount {</span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>        abs_path=$(ViashAbsolutePath &quot;$1&quot;)</span>
+<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>        if [ -d &quot;$abs_path&quot; ]; then</span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>          mount_source=&quot;$abs_path&quot;</span>
+<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a>          base_name=&quot;&quot;</span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>        else</span>
+<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a>          mount_source=`dirname &quot;$abs_path&quot;`</span>
+<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a>          base_name=`basename &quot;$abs_path&quot;`</span>
+<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a>        fi</span>
+<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a>        mount_target=&quot;/viash_automount$mount_source&quot;</span>
+<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>        echo &quot;$mount_target/$base_name&quot;</span>
+<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>      function ViashAutodetectMountArg {</span>
+<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a>        abs_path=$(ViashAbsolutePath &quot;$1&quot;)</span>
+<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a>        if [ -d &quot;$abs_path&quot; ]; then</span>
+<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>          mount_source=&quot;$abs_path&quot;</span>
+<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a>          base_name=&quot;&quot;</span>
+<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a>        else</span>
+<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a>          mount_source=`dirname &quot;$abs_path&quot;`</span>
+<span id="cb6-295"><a href="#cb6-295" aria-hidden="true" tabindex="-1"></a>          base_name=`basename &quot;$abs_path&quot;`</span>
+<span id="cb6-296"><a href="#cb6-296" aria-hidden="true" tabindex="-1"></a>        fi</span>
+<span id="cb6-297"><a href="#cb6-297" aria-hidden="true" tabindex="-1"></a>        mount_target=&quot;/viash_automount$mount_source&quot;</span>
+<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a>        echo &quot;-v \&quot;$mount_source:$mount_target\&quot;&quot;</span>
+<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-300"><a href="#cb6-300" aria-hidden="true" tabindex="-1"></a>      # ViashExtractFlags: Retain leading flag</span>
+<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a>      # $1     : string with a possible leading flag</span>
+<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a>      # return : leading flag</span>
+<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a>      # examples:</span>
+<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>      #   ViashExtractFlags --foo=bar  # returns --foo</span>
+<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>      function ViashExtractFlags {</span>
+<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>        echo $1 | sed &#39;s/=.*//&#39;</span>
+<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>      # initialise variables</span>
+<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>      VIASH_EXTRA_MOUNTS=&#39;&#39;</span>
+<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a>      # initialise array</span>
+<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>      VIASH_POSITIONAL_ARGS=&#39;&#39;</span>
+<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a>      while [[ $# -gt 0 ]]; do</span>
+<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a>          case &quot;$1&quot; in</span>
+<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a>              -h|--help)</span>
+<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a>                  ViashHelp</span>
+<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a>                  exit;;</span>
+<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a>              ---setup)</span>
+<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a>                  VIASH_EXEC_MODE=&quot;setup&quot;</span>
+<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a>                  shift 1</span>
+<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a>              --input)</span>
+<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a>                  VIASH_PAR_INPUT=&quot;$2&quot;</span>
+<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a>                  shift 2</span>
+<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a>              --input=*)</span>
+<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a>                  VIASH_PAR_INPUT=$(ViashRemoveFlags &quot;$1&quot;)</span>
+<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a>                  shift 1</span>
+<span id="cb6-330"><a href="#cb6-330" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a>              -i)</span>
+<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a>                  VIASH_PAR_INPUT=&quot;$2&quot;</span>
+<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a>                  shift 2</span>
+<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a>              --output)</span>
+<span id="cb6-336"><a href="#cb6-336" aria-hidden="true" tabindex="-1"></a>                  VIASH_PAR_OUTPUT=&quot;$2&quot;</span>
+<span id="cb6-337"><a href="#cb6-337" aria-hidden="true" tabindex="-1"></a>                  shift 2</span>
+<span id="cb6-338"><a href="#cb6-338" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-339"><a href="#cb6-339" aria-hidden="true" tabindex="-1"></a>              --output=*)</span>
+<span id="cb6-340"><a href="#cb6-340" aria-hidden="true" tabindex="-1"></a>                  VIASH_PAR_OUTPUT=$(ViashRemoveFlags &quot;$1&quot;)</span>
+<span id="cb6-341"><a href="#cb6-341" aria-hidden="true" tabindex="-1"></a>                  shift 1</span>
+<span id="cb6-342"><a href="#cb6-342" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-343"><a href="#cb6-343" aria-hidden="true" tabindex="-1"></a>              -o)</span>
+<span id="cb6-344"><a href="#cb6-344" aria-hidden="true" tabindex="-1"></a>                  VIASH_PAR_OUTPUT=&quot;$2&quot;</span>
+<span id="cb6-345"><a href="#cb6-345" aria-hidden="true" tabindex="-1"></a>                  shift 2</span>
+<span id="cb6-346"><a href="#cb6-346" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a>              ---dss|---docker_setup_strategy)</span>
+<span id="cb6-348"><a href="#cb6-348" aria-hidden="true" tabindex="-1"></a>                  VIASH_EXEC_MODE=&quot;setup&quot;</span>
+<span id="cb6-349"><a href="#cb6-349" aria-hidden="true" tabindex="-1"></a>                  VIASH_DOCKER_SETUP_STRATEGY=&quot;$2&quot;</span>
+<span id="cb6-350"><a href="#cb6-350" aria-hidden="true" tabindex="-1"></a>                  shift 2</span>
+<span id="cb6-351"><a href="#cb6-351" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-352"><a href="#cb6-352" aria-hidden="true" tabindex="-1"></a>              ---docker_setup_strategy=*)</span>
+<span id="cb6-353"><a href="#cb6-353" aria-hidden="true" tabindex="-1"></a>                  VIASH_EXEC_MODE=&quot;setup&quot;</span>
+<span id="cb6-354"><a href="#cb6-354" aria-hidden="true" tabindex="-1"></a>                  VIASH_DOCKER_SETUP_STRATEGY=$(ViashRemoveFlags &quot;$2&quot;)</span>
+<span id="cb6-355"><a href="#cb6-355" aria-hidden="true" tabindex="-1"></a>                  shift 1</span>
+<span id="cb6-356"><a href="#cb6-356" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-357"><a href="#cb6-357" aria-hidden="true" tabindex="-1"></a>              ---dockerfile)</span>
+<span id="cb6-358"><a href="#cb6-358" aria-hidden="true" tabindex="-1"></a>                  ViashDockerfile</span>
+<span id="cb6-359"><a href="#cb6-359" aria-hidden="true" tabindex="-1"></a>                  exit 0</span>
+<span id="cb6-360"><a href="#cb6-360" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-361"><a href="#cb6-361" aria-hidden="true" tabindex="-1"></a>              ---v|---volume)</span>
+<span id="cb6-362"><a href="#cb6-362" aria-hidden="true" tabindex="-1"></a>                  VIASH_EXTRA_MOUNTS=&quot;$VIASH_EXTRA_MOUNTS -v &quot;$2&quot;&quot;</span>
+<span id="cb6-363"><a href="#cb6-363" aria-hidden="true" tabindex="-1"></a>                  shift 2</span>
+<span id="cb6-364"><a href="#cb6-364" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-365"><a href="#cb6-365" aria-hidden="true" tabindex="-1"></a>              ---volume=*)</span>
+<span id="cb6-366"><a href="#cb6-366" aria-hidden="true" tabindex="-1"></a>                  VIASH_EXTRA_MOUNTS=&quot;$VIASH_EXTRA_MOUNTS -v $(ViashRemoveFlags &quot;$2&quot;)&quot;</span>
+<span id="cb6-367"><a href="#cb6-367" aria-hidden="true" tabindex="-1"></a>                  shift 1</span>
+<span id="cb6-368"><a href="#cb6-368" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-369"><a href="#cb6-369" aria-hidden="true" tabindex="-1"></a>              ---debug)</span>
+<span id="cb6-370"><a href="#cb6-370" aria-hidden="true" tabindex="-1"></a>                  echo &quot;+ docker run --entrypoint=bash -i --rm -v &quot;$(pwd)&quot;:/pwd --workdir /pwd -t dpokidov/imagemagick&quot;</span>
+<span id="cb6-371"><a href="#cb6-371" aria-hidden="true" tabindex="-1"></a>                  docker run --entrypoint=bash -i --rm -v &quot;$(pwd)&quot;:/pwd --workdir /pwd -t dpokidov/imagemagick</span>
+<span id="cb6-372"><a href="#cb6-372" aria-hidden="true" tabindex="-1"></a>                  exit 0</span>
+<span id="cb6-373"><a href="#cb6-373" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-374"><a href="#cb6-374" aria-hidden="true" tabindex="-1"></a>              *)    # positional arg or unknown option</span>
+<span id="cb6-375"><a href="#cb6-375" aria-hidden="true" tabindex="-1"></a>                  # since the positional args will be eval&#39;d, can we always quote, instead of using ViashQuote</span>
+<span id="cb6-376"><a href="#cb6-376" aria-hidden="true" tabindex="-1"></a>                  VIASH_POSITIONAL_ARGS=&quot;$VIASH_POSITIONAL_ARGS &#39;$1&#39;&quot;</span>
+<span id="cb6-377"><a href="#cb6-377" aria-hidden="true" tabindex="-1"></a>                  shift # past argument</span>
+<span id="cb6-378"><a href="#cb6-378" aria-hidden="true" tabindex="-1"></a>                  ;;</span>
+<span id="cb6-379"><a href="#cb6-379" aria-hidden="true" tabindex="-1"></a>          esac</span>
+<span id="cb6-380"><a href="#cb6-380" aria-hidden="true" tabindex="-1"></a>      done</span>
+<span id="cb6-381"><a href="#cb6-381" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-382"><a href="#cb6-382" aria-hidden="true" tabindex="-1"></a>      if [ &quot;$VIASH_EXEC_MODE&quot; == &quot;setup&quot; ]; then</span>
+<span id="cb6-383"><a href="#cb6-383" aria-hidden="true" tabindex="-1"></a>        ViashSetup</span>
+<span id="cb6-384"><a href="#cb6-384" aria-hidden="true" tabindex="-1"></a>        exit 0</span>
+<span id="cb6-385"><a href="#cb6-385" aria-hidden="true" tabindex="-1"></a>      fi</span>
+<span id="cb6-386"><a href="#cb6-386" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-387"><a href="#cb6-387" aria-hidden="true" tabindex="-1"></a>      # parse positional parameters</span>
+<span id="cb6-388"><a href="#cb6-388" aria-hidden="true" tabindex="-1"></a>      eval set -- $VIASH_POSITIONAL_ARGS</span>
+<span id="cb6-389"><a href="#cb6-389" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-390"><a href="#cb6-390" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-391"><a href="#cb6-391" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-392"><a href="#cb6-392" aria-hidden="true" tabindex="-1"></a>      # check whether required parameters exist</span>
+<span id="cb6-393"><a href="#cb6-393" aria-hidden="true" tabindex="-1"></a>      if [ -z &quot;$VIASH_PAR_INPUT&quot; ]; then</span>
+<span id="cb6-394"><a href="#cb6-394" aria-hidden="true" tabindex="-1"></a>        echo &#39;--input&#39; is a required argument. Use &quot;--help&quot; to get more information on the parameters.</span>
+<span id="cb6-395"><a href="#cb6-395" aria-hidden="true" tabindex="-1"></a>        exit 1</span>
+<span id="cb6-396"><a href="#cb6-396" aria-hidden="true" tabindex="-1"></a>      fi</span>
+<span id="cb6-397"><a href="#cb6-397" aria-hidden="true" tabindex="-1"></a>      if [ -z &quot;$VIASH_PAR_OUTPUT&quot; ]; then</span>
+<span id="cb6-398"><a href="#cb6-398" aria-hidden="true" tabindex="-1"></a>        echo &#39;--output&#39; is a required argument. Use &quot;--help&quot; to get more information on the parameters.</span>
+<span id="cb6-399"><a href="#cb6-399" aria-hidden="true" tabindex="-1"></a>        exit 1</span>
+<span id="cb6-400"><a href="#cb6-400" aria-hidden="true" tabindex="-1"></a>      fi</span>
+<span id="cb6-401"><a href="#cb6-401" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-402"><a href="#cb6-402" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-403"><a href="#cb6-403" aria-hidden="true" tabindex="-1"></a>      # check whether required files exist</span>
+<span id="cb6-404"><a href="#cb6-404" aria-hidden="true" tabindex="-1"></a>      if [ ! -z &quot;$VIASH_PAR_INPUT&quot; ] &amp;&amp; [ ! -e &quot;$VIASH_PAR_INPUT&quot; ]; then</span>
+<span id="cb6-405"><a href="#cb6-405" aria-hidden="true" tabindex="-1"></a>        echo &quot;File &#39;$VIASH_PAR_INPUT&#39; does not exist.&quot;</span>
+<span id="cb6-406"><a href="#cb6-406" aria-hidden="true" tabindex="-1"></a>        exit 1</span>
+<span id="cb6-407"><a href="#cb6-407" aria-hidden="true" tabindex="-1"></a>      fi</span>
+<span id="cb6-408"><a href="#cb6-408" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-409"><a href="#cb6-409" aria-hidden="true" tabindex="-1"></a>      # detect volumes from file arguments</span>
+<span id="cb6-410"><a href="#cb6-410" aria-hidden="true" tabindex="-1"></a>      if [ ! -z &quot;$VIASH_PAR_INPUT&quot; ]; then</span>
+<span id="cb6-411"><a href="#cb6-411" aria-hidden="true" tabindex="-1"></a>        VIASH_EXTRA_MOUNTS=&quot;$VIASH_EXTRA_MOUNTS $(ViashAutodetectMountArg &quot;$VIASH_PAR_INPUT&quot;)&quot;</span>
+<span id="cb6-412"><a href="#cb6-412" aria-hidden="true" tabindex="-1"></a>        VIASH_PAR_INPUT=$(ViashAutodetectMount &quot;$VIASH_PAR_INPUT&quot;)</span>
+<span id="cb6-413"><a href="#cb6-413" aria-hidden="true" tabindex="-1"></a>      fi</span>
+<span id="cb6-414"><a href="#cb6-414" aria-hidden="true" tabindex="-1"></a>      if [ ! -z &quot;$VIASH_PAR_OUTPUT&quot; ]; then</span>
+<span id="cb6-415"><a href="#cb6-415" aria-hidden="true" tabindex="-1"></a>        VIASH_EXTRA_MOUNTS=&quot;$VIASH_EXTRA_MOUNTS $(ViashAutodetectMountArg &quot;$VIASH_PAR_OUTPUT&quot;)&quot;</span>
+<span id="cb6-416"><a href="#cb6-416" aria-hidden="true" tabindex="-1"></a>        VIASH_PAR_OUTPUT=$(ViashAutodetectMount &quot;$VIASH_PAR_OUTPUT&quot;)</span>
+<span id="cb6-417"><a href="#cb6-417" aria-hidden="true" tabindex="-1"></a>      fi</span>
+<span id="cb6-418"><a href="#cb6-418" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-419"><a href="#cb6-419" aria-hidden="true" tabindex="-1"></a>      # Always mount the resource directory</span>
+<span id="cb6-420"><a href="#cb6-420" aria-hidden="true" tabindex="-1"></a>      VIASH_EXTRA_MOUNTS=&quot;$VIASH_EXTRA_MOUNTS $(ViashAutodetectMountArg &quot;$VIASH_RESOURCES_DIR&quot;)&quot;</span>
+<span id="cb6-421"><a href="#cb6-421" aria-hidden="true" tabindex="-1"></a>      VIASH_RESOURCES_DIR=$(ViashAutodetectMount &quot;$VIASH_RESOURCES_DIR&quot;)</span>
+<span id="cb6-422"><a href="#cb6-422" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-423"><a href="#cb6-423" aria-hidden="true" tabindex="-1"></a>      # Always mount the VIASH_TEMP directory</span>
+<span id="cb6-424"><a href="#cb6-424" aria-hidden="true" tabindex="-1"></a>      VIASH_EXTRA_MOUNTS=&quot;$VIASH_EXTRA_MOUNTS $(ViashAutodetectMountArg &quot;$VIASH_TEMP&quot;)&quot;</span>
+<span id="cb6-425"><a href="#cb6-425" aria-hidden="true" tabindex="-1"></a>      VIASH_TEMP=$(ViashAutodetectMount &quot;$VIASH_TEMP&quot;)</span>
+<span id="cb6-426"><a href="#cb6-426" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-427"><a href="#cb6-427" aria-hidden="true" tabindex="-1"></a>      # change file ownership</span>
+<span id="cb6-428"><a href="#cb6-428" aria-hidden="true" tabindex="-1"></a>      function viash_perform_chown {</span>
+<span id="cb6-429"><a href="#cb6-429" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-430"><a href="#cb6-430" aria-hidden="true" tabindex="-1"></a>        if [ ! -z &quot;$VIASH_PAR_OUTPUT&quot; ]; then</span>
+<span id="cb6-431"><a href="#cb6-431" aria-hidden="true" tabindex="-1"></a>          eval docker run --entrypoint=chown -i --rm $VIASH_EXTRA_MOUNTS dpokidov/imagemagick &quot;$(id -u):$(id -g)&quot; -R &quot;$VIASH_PAR_OUTPUT&quot;</span>
+<span id="cb6-432"><a href="#cb6-432" aria-hidden="true" tabindex="-1"></a>        fi</span>
+<span id="cb6-433"><a href="#cb6-433" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-434"><a href="#cb6-434" aria-hidden="true" tabindex="-1"></a>      trap viash_perform_chown EXIT</span>
+<span id="cb6-435"><a href="#cb6-435" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-436"><a href="#cb6-436" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-437"><a href="#cb6-437" aria-hidden="true" tabindex="-1"></a>      cat &lt;&lt; VIASHEOF | eval docker run --entrypoint=bash -i --rm $VIASH_EXTRA_MOUNTS dpokidov/imagemagick</span>
+<span id="cb6-438"><a href="#cb6-438" aria-hidden="true" tabindex="-1"></a>      set -e</span>
+<span id="cb6-439"><a href="#cb6-439" aria-hidden="true" tabindex="-1"></a>      tempscript=\$(mktemp &quot;$VIASH_TEMP/viash-run-convert_plot-XXXXXX&quot;)</span>
+<span id="cb6-440"><a href="#cb6-440" aria-hidden="true" tabindex="-1"></a>      function clean_up {</span>
+<span id="cb6-441"><a href="#cb6-441" aria-hidden="true" tabindex="-1"></a>        rm &quot;\$tempscript&quot;</span>
+<span id="cb6-442"><a href="#cb6-442" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-443"><a href="#cb6-443" aria-hidden="true" tabindex="-1"></a>      trap clean_up EXIT</span>
+<span id="cb6-444"><a href="#cb6-444" aria-hidden="true" tabindex="-1"></a>      cat &gt; &quot;\$tempscript&quot; &lt;&lt; &#39;VIASHMAIN&#39;</span>
+<span id="cb6-445"><a href="#cb6-445" aria-hidden="true" tabindex="-1"></a>      # The following code has been auto-generated by Viash.</span>
+<span id="cb6-446"><a href="#cb6-446" aria-hidden="true" tabindex="-1"></a>      par_input=&#39;$VIASH_PAR_INPUT&#39;</span>
+<span id="cb6-447"><a href="#cb6-447" aria-hidden="true" tabindex="-1"></a>      par_output=&#39;$VIASH_PAR_OUTPUT&#39;</span>
+<span id="cb6-448"><a href="#cb6-448" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-449"><a href="#cb6-449" aria-hidden="true" tabindex="-1"></a>      resources_dir=&quot;$VIASH_RESOURCES_DIR&quot;</span>
+<span id="cb6-450"><a href="#cb6-450" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-451"><a href="#cb6-451" aria-hidden="true" tabindex="-1"></a>      #!/bin/bash</span>
+<span id="cb6-452"><a href="#cb6-452" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-453"><a href="#cb6-453" aria-hidden="true" tabindex="-1"></a>      convert &quot;\$par_input&quot; -flatten &quot;\$par_output&quot;</span>
+<span id="cb6-454"><a href="#cb6-454" aria-hidden="true" tabindex="-1"></a>      VIASHMAIN</span>
+<span id="cb6-455"><a href="#cb6-455" aria-hidden="true" tabindex="-1"></a>      PATH=&quot;$VIASH_RESOURCES_DIR:\$PATH&quot;</span>
+<span id="cb6-456"><a href="#cb6-456" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-457"><a href="#cb6-457" aria-hidden="true" tabindex="-1"></a>      bash &quot;\$tempscript&quot;</span>
+<span id="cb6-458"><a href="#cb6-458" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-459"><a href="#cb6-459" aria-hidden="true" tabindex="-1"></a>      VIASHEOF</span>
+<span id="cb6-460"><a href="#cb6-460" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-461"><a href="#cb6-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-462"><a href="#cb6-462" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">dest</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;convert_plot&quot;</span></span>
+<span id="cb6-463"><a href="#cb6-463" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">is_executable</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-464"><a href="#cb6-464" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Convert a plot from pdf to png.&quot;</span></span>
+<span id="cb6-465"><a href="#cb6-465" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tests</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
+<span id="cb6-466"><a href="#cb6-466" aria-hidden="true" tabindex="-1"></a><span class="fu">platform</span><span class="kw">:</span></span>
+<span id="cb6-467"><a href="#cb6-467" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;docker&quot;</span></span>
+<span id="cb6-468"><a href="#cb6-468" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">id</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;docker&quot;</span></span>
+<span id="cb6-469"><a href="#cb6-469" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;dpokidov/imagemagick&quot;</span></span>
+<span id="cb6-470"><a href="#cb6-470" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resolve_volume</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Automatic&quot;</span></span>
+<span id="cb6-471"><a href="#cb6-471" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">chown</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-472"><a href="#cb6-472" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">setup_strategy</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;alwaysbuild&quot;</span></span>
+<span id="cb6-473"><a href="#cb6-473" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">setup</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
+<span id="cb6-474"><a href="#cb6-474" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
+<span id="cb6-475"><a href="#cb6-475" aria-hidden="true" tabindex="-1"></a><span class="fu">info</span><span class="kw">:</span></span>
+<span id="cb6-476"><a href="#cb6-476" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">config</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;src/convert_plot/config.vsh.yaml&quot;</span></span>
+<span id="cb6-477"><a href="#cb6-477" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">platform</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;docker&quot;</span></span>
+<span id="cb6-478"><a href="#cb6-478" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;bin/&quot;</span></span>
+<span id="cb6-479"><a href="#cb6-479" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">executable</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;bin/convert_plot&quot;</span></span>
+<span id="cb6-480"><a href="#cb6-480" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">viash_version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;0.3.1&quot;</span></span>
+<span id="cb6-481"><a href="#cb6-481" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">git_commit</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;184f594ef83680f501967174eeff2401ed3a05e2&quot;</span></span>
+<span id="cb6-482"><a href="#cb6-482" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">git_remote</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;https://github.com/data-intuitive/viash_workshop_1&quot;</span></span></code></pre></div>
+<p>We ask the generated executable to run the necessary setup. In this case, it means <em>pulling</em> the appropriate docker image from Docker Hub.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/convert_plot</span> ---setup</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">docker</span> pull dpokidov/imagemagick</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> default tag: latest</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">latest</span>: Pulling from dpokidov/imagemagick</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Digest</span>: sha256:6749db04ffa5eac1cbe77566af02463f040028fef525b767dc98e06023e6cdf8</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Status</span>: Image is up to date for dpokidov/imagemagick:latest</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">docker.io/dpokidov</span>/imagemagick:<span class="ex">latest</span></span></code></pre></div>
+<p>We can retrieve the <em>help</em></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/convert_plot</span> -h</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Convert</span> a plot from pdf to png.</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-i</span> file, --input=file</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, required parameter, default: input.pdf</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">A</span> PDF input file.</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-o</span> file, --output=file</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, required parameter, default: output.png</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Output</span> path.</span></code></pre></div>
+<h2 id="running-the-executable">Running the executable</h2>
+<p>Now that everything is up and running, we can start converting images. Let us first generate a simple PDF file with the help of <a href="https://github.com/data-intuitive/viash">viash</a>. We start by preparing a directory to store the data:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">mkdir</span> -p data/</span></code></pre></div>
+<p>And then use a simple mechanism to create a (very basic) PDF:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> -h <span class="kw">|</span> <span class="fu">groff</span> -mom -T pdf <span class="op">&gt;</span> data/viash.pdf</span></code></pre></div>
+<p>This generates <code>data/viash.pdf</code> in order to verify if our conversion step works:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/convert_plot</span> -i data/viash.pdf -o data/viash.png</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span>: profile <span class="st">&#39;icc&#39;</span>: <span class="st">&#39;RGB &#39;</span>: RGB color space not permitted on grayscale PNG <span class="kw">`</span><span class="ex">/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/viash.png</span><span class="st">&#39; @ warning/png.c/MagickPNGWarningHandler/1748.</span></span></code></pre></div>
+<p>Ok, so this should work now:</p>
+<figure>
+<img src="data:image/png;base64,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" height="400" alt="PNG from PDF using convert_plot" /><figcaption aria-hidden="true">PNG from PDF using convert_plot</figcaption>
+</figure>
+<!--
+See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/
+-->
+<style>
+img[alt="PNG from PDF using convert_plot"] {
+   border: 1px solid black;
+}
+</style>
+<h2 id="without-viash">Without viash</h2>
+<p>Please note that in the above example, the input file and output file reside on the host image while the conversion process is running inside a Docker container. If we would want to achieve this without <a href="https://github.com/data-intuitive/viash">viash</a>, we would need something like this:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run -i -v <span class="kw">`</span><span class="bu">pwd</span><span class="kw">`</span>:/mount dpokidov/imagemagick /mount/data/viash.pdf -flatten /mount/data/viash.png</span></code></pre></div>
+<p>This requires some mental bookkeeping to understand the difference between the host’s file system and the one inside the container. It also requires one to know how the container’s commands are parsed. In this case the <code>convert</code> command from ImageMagic is automatically called with the options we provide. But that may be different for every container and depends on the contents of the <code>Dockerfile</code>.</p>
+<p>Also, while the above explicit <code>docker</code> command achieves our aim, it does not fully cover the use-case that we tackle using <a href="https://github.com/data-intuitive/viash">viash</a>. For a correct comparison, we would have to run our custom script in the container. But then, we would have to make a few updates:</p>
+<ol type="1">
+<li>Include command-line argument parsing in the <code>script.sh</code> file so that we can provide input and output parameters to it.</li>
+<li><em>Install</em> the modified <code>script.sh</code> file inside the container, or somehow <em>mount</em> the location of the executable inside the container such that it can be found.</li>
+</ol>
+<p>In other words:</p>
+<blockquote>
+<p>Using <a href="https://github.com/data-intuitive/viash">viash</a> all this is greatly simplified and wrapped in one executable, command-line parsing comes for free.</p>
+</blockquote>
+<h2 id="combine_plots"><code>combine_plots</code></h2>
 </body>
 </html>

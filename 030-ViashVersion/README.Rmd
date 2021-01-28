@@ -94,9 +94,83 @@ Building an executable can be done just like before. We assume ImageMagic is not
 
 ```{sh}
 viash build src/convert_plot/config.vsh.yaml -o bin/ -p docker
+```
+
+We specify the `docker` platform explicitly although that is not really necessary because of the order of the platforms in the viash config. The resulting script is stored under `bin` relative to the current working directory.
+
+A second file is written next to the executable: `viash.yaml`. This file contains (almost) all information contained in the original config file, including a serialized version of the script to run. `viash.yaml` aims at providing the ability to reproduce the original viash configuration but also to actually `viash run` that `viash.yaml` file. Such functionality is called [idempotence](https://en.wikipedia.org/wiki/Idempotence).
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format bin/viash.yaml
+```
+
+We ask the generated executable to run the necessary setup. In this case, it means _pulling_ the appropriate docker image from Docker Hub.
+
+```{sh results="hold"}
 bin/convert_plot ---setup
+```
+
+We can retrieve the _help_
+
+```{sh}
 bin/convert_plot -h
 ```
+
+## Running the executable
+
+Now that everything is up and running, we can start converting images. Let us first generate a simple PDF file with the help of [viash]. We start by preparing a directory to store the data:
+
+```{sh}
+mkdir -p data/
+```
+
+And then use a simple mechanism to create a (very basic) PDF:
+
+```{sh}
+viash -h | groff -mom -T pdf > data/viash.pdf
+```
+
+This generates `data/viash.pdf` in order to verify if our conversion step works:
+
+```{sh}
+bin/convert_plot -i data/viash.pdf -o data/viash.png
+```
+
+Ok, so this should work now:
+
+![PNG from PDF using convert_plot](data/viash.png){height=400px}
+
+<!--
+See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/
+-->
+
+<style>
+img[alt="PNG from PDF using convert_plot"] {
+   border: 1px solid black;
+}
+</style>
+
+## Without viash
+
+Please note that in the above example, the input file and output file reside on the host image while the conversion process is running inside a Docker container. If we would want to achieve this without [viash], we would need something like this:
+
+```sh
+docker run -i -v `pwd`:/mount dpokidov/imagemagick /mount/data/viash.pdf -flatten /mount/data/viash.png
+```
+
+This requires some mental bookkeeping to understand the difference between the host's file system and the one inside the container. It also requires one to know how the container's commands are parsed. In this case the `convert` command from ImageMagic is automatically called with the options we provide. But that may be different for every container and depends on the contents of the `Dockerfile`.
+
+Also, while the above explicit `docker` command achieves our aim, it does not fully cover the use-case that we tackle using [viash]. For a correct comparison, we would have to run our custom script in the container. But then, we would have to make a few updates:
+
+1. Include command-line argument parsing in the `script.sh` file so that we can provide input and output parameters to it.
+2. _Install_ the modified `script.sh` file inside the container, or somehow _mount_ the location of the executable inside the container such that it can be found.
+
+In other words:
+
+> Using [viash] all this is greatly simplified and wrapped in one executable, command-line parsing comes for free.
+
+## `combine_plots`
+
 
 
 
