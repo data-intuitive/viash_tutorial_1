@@ -2,9 +2,9 @@
 author: Data Intuitive
 date: Tuesday - January 26, 2021
 mainfont: Roboto Condensed
-monobackgroundcolor: lightgrey
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
+monobackgroundcolor: lightgrey
 title: Viash Workshop 1 - Civilization Postgame
 ---
 
@@ -12,139 +12,422 @@ title: Viash Workshop 1 - Civilization Postgame
 
 The application domain of
 [viash](https://www.data-intuitive.com/viash_docs) is not limited to
-just biomedical research. For the purposes of this workshop, we will
-solve one of our pet peeves in a video game called Sid Meier’s
-Civilization.
+just biomedical research. In this workshop, we will solve one of our pet
+peeves in a video game called Sid Meier’s Civilization.
 
 ## Background on Civilization
 
 Civilization is a series of six video strategy games where players
 oversee the development of a civilization, starting from the dawn of
-civilizations until present times.
-
-Not only is the series famous for having defined a lot of the game
-mechanics in the 4X genre (eXplore, eXpand, eXploit, and eXterminate),
-it is also frequently associated with the “One More Turn Syndrome”.
+civilizations until present times. Not only is the series famous for
+having defined a lot of the game mechanics in the 4X genre (eXplore,
+eXpand, eXploit, and eXterminate), it is also frequently associated with
+the “One More Turn Syndrome”.
 
 ![Comic by Mart Virkus,
 <https://arcaderage.co/2016/10/18/civilization-vi/>](img/mart_virkus_every_civilization_game_ever.jpg)
 
-## Post-game replay map in Civilization V
+## Post-game replay map
 
-At the end of a game of Civilization V, the players would be able to
-watch a video of when each player owned which tile at any given point in
-time.
+Multiplayer games can take a few hours to finish – anywhere between 2 to
+10 hours, depending on who you’re playing with. That’s why a perfect way
+of closing a session of Civilization V is by being able to watch a
+‘postgame map replay’ of which owner owned which time at any given point
+in time.
 
 ![](img/civ5_victory_.webm)
 
-## Post-game replay map in Civilization VI
-
-However, for whatever reason, this feature was not included in
+However, for whatever reason, this feature did not make it in
 Civilization VI. This made a lot of people very angry and been widely
 regarded as a bad move. <!-- quoting Douglas Adams here -->
 
 ![](img/civ6_rant_.png)
 
-## Creating custom post-game replay maps
+## Rendering post-game replay maps
 
 At Data Intuitive, we’re all about alleviating people’s suffering, so we
 developed a few scripts for rendering a postgame video for Civilization
-VI using open-source tools.
+VI using open-source tools. It works by letting the game automatically
+creates saves for every turn of the game (called ‘autosaves’). An
+autosave contains all the information to resume the game from that point
+in time. Since the information that we need is stored in a format, we
+need scripts to: 1. extract the information from the binary format (in
+JavaScript), 2. generate a map visualisation (in R), 3. convert all the
+visualisations into a video (with ImageMagick and ffmpeg).
 
-![A workflow for rendering a postgame video for Civilization
-VI](img/workflow.png)
+You can see the general workflow for generating a postgame replay video
+in the diagram below.
 
-The way this works is as follows.
+![](img/workflow.png)
 
--   First, we configure Civilization VI such that it creates an autosave
-    of the current progress at each turn in the game.
--   For every save, we extract various pieces of information using two
-    JavaScript scripts.
--   We combine this information in R and render a visualisation of the
-    world map as a PDF.
--   We use ImageMagick to convert the PDF to a PNG.
--   Finally, we collect all PNGs and use ffmpeg to convert them into a
-    webm movie file.
+In the next sections, we briefly discuss how each component works, as it
+will be used later on in the workshop.
 
-## Input files
+## Step 1: Generate input files
 
-Screenshot of Civ6Save files.
+Start up Civilization VI and go into the settings menu. You need to
+configure Civilization VI to create an autosave every turn, and to keep
+all autosaves as normally only the 10 latest autosaves are kept.
 
-## `parse_header`: Extract game info
+![](img/civ6_settings_.png)
 
-Setup:
+Your first task in this workshop is to play a game of Civilization VI,
+yay! See you in a few hours! Don’t forget to come back for the remainder
+of this workshop!
+
+…
+
+…
+
+Just kidding. We did the fun part and already created autosaves for you.
+If you check the `data` folder, you will see five autosave files.
+
+    ls -l data
+
+    ## total 5048
+    ## -rw-rw-r--. 1 rcannood rcannood  612404 Jan 26 10:42 AutoSave_0158.Civ6Save
+    ## -rw-rw-r--. 1 rcannood rcannood 1061697 Jan 26 10:42 AutoSave_0159.Civ6Save
+    ## -rw-rw-r--. 1 rcannood rcannood 1140352 Jan 26 10:42 AutoSave_0160.Civ6Save
+    ## -rw-rw-r--. 1 rcannood rcannood 1164860 Jan 26 10:42 AutoSave_0161.Civ6Save
+    ## -rw-rw-r--. 1 rcannood rcannood 1179409 Jan 26 10:42 AutoSave_0162.Civ6Save
+
+## Step 2, `parse_header`: Extract game info
+
+So how do we parse the binary Civ6Save data format? Luckily, by the
+miracles of open-source software development, GitHub users Mike
+“mrosack” Rosack and Tuomas “iqqmuT” Jaakola already developed a tool
+for extracting which players are playing which civilizations. You can
+install their software by running the following command.
+
+Note that you do not need to install these commands yourself, as we will
+see in a later part of the workshop how to do this more easily with
+viash!
 
     npm install civ6-save-parser
 
-Convert:
+You can view which players are playing the game by running the following
+command:
 
-    node /home/node/node_modules/civ6-save-parser/index.js data/AutoSave_0001.Civ6Save --simple > data/AutoSave_0001.yaml
+    node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple | head -20
 
-## `parse_map`: Extract map info
+    ## {
+    ##   ACTORS: [
+    ##     {
+    ##       START_ACTOR: 4159575459,
+    ##       ACTOR_NAME: 'CIVILIZATION_FREE_CITIES',
+    ##       ACTOR_TYPE: 'CIVILIZATION_LEVEL_FREE_CITIES',
+    ##       ACTOR_AI_HUMAN: 1,
+    ##       LEADER_NAME: 'LEADER_FREE_CITIES'
+    ##     },
+    ##     {
+    ##       SLOT_HEADER: 19,
+    ##       ACTOR_NAME: 'CIVILIZATION_ARMAGH',
+    ##       ACTOR_TYPE: 'CIVILIZATION_LEVEL_CITY_STATE',
+    ##       ACTOR_AI_HUMAN: 1,
+    ##       LEADER_NAME: 'LEADER_MINOR_CIV_ARMAGH'
+    ##     },
+    ##     {
+    ##       START_ACTOR: 4058321742,
+    ##       ACTOR_NAME: 'CIVILIZATION_BOLOGNA',
+    ##       ACTOR_TYPE: 'CIVILIZATION_LEVEL_CITY_STATE',
 
-Setup:
+The output is a json file, which you save as follows.
 
-    git clone https://github.com/rcannood/civ6save-editing.git
+    node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple > data/AutoSave_0159.json
 
-Convert:
+## Step 3, `parse_map`: Extract map info
 
-    node /home/node/civ6save-editing/scripts/savetomaptsv.js data/AutoSave_0001.Civ6Save data/AutoSave_0001
+Alright, so we know which games are playing the game, but which tiles do
+they own? As there are no ready to use npm packages available to do this
+specific task, we had to write this functionality in JavaScript
+ourselves. The scripts `helper.js` and `script.js` are based on work by
+Lucien “lucienmaloney” Maloney on GitHub.
 
-## `plot_map`: Generate map visualisation
+Some helper functions are defined in
+[`helper.js`](src/civ6_save_renderer/parse_map/helper.js) (some code is
+omitted for the sake of clarity). The `decompress()` function reads in
+the binary data, while the `savetomap()` function responsible is for
+parsing the relevant data about each time in a tabular format.
 
-Setup:
+    const zlib = require('zlib');
+
+    /**
+     * Output a decompressed buffer from the primary zlib zip of the .Civ6Save file
+     * @param {Buffer} savefile
+     * @return {Buffer} decompressed
+     */
+    function decompress(savefile) {
+      // ... omitted for the sake of clarity ...
+    }
+
+    /**
+     * Convert compressed tile data in .Civ6Save file into json format
+     * @param {buffer} savefile
+     * @return {object} tiles
+     */
+    function savetomap(savefile) {
+      // ... omitted for the sake of clarity ...
+    }
+
+    module.exports = {
+      decompress,
+      savetomap
+    }
+
+Reading in the map data and saving it as a tsv (tab-separated values)
+table can be done by executing the scropt
+[`script.js`](src/civ6_save_renderer/parse_map/script.js).
+
+    let par = {
+      'input': 'data/AutoSave_0159.Civ6Save',
+      'output': 'data/AutoSave_0159.tsv'
+    }
+
+    // read helper libraries & functions
+    const fs = require("fs");
+    const helper = require("helper.js");
+
+    // read data from file
+    const json = helper.savetomap(fs.readFileSync(par["input"]));
+
+    // convert to tsv
+    const headers = Object.keys(json.tiles[0]);
+    const header = headers.join("\t") + "\n";
+    const lines = json.tiles.map(o => {
+      return Object.values(o).map(b => JSON.stringify(b)).join("\t") + "\n";
+    });
+    const tsvLines = header + lines.join('')
+
+    // save to file
+    fs.writeFileSync(par["output"], tsvLines);
+
+Note that at this stage, the imported data looks very raw. These are the
+first 10 rows and 10 columns of the generated tsv.
+
+<table>
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 2%" />
+<col style="width: 11%" />
+<col style="width: 12%" />
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 17%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">x</th>
+<th style="text-align: left;">y</th>
+<th style="text-align: left;">hex_location</th>
+<th style="text-align: left;">travel_regions</th>
+<th style="text-align: left;">connected_regions</th>
+<th style="text-align: left;">landmass</th>
+<th style="text-align: left;">terrain</th>
+<th style="text-align: left;">feature</th>
+<th style="text-align: left;">natural_wonder_order</th>
+<th style="text-align: left;">continent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429433</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429488</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429543</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429598</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429653</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429708</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429763</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429818</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429873</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1429928</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">65536</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">1204357597</td>
+<td style="text-align: left;">4294967295</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">4294967295</td>
+</tr>
+</tbody>
+</table>
+
+## Step 4, `plot_map`: Generate map visualisation
+
+With both the game metadata in the yaml file and the map information in
+the tsv file, we can finally go ahead and generate our first map
+visualisation. The map is being generated with a software package called
+‘ggplot2’ in R, but first we need to download all the required software
+for it. Provided that you already have R installed, we need to run the
+following code to install all of the dependencies. Setup:
 
     install.packages(c("ggforce", "yaml", "bit64", "ggnewscale", "cowplot", "devtools"))
     devtools::install("rcannood/civ6saves")
 
-Execute:
+Some helper functions are defined in
+[`helper.R`](src/civ6_save_renderer/plot_map/helper.R) (some code is
+omitted for the sake of clarity). The `read_header()` and `read_map()`
+functions respectively read in the yaml and tsv files outputted in the
+previous steps. The `make_map_plot()` function uses those two data
+objects and generates a map view of the data provided.
 
     library(tidyverse)
-    library(ggforce)
-    library(civ6saves)
-    library(bit64)
+    requireNamespace("ggforce", quietly = TRUE)
+    requireNamespace("civ6saves", quietly = TRUE)
+    requireNamespace("bit64", quietly = TRUE)
+    requireNamespace("yaml", quietly = TRUE)
+    requireNamespace("ggnewscale", quietly = TRUE)
+
+    read_header <- function(yaml_file) {
+      # read yaml file
+      # ... omitted for the sake of clarity ...
+    }
+
+    read_map <- function(tsv_file) {
+      # read tsv file
+      # ... omitted for the sake of clarity ...
+    }
+
+    make_map_plot <- function(game_data, map_data) {
+      # plot map with ggplot2
+      # ... omitted for the sake of clarity ...
+    }
+
+With [`script.R`](src/civ6_save_renderer/plot_map/script.R) we tie all
+data inputs and helper functies to generate a PDF file of turn 159 of
+the game we played for you.
+
+    library(tidyverse)
     library(cowplot)
-    library(yaml)
-    library(ggnewscale)
+
+    source("helper.R")
 
     par <- list(
-      yaml = "data/AutoSave_0001.yaml",
-      tsv = "data/AutoSave_0001.tsv",
-      output = "data/AutoSave_0001.pdf"
+      yaml = "data/AutoSave_0159.yaml",
+      tsv = "data/AutoSave_0159.tsv",
+      output = "data/AutoSave_0159.pdf"
     )
 
-    # read header information
-    map_data <- readr::read_lines(par$yaml)
+    # read data
+    game_data <- read_header(par$yaml)
+    map_data <- read_map(par$tsv)
 
-    # read map information
-    map_data$MAP <- read_tsv(par$tsv, col_types = cols(.default = "c")) 
-
-    # do some in between processing (omitted for the sake of this tutorial)
-    ... 
-
-    # create plot
-    plot <-
-      plot_empty_map(map_data) +
-      ggforce::geom_regon(aes(fill = terrain_name), alpha = alpha) +
-      geom_text(aes(label = "^"), tab_static %>% filter(terrain_form == "Hill"), alpha = alpha) +
-      geom_text(aes(label = "^"), tab_static %>% filter(terrain_form == "Mountain"), fontface = "bold", alpha = alpha) +
-      geom_segment(aes(x = xa, xend = xb, y = ya, yend = yb), colour = feature_palette[["River"]], rivers, size = 1, alpha = alpha) +
-      ggforce::geom_regon(aes(r = civ6saves:::xy_ratio * .9), tab %>% filter(feature_name == "Ice"), fill = feature_palette[["Ice"]], alpha = .4) +
-      labs(
-        title = paste0("Turn ", map_data$GAME_TURN, " - ", tolower(gsub("MAPSIZE_", "", map_data$MAP_SIZE))),
-        subtitle = paste0(players$leader_name, collapse = ", "),
-        fill = "Terrain"
-      )
+    # make visualisation
+    g <- make_map_plot(game_data, map_data)
 
     # save map to file
-    ggsave(par$output, plot, width = 24, height = 13)
+    gleg <- cowplot::get_legend(g)
+    gnoleg <- g + theme(legend.position = "none")
+    gout <- cowplot::plot_grid(gnoleg, gleg, rel_widths = c(8, 1))
+    ggsave(par$output, gout, width = 24, height = 13)
 
-Some (actually, a lot) of code was omitted from the above script, for
-the purposes of this tutorial. You can view the full script at the
-[viash\_docs](https://github.com/data-intuitive/viash_docs/blob/master/examples/civ6_postgame/src/civ6_save_renderer/plot_map/script.R)
-GitHub repository.
+This is what the generated PDF file looks like.
+![](img/AutoSave_0159.png)
 
-## `convert_plot`: Convert PDF to PNG
+## Step 5, `convert_plot`: Convert PDF to PNG
 
 Setup:
 
@@ -152,9 +435,9 @@ Setup:
 
 Convert:
 
-    convert data/AutoSave_0001.pdf -flatten data/AutoSave_0001.png
+    convert data/AutoSave_0159.pdf -flatten data/AutoSave_0159.png
 
-## `combine_plots`: Create movie
+## Step 6, `combine_plots`: Create movie
 
 Setup:
 
@@ -162,7 +445,7 @@ Setup:
 
 Convert:
 
-    ffmpeg -framerate 4 -i "concat:data/AutoSave_0001.png|data/AutoSave_0002.png|..." -c:v libvpx-vp9 -pix_fmt yuva420p -y "data/Movie.webm"
+    ffmpeg -framerate 4 -i "concat:data/AutoSave_0159.png|data/AutoSave_0002.png|..." -c:v libvpx-vp9 -pix_fmt yuva420p -y "data/Movie.webm"
 
 ## Enter viash, stage left
 
