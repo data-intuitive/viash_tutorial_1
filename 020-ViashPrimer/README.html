@@ -282,352 +282,348 @@
 <h2 id="example-1-a-minimal-viash-config-file">Example 1: a minimal viash config file</h2>
 <p>A core concept in <a href="https://github.com/data-intuitive/viash">viash</a> is the <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>, which is a YAML file containing information on software component, such as its parameters, its requirements, and some documentation.</p>
 <p>Let us start with the smallest possible <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>, which is an almost trivial wrapper around <code>ls</code>. <code>ls</code> is a Unix command used to list all files in a directory.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/intro_example1.vsh.yaml</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: intro_example1</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
+<p><code>src/intro_example1.vsh.yaml</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> intro_example1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> executable</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ls</span></span></code></pre></div>
 <p><a href="https://www.data-intuitive.com/viash_docs/commands/run"><code>viash run</code></a> is a command for running a component as defined by the <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>. You can run it as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example1.vsh.yaml</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Makefile</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">README.Rmd</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">README.html</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">README.md</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">README_cache</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">bin</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
+<p>Makefile README.Rmd README.html README.md README_cache bin casts src</p>
 <p>Perhaps unsurprisingly, this performs an <code>ls</code> in the <em>current</em> directory which in this case is where <a href="https://github.com/data-intuitive/viash">viash</a> is running. This example, while illustrative, does not capture what <a href="https://github.com/data-intuitive/viash">viash</a> is and can be used for. It’s just a wrapper around the <code>ls</code> command.</p>
 <p>Let’s go one step further.</p>
 <h2 id="example-2-adding-some-arguments">Example 2: adding some arguments</h2>
 <p>Software components are (usually) not useful unless they have some arguments which you can specify and change.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/intro_example2.vsh.yaml</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: intro_example2</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-l&quot;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-a&quot;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
+<p><code>src/intro_example2.vsh.yaml</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> intro_example2</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;-l&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> boolean_true</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;-a&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> boolean_true</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> executable</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ls</span></span></code></pre></div>
 <p>We added two arguments to the <code>arguments</code> list. The arguments are flags and if we specify for <code>-l</code> it means <em>long listing</em> is one which corresponds to <code>boolean_true</code>.</p>
 <p>This is what happens when you run <a href="https://github.com/data-intuitive/viash">viash</a> in a few different scenarios:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example2.vsh.yaml</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Makefile</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">README.Rmd</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">README.html</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">README.md</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">README_cache</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">bin</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example2.vsh.yaml</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Makefile</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">README.Rmd</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">README.html</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">README.md</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">README_cache</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">bin</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">casts</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ex">src</span></span></code></pre></div>
 <p>There is no difference with the previous version of the component. Now, let us pass the argument <code>-l</code> to <code>intro_example2</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example2.vsh.yaml -- -l</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 200</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff    547 Jan 27 12:09 Makefile</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  10335 Jan 27 14:20 README.Rmd</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span> 1 toni  staff  62264 Jan 27 11:11 README.html</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  19106 Jan 27 11:47 README.md</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  3 toni  staff     96 Jan 27 10:56 README_cache</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  7 toni  staff    224 Jan 27 11:47 bin</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  9 toni  staff    288 Jan 27 14:17 src</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example2.vsh.yaml -- -l</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 336</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff    608 Jan 27 15:46 Makefile</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff  10654 Jan 28 11:10 README.Rmd</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span>  1 toni  staff  78267 Jan 28 09:10 README.html</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff  23172 Jan 28 09:10 README.md</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 toni  staff     96 Jan 27 10:56 README_cache</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   9 toni  staff    288 Jan 28 09:10 bin</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  35 toni  staff   1120 Jan 27 16:00 casts</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   9 toni  staff    288 Jan 27 14:17 src</span></code></pre></div>
 <p>Please note that options <em>before</em> the <code>--</code> are considered for <a href="https://github.com/data-intuitive/viash">viash</a> while options after the <code>--</code> are for the tool that is wrapped (in this case <code>ls</code>).</p>
 <h2 id="example-3-setting-different-argument-types">Example 3: setting different argument types</h2>
 <p>Not all arguments are boolean flags such as specified in the previous example. In this <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>, we added an extra argument that corresponds to the path which we want to <em>list</em>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/intro_example3.vsh.yaml</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: intro_example3</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-l&quot;</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-a&quot;</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;path&quot;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: file</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">default</span>: .</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
+<p><code>src/intro_example3.vsh.yaml</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> intro_example3</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;-l&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> boolean_true</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;-a&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> boolean_true</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;path&quot;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> executable</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ls</span></span></code></pre></div>
 <p>Running this component will still list the contents of the current directory (like before).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- -l</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 200</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff    547 Jan 27 12:09 Makefile</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  10335 Jan 27 14:20 README.Rmd</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span> 1 toni  staff  62264 Jan 27 11:11 README.html</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  19106 Jan 27 11:47 README.md</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  3 toni  staff     96 Jan 27 10:56 README_cache</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  7 toni  staff    224 Jan 27 11:47 bin</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  9 toni  staff    288 Jan 27 14:17 src</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- -l</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 336</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff    608 Jan 27 15:46 Makefile</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff  10654 Jan 28 11:10 README.Rmd</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--@</span>  1 toni  staff  78267 Jan 28 09:10 README.html</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   1 toni  staff  23172 Jan 28 09:10 README.md</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 toni  staff     96 Jan 27 10:56 README_cache</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   9 toni  staff    288 Jan 28 09:10 bin</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  35 toni  staff   1120 Jan 27 16:00 casts</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   9 toni  staff    288 Jan 27 14:17 src</span></code></pre></div>
 <p>However, we can now also list the contents of a different directory.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- src/ -l</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 56</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   89 Jan 27 14:17 intro_example1.vsh.yaml</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  186 Jan 27 14:17 intro_example2.vsh.yaml</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  239 Jan 27 14:17 intro_example3.vsh.yaml</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  543 Jan 27 14:17 intro_example4.vsh.yaml</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  613 Jan 27 14:17 intro_example5.vsh.yaml</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  593 Jan 27 14:17 intro_example6.vsh.yaml</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   58 Jan 27 14:17 script.sh</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- src/ -l</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 56</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   89 Jan 27 14:17 intro_example1.vsh.yaml</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  186 Jan 27 14:17 intro_example2.vsh.yaml</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  239 Jan 27 14:17 intro_example3.vsh.yaml</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  543 Jan 27 14:17 intro_example4.vsh.yaml</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  613 Jan 27 14:17 intro_example5.vsh.yaml</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  593 Jan 27 14:17 intro_example6.vsh.yaml</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   58 Jan 27 14:17 script.sh</span></code></pre></div>
 <p>You can always retrieve information about the component by requesting the included help.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- -h</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- -h</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span></code></pre></div>
 <p>Note that there are many more argument types than a flag or a file. These are not very useful for now, but come in handy when wrapping R/Python/JavaScript scripts. For more information, see the documentation regarding the <a href="https://www.data-intuitive.com/viash_docs/config/functionality">functionality</a> specifications.</p>
 <h2 id="example-4-adding-documentation">Example 4: adding documentation</h2>
 <p>The help from the last <code>intro_example3</code> does not show a lot of useful information. Let’s add some documentation regarding the component and its parameters.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/intro_example4.vsh.yaml</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: intro_example4</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">version</span>: 0.4</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span>: <span class="kw">|</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">List</span> information about the files (the current directory by default) </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">in</span> <span class="ex">alphabetical</span> order.</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-l&quot;</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;Use a long listing format.&quot;</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-a&quot;</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;Do not ignore entries starting with &#39;.&#39;.&quot;</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;path&quot;</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: file</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;Which directory to list the contents of.&quot;</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>      <span class="ex">default</span>: .</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span></code></pre></div>
+<p><code>src/intro_example4.vsh.yaml</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> intro_example4</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.4</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">  description</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    List information about the files (the current directory by default) </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    in alphabetical order.</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;-l&quot;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> boolean_true</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Use a long listing format.&quot;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;-a&quot;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> boolean_true</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Do not ignore entries starting with &#39;.&#39;.&quot;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;path&quot;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Which directory to list the contents of.&quot;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> executable</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ls</span></span></code></pre></div>
 <p>In doing so, the help message becomes a lot more useful in reminding yourself and other users how to use the components.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example4.vsh.yaml -- -h</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">List</span> information about the files (the current directory by default) </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">in</span> <span class="ex">alphabetical</span> order.</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Use</span> a long listing format.</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Do</span> not ignore entries starting with <span class="st">&#39;.&#39;</span>.</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Which</span> directory to list the contents of.</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example4.vsh.yaml -- -h</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">List</span> information about the files (the current directory by default) </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">in</span> <span class="ex">alphabetical</span> order.</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Use</span> a long listing format.</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Do</span> not ignore entries starting with <span class="st">&#39;.&#39;</span>.</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Which</span> directory to list the contents of.</span></code></pre></div>
 <h2 id="example-4-part-2-building-an-executable">Example 4 part 2: building an <em>executable</em></h2>
 <p>Suppose <code>intro_example4</code> from above is exactly what we need as standalone tool for ourselves or other people to use. Obviously, providing everyone access to <a href="https://github.com/data-intuitive/viash">viash</a> and then letting them access the <code>intro_example4.vsh.yaml</code> file in order to run the above commands would not simplify things at all!</p>
 <p>Time to introduce a second <a href="https://github.com/data-intuitive/viash">viash</a> command, namely <a href="https://www.data-intuitive.com/viash_docs/commands/run"><code>viash build</code></a>. This command takes a <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a> as input, and generates an executable as output.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/intro_example4.vsh.yaml -o bin</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/intro_example4.vsh.yaml -o bin</span></code></pre></div>
 <p>After running the above command, viash will have generated a file at <code>bin/intro_example4</code>. It contains all the functionality that we saw in the above examples:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/intro_example4</span> -h</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">List</span> information about the files (the current directory by default) </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">in</span> <span class="ex">alphabetical</span> order.</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Use</span> a long listing format.</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Do</span> not ignore entries starting with <span class="st">&#39;.&#39;</span>.</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Which</span> directory to list the contents of.</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/intro_example4</span> src/ -l</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 56</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   89 Jan 27 14:17 intro_example1.vsh.yaml</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  186 Jan 27 14:17 intro_example2.vsh.yaml</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  239 Jan 27 14:17 intro_example3.vsh.yaml</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  543 Jan 27 14:17 intro_example4.vsh.yaml</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  613 Jan 27 14:17 intro_example5.vsh.yaml</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  593 Jan 27 14:17 intro_example6.vsh.yaml</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   58 Jan 27 14:17 script.sh</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/intro_example4</span> -h</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">List</span> information about the files (the current directory by default) </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">in</span> <span class="ex">alphabetical</span> order.</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-l</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Use</span> a long listing format.</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-a</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: boolean_true</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Do</span> not ignore entries starting with <span class="st">&#39;.&#39;</span>.</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, default: .</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Which</span> directory to list the contents of.</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/intro_example4</span> src/ -l</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 56</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   89 Jan 27 14:17 intro_example1.vsh.yaml</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  186 Jan 27 14:17 intro_example2.vsh.yaml</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  239 Jan 27 14:17 intro_example3.vsh.yaml</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  543 Jan 27 14:17 intro_example4.vsh.yaml</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  613 Jan 27 14:17 intro_example5.vsh.yaml</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff  593 Jan 27 14:17 intro_example6.vsh.yaml</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>  1 toni  staff   58 Jan 27 14:17 script.sh</span></code></pre></div>
 <p>You can now share this <code>bin/intro_example4</code> file with others, or add it to your <code>~/bin</code> directory to turn it into a system-wide command.</p>
 <h2 id="example-5-running-the-component-inside-a-docker-container">Example 5: running the component inside a Docker container</h2>
 <p>In the above examples, we ran the components on our local system. This is simple as long as the wrapped tool at hand (<code>ls</code> in this case) is always available on the local system. However, this assumption generally does not hold true. <a href="https://github.com/data-intuitive/viash">viash</a> not only supports running components on the native system, but can also run components inside a Docker container.</p>
 <p>To make use of this functionality, we need to get into the the ‘platforms’ section of the <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>, which can contain one or more execution platforms. In this case, we defined platforms: a <em>native</em> one (local machine) and a <em>docker</em> one.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/intro_example5.vsh.yaml</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: intro_example5</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">version</span>: 0.5</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span>: <span class="kw">|</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">List</span> information about the files (the current directory by default) </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">in</span> <span class="ex">alphabetical</span> order.</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-l&quot;</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;Use a long listing format.&quot;</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;-a&quot;</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: boolean_true</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;Do not ignore entries starting with &#39;.&#39;.&quot;</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;path&quot;</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: file</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;Which directory to list the contents of.&quot;</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>      <span class="ex">default</span>: .</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: executable</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: ls</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="ex">platforms</span>:</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: native</span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: docker</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">image</span>: ubuntu:latest</span></code></pre></div>
+<p><code>src/intro_example5.vsh.yaml</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> intro_example5</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">  description</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    List information about the files (the current directory by default) </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    in alphabetical order.</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;-l&quot;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> boolean_true</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Use a long listing format.&quot;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;-a&quot;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> boolean_true</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Do not ignore entries starting with &#39;.&#39;.&quot;</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;path&quot;</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Which directory to list the contents of.&quot;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> executable</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ls</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ubuntu:latest</span></span></code></pre></div>
 <p>By default, <a href="https://github.com/data-intuitive/viash">viash</a> will use the first platform specified in the <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>, which in this case the native platform. In order to build an executable which uses Docker in the backend, we need to pass this information as follows:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/intro_example5.vsh.yaml -o bin -p docker</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/intro_example5.vsh.yaml -o bin -p docker</span></code></pre></div>
 <p>The executable <code>bin/intro_example5</code> now automatically runs inside Docker.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/intro_example5</span> / -l</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 52</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    7 Jul 29 01:29 bin -<span class="op">&gt;</span> usr/bin</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Apr 15  2020 boot</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   5 root root  340 Jan 27 13:20 dev</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jan 27 13:20 etc</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Apr 15  2020 home</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 root root 4096 Jan 27 13:20 host_mnt</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    7 Jul 29 01:29 lib -<span class="op">&gt;</span> usr/lib</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    9 Jul 29 01:29 lib32 -<span class="op">&gt;</span> usr/lib32</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    9 Jul 29 01:29 lib64 -<span class="op">&gt;</span> usr/lib64</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   10 Jul 29 01:29 libx32 -<span class="op">&gt;</span> usr/libx32</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29 01:29 media</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29 01:29 mnt</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29 01:29 opt</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span> 186 root root    0 Jan 27 13:20 proc</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="ex">drwx------</span>   2 root root 4096 Jul 29 01:33 root</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Aug 19 21:14 run</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    8 Jul 29 01:29 sbin -<span class="op">&gt;</span> usr/sbin</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29 01:29 srv</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>  13 root root    0 Jan 26 14:00 sys</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxrwt</span>   2 root root 4096 Jul 29 01:33 tmp</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jul 29 01:29 usr</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jul 29 01:33 var</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 1380 Jan 19 14:29 viash_automount</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">bin/intro_example5</span> / -l</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 52</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    7 Jul 29  2020 bin -<span class="op">&gt;</span> usr/bin</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Apr 15  2020 boot</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   5 root root  340 Jan 28 10:11 dev</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jan 28 10:11 etc</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Apr 15  2020 home</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   3 root root 4096 Jan 28 10:11 host_mnt</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    7 Jul 29  2020 lib -<span class="op">&gt;</span> usr/lib</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    9 Jul 29  2020 lib32 -<span class="op">&gt;</span> usr/lib32</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    9 Jul 29  2020 lib64 -<span class="op">&gt;</span> usr/lib64</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   10 Jul 29  2020 libx32 -<span class="op">&gt;</span> usr/libx32</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29  2020 media</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29  2020 mnt</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29  2020 opt</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span> 188 root root    0 Jan 28 10:11 proc</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="ex">drwx------</span>   2 root root 4096 Jul 29  2020 root</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Aug 19 21:14 run</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root    8 Jul 29  2020 sbin -<span class="op">&gt;</span> usr/sbin</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jul 29  2020 srv</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>  13 root root    0 Jan 26 14:00 sys</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxrwt</span>   2 root root 4096 Jul 29  2020 tmp</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jul 29  2020 usr</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 4096 Jul 29  2020 var</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root 1380 Jan 19 14:29 viash_automount</span></code></pre></div>
 <p>If the <code>ubuntu</code> image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.</p>
 <p>Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction like</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">docker</span> run --rm -v /:/mount ubuntu:latest ls /mount/ -l</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 36</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 A -<span class="op">&gt;</span> /host_mnt/a</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   22 Jan 19 14:29 Applications -<span class="op">&gt;</span> /host_mnt/Applications</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 B -<span class="op">&gt;</span> /host_mnt/b</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 C -<span class="op">&gt;</span> /host_mnt/c</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 D -<span class="op">&gt;</span> /host_mnt/d</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 E -<span class="op">&gt;</span> /host_mnt/e</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 F -<span class="op">&gt;</span> /host_mnt/f</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 G -<span class="op">&gt;</span> /host_mnt/g</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 H -<span class="op">&gt;</span> /host_mnt/h</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 I -<span class="op">&gt;</span> /host_mnt/i</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 J -<span class="op">&gt;</span> /host_mnt/j</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 K -<span class="op">&gt;</span> /host_mnt/k</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 L -<span class="op">&gt;</span> /host_mnt/l</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   17 Jan 19 14:29 Library -<span class="op">&gt;</span> /host_mnt/Library</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 M -<span class="op">&gt;</span> /host_mnt/m</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 N -<span class="op">&gt;</span> /host_mnt/n</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 O -<span class="op">&gt;</span> /host_mnt/o</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 P -<span class="op">&gt;</span> /host_mnt/p</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 Q -<span class="op">&gt;</span> /host_mnt/q</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 R -<span class="op">&gt;</span> /host_mnt/r</span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 S -<span class="op">&gt;</span> /host_mnt/s</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   16 Jan 19 14:29 System -<span class="op">&gt;</span> /host_mnt/System</span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 T -<span class="op">&gt;</span> /host_mnt/t</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 U -<span class="op">&gt;</span> /host_mnt/u</span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   15 Jan 19 14:29 Users -<span class="op">&gt;</span> /host_mnt/Users</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 V -<span class="op">&gt;</span> /host_mnt/v</span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   17 Jan 19 14:29 Volumes -<span class="op">&gt;</span> /host_mnt/Volumes</span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 W -<span class="op">&gt;</span> /host_mnt/w</span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 X -<span class="op">&gt;</span> /host_mnt/x</span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 Y -<span class="op">&gt;</span> /host_mnt/y</span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 Z -<span class="op">&gt;</span> /host_mnt/z</span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 a -<span class="op">&gt;</span> /host_mnt/a</span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 b -<span class="op">&gt;</span> /host_mnt/b</span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 bin</span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 boot</span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 c -<span class="op">&gt;</span> /host_mnt/c</span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   15 Jan 19 14:29 cores -<span class="op">&gt;</span> /host_mnt/cores</span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 d -<span class="op">&gt;</span> /host_mnt/d</span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  10 root root 3140 Jan 19 14:29 dev</span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 e -<span class="op">&gt;</span> /host_mnt/e</span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root  200 Jan 19 14:29 etc</span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 f -<span class="op">&gt;</span> /host_mnt/f</span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 g -<span class="op">&gt;</span> /host_mnt/g</span>
-<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 h -<span class="op">&gt;</span> /host_mnt/h</span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 home</span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  23 root root  736 May 17  2020 host_mnt</span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 i -<span class="op">&gt;</span> /host_mnt/i</span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 j -<span class="op">&gt;</span> /host_mnt/j</span>
-<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 k -<span class="op">&gt;</span> /host_mnt/k</span>
-<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 l -<span class="op">&gt;</span> /host_mnt/l</span>
-<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root   60 Jan 19 14:29 lib</span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 lib64</span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 m -<span class="op">&gt;</span> /host_mnt/m</span>
-<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 media</span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 mnt</span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 n -<span class="op">&gt;</span> /host_mnt/n</span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 o -<span class="op">&gt;</span> /host_mnt/o</span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root   60 Jan 19 14:29 opt</span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 p -<span class="op">&gt;</span> /host_mnt/p</span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   17 Jan 19 14:29 private -<span class="op">&gt;</span> /host_mnt/private</span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span> 189 root root    0 Jan 19 14:29 proc</span>
-<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 q -<span class="op">&gt;</span> /host_mnt/q</span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 r -<span class="op">&gt;</span> /host_mnt/r</span>
-<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 root</span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root  360 Jan 19 16:03 run</span>
-<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 s -<span class="op">&gt;</span> /host_mnt/s</span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 sbin</span>
-<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 srv</span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>  13 root root    0 Jan 26 14:00 sys</span>
-<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 t -<span class="op">&gt;</span> /host_mnt/t</span>
-<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root   40 Jan 26 15:55 tmp</span>
-<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 u -<span class="op">&gt;</span> /host_mnt/u</span>
-<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root  100 Jan 19 14:29 usr</span>
-<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 v -<span class="op">&gt;</span> /host_mnt/v</span>
-<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root   60 Jan 19 14:29 var</span>
-<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 w -<span class="op">&gt;</span> /host_mnt/w</span>
-<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 x -<span class="op">&gt;</span> /host_mnt/x</span>
-<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 y -<span class="op">&gt;</span> /host_mnt/y</span>
-<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 z -<span class="op">&gt;</span> /host_mnt/z</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">docker</span> run --rm -v /:/mount ubuntu:latest ls /mount/ -l</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 36</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 A -<span class="op">&gt;</span> /host_mnt/a</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   22 Jan 19 14:29 Applications -<span class="op">&gt;</span> /host_mnt/Applications</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 B -<span class="op">&gt;</span> /host_mnt/b</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 C -<span class="op">&gt;</span> /host_mnt/c</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 D -<span class="op">&gt;</span> /host_mnt/d</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 E -<span class="op">&gt;</span> /host_mnt/e</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 F -<span class="op">&gt;</span> /host_mnt/f</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 G -<span class="op">&gt;</span> /host_mnt/g</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 H -<span class="op">&gt;</span> /host_mnt/h</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 I -<span class="op">&gt;</span> /host_mnt/i</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 J -<span class="op">&gt;</span> /host_mnt/j</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 K -<span class="op">&gt;</span> /host_mnt/k</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 L -<span class="op">&gt;</span> /host_mnt/l</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   17 Jan 19 14:29 Library -<span class="op">&gt;</span> /host_mnt/Library</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 M -<span class="op">&gt;</span> /host_mnt/m</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 N -<span class="op">&gt;</span> /host_mnt/n</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 O -<span class="op">&gt;</span> /host_mnt/o</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 P -<span class="op">&gt;</span> /host_mnt/p</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 Q -<span class="op">&gt;</span> /host_mnt/q</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 R -<span class="op">&gt;</span> /host_mnt/r</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 S -<span class="op">&gt;</span> /host_mnt/s</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   16 Jan 19 14:29 System -<span class="op">&gt;</span> /host_mnt/System</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 T -<span class="op">&gt;</span> /host_mnt/t</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 U -<span class="op">&gt;</span> /host_mnt/u</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   15 Jan 19 14:29 Users -<span class="op">&gt;</span> /host_mnt/Users</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 V -<span class="op">&gt;</span> /host_mnt/v</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   17 Jan 19 14:29 Volumes -<span class="op">&gt;</span> /host_mnt/Volumes</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 W -<span class="op">&gt;</span> /host_mnt/w</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 X -<span class="op">&gt;</span> /host_mnt/x</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 Y -<span class="op">&gt;</span> /host_mnt/y</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 Z -<span class="op">&gt;</span> /host_mnt/z</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 a -<span class="op">&gt;</span> /host_mnt/a</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 b -<span class="op">&gt;</span> /host_mnt/b</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 bin</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 boot</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 c -<span class="op">&gt;</span> /host_mnt/c</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   15 Jan 19 14:29 cores -<span class="op">&gt;</span> /host_mnt/cores</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 d -<span class="op">&gt;</span> /host_mnt/d</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  10 root root 3140 Jan 19 14:29 dev</span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 e -<span class="op">&gt;</span> /host_mnt/e</span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root  200 Jan 19 14:29 etc</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 f -<span class="op">&gt;</span> /host_mnt/f</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 g -<span class="op">&gt;</span> /host_mnt/g</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 h -<span class="op">&gt;</span> /host_mnt/h</span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 home</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>  23 root root  736 May 17  2020 host_mnt</span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 i -<span class="op">&gt;</span> /host_mnt/i</span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 j -<span class="op">&gt;</span> /host_mnt/j</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 k -<span class="op">&gt;</span> /host_mnt/k</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 l -<span class="op">&gt;</span> /host_mnt/l</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root   60 Jan 19 14:29 lib</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 lib64</span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 m -<span class="op">&gt;</span> /host_mnt/m</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 media</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 mnt</span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 n -<span class="op">&gt;</span> /host_mnt/n</span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 o -<span class="op">&gt;</span> /host_mnt/o</span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root   60 Jan 19 14:29 opt</span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 p -<span class="op">&gt;</span> /host_mnt/p</span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   17 Jan 19 14:29 private -<span class="op">&gt;</span> /host_mnt/private</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span> 189 root root    0 Jan 19 14:29 proc</span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 q -<span class="op">&gt;</span> /host_mnt/q</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 r -<span class="op">&gt;</span> /host_mnt/r</span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 root</span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root  360 Jan 19 16:03 run</span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 s -<span class="op">&gt;</span> /host_mnt/s</span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 sbin</span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 4096 Jan 19 14:29 srv</span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a><span class="ex">dr-xr-xr-x</span>  13 root root    0 Jan 26 14:00 sys</span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 t -<span class="op">&gt;</span> /host_mnt/t</span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root   40 Jan 26 15:55 tmp</span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 u -<span class="op">&gt;</span> /host_mnt/u</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root  100 Jan 19 14:29 usr</span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 v -<span class="op">&gt;</span> /host_mnt/v</span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   1 root root   60 Jan 19 14:29 var</span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 w -<span class="op">&gt;</span> /host_mnt/w</span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 x -<span class="op">&gt;</span> /host_mnt/x</span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 y -<span class="op">&gt;</span> /host_mnt/y</span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span>   1 root root   11 Jan 19 14:29 z -<span class="op">&gt;</span> /host_mnt/z</span></code></pre></div>
 <p>While this is all still manageable, it could quickly become more complicated, but that is for a later section. In what follows, we will also come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.</p>
 <h2 id="example-6-wrapping-a-script">Example 6: Wrapping a script</h2>
 <p>While running a command wrapped as a <a href="https://github.com/data-intuitive/viash">viash</a> component could be useful in <em>some</em> form or another, we will usually want to run something a bit more custom or elaborate. Say you want to run the <code>intro_example5</code> component from above but this time filtering out certain files/directories based on their name. We could do just that by means of a simple CLI instruction that we put in a script:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/script.sh</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">&quot;ls </span><span class="dt">\&quot;</span><span class="va">$par_path</span><span class="dt">\&quot;</span><span class="st"> | grep &#39;</span><span class="va">$par_filter</span><span class="st">&#39;&quot;</span></span></code></pre></div>
+<p><code>src/script.sh</code>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">&quot;ls </span><span class="dt">\&quot;</span><span class="va">$par_path</span><span class="dt">\&quot;</span><span class="st"> | grep &#39;</span><span class="va">$par_filter</span><span class="st">&#39;&quot;</span></span></code></pre></div>
 <p>In combination with the following <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">cat</span> src/intro_example6.vsh.yaml</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">functionality</span>:</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>: intro_example6</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">version</span>: 0.6</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span>: <span class="kw">|</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">List</span> information about the files (the current directory by default) </span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">in</span> <span class="ex">alphabetical</span> order, filtered by a regular expression.</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">arguments</span>:</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;path&quot;</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: file</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;Which directory to list the contents of.&quot;</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>      <span class="ex">default</span>: .</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> name: <span class="st">&quot;--filter&quot;</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>      <span class="ex">type</span>: string</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span>: <span class="st">&quot;A regular expression to filter the listed files.&quot;</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>      <span class="ex">default</span>: <span class="st">&#39;.*&#39;</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="ex">resources</span>:</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span> type: bash_script</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>      <span class="ex">path</span>: script.sh</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="ex">platforms</span>:</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: native</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> type: docker</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">image</span>: ubuntu:latest</span></code></pre></div>
+<p><code>src/intro_example6.vsh.yaml</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> intro_example6</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.6</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">  description</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    List information about the files (the current directory by default) </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    in alphabetical order, filtered by a regular expression.</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;path&quot;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Which directory to list the contents of.&quot;</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--filter&quot;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A regular expression to filter the listed files.&quot;</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;.*&#39;</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ubuntu:latest</span></span></code></pre></div>
 <p>We get results like this:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example6.vsh.yaml -p docker -- /etc --filter <span class="st">&quot;^h.*&quot;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hosts</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hosts.equiv</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example6.vsh.yaml -p docker -- /etc --filter <span class="st">&quot;^h.*&quot;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hosts</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hosts.equiv</span></span></code></pre></div>
 <p>A lot is happening here at once, so let’s unwrap this. We did not <em>build</em> the executable in this example, but just run <a href="https://www.data-intuitive.com/viash_docs/commands/run"><code>viash run</code></a> on on the <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>. This config contains a pointer (relative path) to the <code>script.sh</code> file that contains parameters. Those parameters are defined in the <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a> and are automatically resolved and parsed when running the wrapped <a href="https://github.com/data-intuitive/viash">viash</a> version of the script. The <code>docker</code> platform is defined in the <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a> as well, so we can just run it inside the respective container. The <code>--filter</code> argument takes a regular expression, it is simply passed to <code>grep</code> in <code>script.sh</code>.</p>
 <p>Please note that when we decide to <em>build</em> a <code>intro_example6</code> executable (for a specific platform), again this executable is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.</p>
 <p>If you would want to achieve something similar with just Docker without <a href="https://github.com/data-intuitive/viash">viash</a>, you are in for some serious Bash development. But it does not stop here, because in addition to support for wrapping Bash scripts, <a href="https://github.com/data-intuitive/viash">viash</a> also supports wrapping Python, R, JavaScript, and Scala scripts.</p>

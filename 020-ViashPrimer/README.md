@@ -101,8 +101,9 @@ config](https://www.data-intuitive.com/viash_docs/config), which is an
 almost trivial wrapper around `ls`. `ls` is a Unix command used to list
 all files in a directory.
 
-``` {.sh}
-> cat src/intro_example1.vsh.yaml
+`src/intro_example1.vsh.yaml`:
+
+``` {.yaml}
 functionality:
   name: intro_example1
   resources:
@@ -115,16 +116,7 @@ a command for running a component as defined by the [viash
 config](https://www.data-intuitive.com/viash_docs/config). You can run
 it as follows:
 
-``` {.sh}
-> viash run src/intro_example1.vsh.yaml
-Makefile
-README.Rmd
-README.html
-README.md
-README_cache
-bin
-src
-```
+Makefile README.Rmd README.html README.md README_cache bin casts src
 
 Perhaps unsurprisingly, this performs an `ls` in the *current* directory
 which in this case is where
@@ -140,8 +132,9 @@ Let's go one step further.
 Software components are (usually) not useful unless they have some
 arguments which you can specify and change.
 
-``` {.sh}
-> cat src/intro_example2.vsh.yaml
+`src/intro_example2.vsh.yaml`:
+
+``` {.yaml}
 functionality:
   name: intro_example2
   arguments:
@@ -170,6 +163,7 @@ README.html
 README.md
 README_cache
 bin
+casts
 src
 ```
 
@@ -178,14 +172,15 @@ let us pass the argument `-l` to `intro_example2`:
 
 ``` {.sh}
 > viash run src/intro_example2.vsh.yaml -- -l
-total 200
--rw-r--r--  1 toni  staff    547 Jan 27 12:09 Makefile
--rw-r--r--  1 toni  staff  10335 Jan 27 14:20 README.Rmd
--rw-r--r--@ 1 toni  staff  62264 Jan 27 11:11 README.html
--rw-r--r--  1 toni  staff  19106 Jan 27 11:47 README.md
-drwxr-xr-x  3 toni  staff     96 Jan 27 10:56 README_cache
-drwxr-xr-x  7 toni  staff    224 Jan 27 11:47 bin
-drwxr-xr-x  9 toni  staff    288 Jan 27 14:17 src
+total 336
+-rw-r--r--   1 toni  staff    608 Jan 27 15:46 Makefile
+-rw-r--r--   1 toni  staff  10654 Jan 28 11:10 README.Rmd
+-rw-r--r--@  1 toni  staff  78267 Jan 28 09:10 README.html
+-rw-r--r--   1 toni  staff  23172 Jan 28 09:10 README.md
+drwxr-xr-x   3 toni  staff     96 Jan 27 10:56 README_cache
+drwxr-xr-x   9 toni  staff    288 Jan 28 09:10 bin
+drwxr-xr-x  35 toni  staff   1120 Jan 27 16:00 casts
+drwxr-xr-x   9 toni  staff    288 Jan 27 14:17 src
 ```
 
 Please note that options *before* the `--` are considered for
@@ -199,8 +194,9 @@ example. In this [viash
 config](https://www.data-intuitive.com/viash_docs/config), we added an
 extra argument that corresponds to the path which we want to *list*.
 
-``` {.sh}
-> cat src/intro_example3.vsh.yaml
+`src/intro_example3.vsh.yaml`:
+
+``` {.yaml}
 functionality:
   name: intro_example3
   arguments:
@@ -221,14 +217,15 @@ directory (like before).
 
 ``` {.sh}
 > viash run src/intro_example3.vsh.yaml -- -l
-total 200
--rw-r--r--  1 toni  staff    547 Jan 27 12:09 Makefile
--rw-r--r--  1 toni  staff  10335 Jan 27 14:20 README.Rmd
--rw-r--r--@ 1 toni  staff  62264 Jan 27 11:11 README.html
--rw-r--r--  1 toni  staff  19106 Jan 27 11:47 README.md
-drwxr-xr-x  3 toni  staff     96 Jan 27 10:56 README_cache
-drwxr-xr-x  7 toni  staff    224 Jan 27 11:47 bin
-drwxr-xr-x  9 toni  staff    288 Jan 27 14:17 src
+total 336
+-rw-r--r--   1 toni  staff    608 Jan 27 15:46 Makefile
+-rw-r--r--   1 toni  staff  10654 Jan 28 11:10 README.Rmd
+-rw-r--r--@  1 toni  staff  78267 Jan 28 09:10 README.html
+-rw-r--r--   1 toni  staff  23172 Jan 28 09:10 README.md
+drwxr-xr-x   3 toni  staff     96 Jan 27 10:56 README_cache
+drwxr-xr-x   9 toni  staff    288 Jan 28 09:10 bin
+drwxr-xr-x  35 toni  staff   1120 Jan 27 16:00 casts
+drwxr-xr-x   9 toni  staff    288 Jan 27 14:17 src
 ```
 
 However, we can now also list the contents of a different directory.
@@ -276,8 +273,9 @@ The help from the last `intro_example3` does not show a lot of useful
 information. Let's add some documentation regarding the component and
 its parameters.
 
-``` {.sh}
-> cat src/intro_example4.vsh.yaml
+`src/intro_example4.vsh.yaml`:
+
+``` {.yaml}
 functionality:
   name: intro_example4
   version: 0.4
@@ -395,8 +393,9 @@ config](https://www.data-intuitive.com/viash_docs/config), which can
 contain one or more execution platforms. In this case, we defined
 platforms: a *native* one (local machine) and a *docker* one.
 
-``` {.sh}
-> cat src/intro_example5.vsh.yaml
+`src/intro_example5.vsh.yaml`:
+
+``` {.yaml}
 functionality:
   name: intro_example5
   version: 0.5
@@ -439,28 +438,28 @@ Docker.
 ``` {.sh}
 > bin/intro_example5 / -l
 total 52
-lrwxrwxrwx   1 root root    7 Jul 29 01:29 bin -> usr/bin
+lrwxrwxrwx   1 root root    7 Jul 29  2020 bin -> usr/bin
 drwxr-xr-x   2 root root 4096 Apr 15  2020 boot
-drwxr-xr-x   5 root root  340 Jan 27 13:20 dev
-drwxr-xr-x   1 root root 4096 Jan 27 13:20 etc
+drwxr-xr-x   5 root root  340 Jan 28 10:11 dev
+drwxr-xr-x   1 root root 4096 Jan 28 10:11 etc
 drwxr-xr-x   2 root root 4096 Apr 15  2020 home
-drwxr-xr-x   3 root root 4096 Jan 27 13:20 host_mnt
-lrwxrwxrwx   1 root root    7 Jul 29 01:29 lib -> usr/lib
-lrwxrwxrwx   1 root root    9 Jul 29 01:29 lib32 -> usr/lib32
-lrwxrwxrwx   1 root root    9 Jul 29 01:29 lib64 -> usr/lib64
-lrwxrwxrwx   1 root root   10 Jul 29 01:29 libx32 -> usr/libx32
-drwxr-xr-x   2 root root 4096 Jul 29 01:29 media
-drwxr-xr-x   2 root root 4096 Jul 29 01:29 mnt
-drwxr-xr-x   2 root root 4096 Jul 29 01:29 opt
-dr-xr-xr-x 186 root root    0 Jan 27 13:20 proc
-drwx------   2 root root 4096 Jul 29 01:33 root
+drwxr-xr-x   3 root root 4096 Jan 28 10:11 host_mnt
+lrwxrwxrwx   1 root root    7 Jul 29  2020 lib -> usr/lib
+lrwxrwxrwx   1 root root    9 Jul 29  2020 lib32 -> usr/lib32
+lrwxrwxrwx   1 root root    9 Jul 29  2020 lib64 -> usr/lib64
+lrwxrwxrwx   1 root root   10 Jul 29  2020 libx32 -> usr/libx32
+drwxr-xr-x   2 root root 4096 Jul 29  2020 media
+drwxr-xr-x   2 root root 4096 Jul 29  2020 mnt
+drwxr-xr-x   2 root root 4096 Jul 29  2020 opt
+dr-xr-xr-x 188 root root    0 Jan 28 10:11 proc
+drwx------   2 root root 4096 Jul 29  2020 root
 drwxr-xr-x   1 root root 4096 Aug 19 21:14 run
-lrwxrwxrwx   1 root root    8 Jul 29 01:29 sbin -> usr/sbin
-drwxr-xr-x   2 root root 4096 Jul 29 01:29 srv
+lrwxrwxrwx   1 root root    8 Jul 29  2020 sbin -> usr/sbin
+drwxr-xr-x   2 root root 4096 Jul 29  2020 srv
 dr-xr-xr-x  13 root root    0 Jan 26 14:00 sys
-drwxrwxrwt   2 root root 4096 Jul 29 01:33 tmp
-drwxr-xr-x   1 root root 4096 Jul 29 01:29 usr
-drwxr-xr-x   1 root root 4096 Jul 29 01:33 var
+drwxrwxrwt   2 root root 4096 Jul 29  2020 tmp
+drwxr-xr-x   1 root root 4096 Jul 29  2020 usr
+drwxr-xr-x   1 root root 4096 Jul 29  2020 var
 drwxr-xr-x   1 root root 1380 Jan 19 14:29 viash_automount
 ```
 
@@ -571,8 +570,9 @@ component from above but this time filtering out certain
 files/directories based on their name. We could do just that by means of
 a simple CLI instruction that we put in a script:
 
+`src/script.sh`:
+
 ``` {.sh}
-> cat src/script.sh
 #!/bin/bash
 
 eval "ls \"$par_path\" | grep '$par_filter'"
@@ -581,8 +581,9 @@ eval "ls \"$par_path\" | grep '$par_filter'"
 In combination with the following [viash
 config](https://www.data-intuitive.com/viash_docs/config):
 
-``` {.sh}
-> cat src/intro_example6.vsh.yaml
+`src/intro_example6.vsh.yaml`:
+
+``` {.yaml}
 functionality:
   name: intro_example6
   version: 0.6

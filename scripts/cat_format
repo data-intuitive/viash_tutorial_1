@@ -76,7 +76,7 @@ an optional format identifier."
     echo "        Input file"
     echo ""
     echo "    -f string, --format=string"
-    echo "        type: string, required parameter"
+    echo "        type: string, default: ${VIASH_PAR_INPUT##*.}"
     echo "        Format for code block"
     echo ""
 }
@@ -132,10 +132,8 @@ if [ -z "$VIASH_PAR_INPUT" ]; then
   exit 1
 fi
 if [ -z "$VIASH_PAR_FORMAT" ]; then
-  echo '--format' is a required argument. Use "--help" to get more information on the parameters.
-  exit 1
+  VIASH_PAR_FORMAT="${VIASH_PAR_INPUT##*.}"
 fi
-
 
 # check whether required files exist
 if [ ! -z "$VIASH_PAR_INPUT" ] && [ ! -e "$VIASH_PAR_INPUT" ]; then
@@ -165,6 +163,7 @@ echo ""
 
 echo '\`\`\`'"\$par_format"
 cat "\$par_input"
+echo ""
 echo '\`\`\`'
 VIASHMAIN
 PATH="$VIASH_RESOURCES_DIR:\$PATH"
