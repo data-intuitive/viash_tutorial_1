@@ -135,7 +135,7 @@ The output is a json file, which you save as follows.
 
     node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple > data/AutoSave_0159.json
 
-## `parse_map`: Extract map info
+## Step 3, `parse_map`: Extract map info
 
 Alright, so we know which games are playing the game, but which tiles do
 they own? As there are no ready to use npm packages available to do this
@@ -355,7 +355,7 @@ first 10 rows and 10 columns of the generated tsv.
 </tbody>
 </table>
 
-## `plot_map`: Generate map visualisation
+## Step 4, `plot_map`: Generate map visualisation
 
 With both the game metadata in the yaml file and the map information in
 the tsv file, we can finally go ahead and generate our first map
@@ -403,7 +403,7 @@ the game we played for you.
     library(tidyverse)
     library(cowplot)
 
-    source("helper.R"))
+    source("helper.R")
 
     par <- list(
       yaml = "data/AutoSave_0159.yaml",
@@ -427,7 +427,7 @@ the game we played for you.
 This is what the generated PDF file looks like.
 ![](img/AutoSave_0159.png)
 
-## `convert_plot`: Convert PDF to PNG
+## Step 5, `convert_plot`: Convert PDF to PNG
 
 Setup:
 
@@ -437,7 +437,7 @@ Convert:
 
     convert data/AutoSave_0159.pdf -flatten data/AutoSave_0159.png
 
-## `combine_plots`: Create movie
+## Step 6, `combine_plots`: Create movie
 
 Setup:
 

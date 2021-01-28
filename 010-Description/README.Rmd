@@ -85,7 +85,7 @@ The output is a json file, which you save as follows.
 node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple > data/AutoSave_0159.json
 ```
 
-## `parse_map`: Extract map info
+## Step 3, `parse_map`: Extract map info
 
 Alright, so we know which games are playing the game, but which tiles do they own? As there are no ready to use npm packages available to do this specific task, we had to write this functionality in JavaScript ourselves. The scripts `helper.js` and `script.js` are based on work by Lucien "lucienmaloney" Maloney on GitHub. 
 
@@ -150,7 +150,7 @@ tab <- readr::read_tsv("010-Description/img/AutoSave_0159.tsv", col_types = read
 knitr::kable(tab[1:10, 1:10])
 ```
 
-## `plot_map`: Generate map visualisation
+## Step 4, `plot_map`: Generate map visualisation
 
 With both the game metadata in the yaml file and the map information in the tsv file, we can finally go ahead and generate our first map visualisation.
 The map is being generated with a software package called 'ggplot2' in R, but first we need to download all the required software for it. 
@@ -191,7 +191,7 @@ With [`script.R`](src/civ6_save_renderer/plot_map/script.R) we tie all data inpu
 library(tidyverse)
 library(cowplot)
 
-source("helper.R"))
+source("helper.R")
 
 par <- list(
   yaml = "data/AutoSave_0159.yaml",
@@ -216,7 +216,7 @@ ggsave(par$output, gout, width = 24, height = 13)
 This is what the generated PDF file looks like.
 ![](img/AutoSave_0159.png)
 
-## `convert_plot`: Convert PDF to PNG
+## Step 5, `convert_plot`: Convert PDF to PNG
 
 Setup:
 ```bash
@@ -228,7 +228,7 @@ Convert:
 convert data/AutoSave_0159.pdf -flatten data/AutoSave_0159.png
 ```
 
-## `combine_plots`: Create movie
+## Step 6, `combine_plots`: Create movie
 
 Setup:
 ```bash
