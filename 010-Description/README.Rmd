@@ -8,6 +8,11 @@ monobackgroundcolor: lightgrey
 title: Viash Workshop 1 - Civilization Postgame
 ---
 
+
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '..')
+```
+
 # Setting the stage for viash
 
 The application domain of [viash] is not limited to just biomedical research. In this workshop, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
@@ -39,33 +44,105 @@ You can see the general workflow for generating a postgame replay video in the d
 
 In the next sections, we briefly discuss how each component works, as it will be used later on in the workshop.
 
-## Input files
+## Step 1: Generate input files
 
-Screenshot of Civ6Save files.
+Start up Civilization VI and go into the settings menu. You need to configure Civilization VI to create an autosave every turn, and to keep all autosaves as normally only the 10 latest autosaves are kept.
 
-## `parse_header`: Extract game info
+![](img/civ6_settings_.png)
 
-Setup:
+Your first task in this workshop is to play a game of Civilization VI, yay! See you in a few hours! Don't forget to come back for the remainder of this workshop!
+
+...
+
+...
+
+Just kidding. We did the fun part and already created autosaves for you. If you check the `data` folder, you will see five autosave files.
+
+```{bash, }
+ls -l data
+```
+
+## Step 2, `parse_header`: Extract game info
+
+So how do we parse the binary Civ6Save data format? Luckily, by the miracles of open-source software development, 
+GitHub users Mike "mrosack" Rosack and Tuomas "iqqmuT" Jaakola already developed a tool for extracting which
+players are playing which civilizations. You can install their software by running the following command.
+
+Note that you do not need to install these commands yourself, as we will see in a later part of the workshop how to do
+this more easily with viash!
+
 ```bash
 npm install civ6-save-parser
 ```
 
-Convert:
+You can view which players are playing the game by running the following command:
+```{bash}
+node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple | head -20
+```
+
+The output is a json file, which you save as follows.
 ```bash
-node /home/node/node_modules/civ6-save-parser/index.js data/AutoSave_0001.Civ6Save --simple > data/AutoSave_0001.yaml
+node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple > data/AutoSave_0159.json
 ```
 
 ## `parse_map`: Extract map info
 
-Setup:
-```bash
-git clone https://github.com/rcannood/civ6save-editing.git
+Alright, so we know which games are playing the game, but which tiles do they own? As there are no ready to use npm packages available to do this specific task, we had to write this functionality in JavaScript ourselves. The scripts `helper.js` and `script.js` are based on work by Lucien "lucienmaloney" Maloney on GitHub. 
+
+`script.js`:
+```js
+let par = {
+  'input': 'data/AutoSave_0159.Civ6Save',
+  'output': 'data/AutoSave_0159.tsv'
+}
+
+// read helper libraries & functions
+const fs = require("fs");
+const helper = require("helper.js");
+
+// read data from file
+const json = helper.savetomap(fs.readFileSync(par["input"]));
+
+// convert to tsv
+const headers = Object.keys(json.tiles[0]);
+const header = headers.join("\t") + "\n";
+const lines = json.tiles.map(o => {
+  return Object.values(o).map(b => JSON.stringify(b)).join("\t") + "\n";
+});
+const tsvLines = header + lines.join('')
+
+// save to file
+fs.writeFileSync(par["output"], tsvLines);
 ```
 
-Convert:
-```bash
-node /home/node/civ6save-editing/scripts/savetomaptsv.js data/AutoSave_0001.Civ6Save data/AutoSave_0001
+`helper.js`:
+```js
+const zlib = require('zlib');
+
+/**
+ * Output a decompressed buffer from the primary zlib zip of the .Civ6Save file
+ * @param {Buffer} savefile
+ * @return {Buffer} decompressed
+ */
+function decompress(savefile) {
+  // ... omitted for the sake of clarity ...
+}
+
+/**
+ * Convert compressed tile data in .Civ6Save file into json format
+ * @param {buffer} savefile
+ * @return {object} tiles
+ */
+function savetomap(savefile) {
+  // ... omitted for the sake of clarity ...
+}
+
+module.exports = {
+  decompress,
+  savetomap
+}
 ```
+
 
 ## `plot_map`: Generate map visualisation
 
@@ -86,9 +163,9 @@ library(yaml)
 library(ggnewscale)
 
 par <- list(
-  yaml = "data/AutoSave_0001.yaml",
-  tsv = "data/AutoSave_0001.tsv",
-  output = "data/AutoSave_0001.pdf"
+  yaml = "data/AutoSave_0159.yaml",
+  tsv = "data/AutoSave_0159.tsv",
+  output = "data/AutoSave_0159.pdf"
 )
 
 # read header information
@@ -118,7 +195,7 @@ plot <-
 ggsave(par$output, plot, width = 24, height = 13)
 ```
 
-Some (actually, a lot) of code was omitted from the above script. You can view the full script at the [viash_docs](https://github.com/data-intuitive/viash_docs/blob/master/examples/civ6_postgame/src/civ6_save_renderer/plot_map/script.R) GitHub repository.
+Some (actually, a lot) of code was omitted from the above script. You can view the full script [here](src/civ6_save_renderer/plot_map/script.R).
 
 
 
@@ -131,7 +208,7 @@ sudo apt-get install imagemagick
 
 Convert:
 ```bash
-convert data/AutoSave_0001.pdf -flatten data/AutoSave_0001.png
+convert data/AutoSave_0159.pdf -flatten data/AutoSave_0159.png
 ```
 
 ## `combine_plots`: Create movie
@@ -143,7 +220,7 @@ sudo apt-get install ffmpeg
 
 Convert:
 ```bash
-ffmpeg -framerate 4 -i "concat:data/AutoSave_0001.png|data/AutoSave_0002.png|..." -c:v libvpx-vp9 -pix_fmt yuva420p -y "data/Movie.webm"
+ffmpeg -framerate 4 -i "concat:data/AutoSave_0159.png|data/AutoSave_0002.png|..." -c:v libvpx-vp9 -pix_fmt yuva420p -y "data/Movie.webm"
 ```
 
 ## Enter viash, stage left
