@@ -39,17 +39,16 @@ First of all, we will store all files related to one *component* in a
 separate directory and give it the name of the component:
 
 ``` {.sh}
-ls src/convert_plot
+> ls src/convert_plot
+config.vsh.yaml
+script.sh
 ```
-
-    config.vsh.yaml
-    script.sh
 
 Just like in the [viash](https://github.com/data-intuitive/viash) primer
 (of the previous section) there is a viash config (`config.vsh.yaml`)
 and a script (`script.sh`). Let us take a closer look at both of these:
 
-    cat src/convert_plot/config.vsh.yaml
+`src/convert_plot/config.vsh.yaml`:
 
 ``` {.yaml}
 functionality:
@@ -79,7 +78,7 @@ platforms:
   - type: native
 ```
 
-    cat src/convert_plot/script.sh
+`src/convert_plot/script.sh`:
 
 ``` {.sh}
 #!/bin/bash
@@ -149,24 +148,23 @@ ImageMagic is not installed on the local system and thus build the
 Docker version:
 
 ``` {.sh}
-viash build src/convert_plot/config.vsh.yaml -o bin/ -p docker
-bin/convert_plot ---setup
-bin/convert_plot -h
+> viash build src/convert_plot/config.vsh.yaml -o bin/ -p docker
++ bin/convert_plot ---setup
++ bin/convert_plot -h
+> docker pull dpokidov/imagemagick
+Using default tag: latest
+latest: Pulling from dpokidov/imagemagick
+Digest: sha256:6749db04ffa5eac1cbe77566af02463f040028fef525b767dc98e06023e6cdf8
+Status: Image is up to date for dpokidov/imagemagick:latest
+docker.io/dpokidov/imagemagick:latest
+Convert a plot from pdf to png.
+
+Options:
+    -i file, --input=file
+        type: file, required parameter, default: input.pdf
+        A PDF input file.
+
+    -o file, --output=file
+        type: file, required parameter, default: output.png
+        Output path.
 ```
-
-    > docker pull dpokidov/imagemagick
-    Using default tag: latest
-    latest: Pulling from dpokidov/imagemagick
-    Digest: sha256:6749db04ffa5eac1cbe77566af02463f040028fef525b767dc98e06023e6cdf8
-    Status: Image is up to date for dpokidov/imagemagick:latest
-    docker.io/dpokidov/imagemagick:latest
-    Convert a plot from pdf to png.
-
-    Options:
-        -i file, --input=file
-            type: file, required parameter, default: input.pdf
-            A PDF input file.
-
-        -o file, --output=file
-            type: file, required parameter, default: output.png
-            Output path.

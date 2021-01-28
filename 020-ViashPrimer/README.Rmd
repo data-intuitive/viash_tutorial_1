@@ -12,8 +12,7 @@ title: Viash Workshop 1 - Viash Primer
 # set default chunk options
 knitr::opts_chunk$set(
   echo = TRUE,
-  comment = "", 
-  results = "hold", 
+  comment = "",
   collapse = TRUE,
   prompt = TRUE
 )
@@ -58,14 +57,14 @@ information on software component, such as its parameters, its requirements, and
 
 Let us start with the smallest possible [viash config], which is an almost trivial wrapper around `ls`. `ls` is a Unix command used to list all files in a directory.
 
-```{sh}
-cat src/intro_example1.vsh.yaml
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/intro_example1.vsh.yaml
 ```
 
 [`viash run`] is a command for running a component as defined by the [viash config].
 You can run it as follows:
 
-```{sh}
+```{sh echo = F, results = "asis"}
 viash run src/intro_example1.vsh.yaml
 ```
 
@@ -78,8 +77,8 @@ Let's go one step further.
 
 Software components are (usually) not useful unless they have some arguments which you can specify and change.
 
-```{sh}
-cat src/intro_example2.vsh.yaml
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/intro_example2.vsh.yaml
 ```
 
 We added two arguments to the `arguments` list. The arguments are flags and if we specify for `-l` it means _long listing_ is one which corresponds to `boolean_true`.
@@ -105,8 +104,8 @@ Not all arguments are boolean flags such as specified in the previous example.
 In this [viash config], we added an extra argument that corresponds to the path which we want to _list_. 
 
 
-```{sh}
-cat src/intro_example3.vsh.yaml
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/intro_example3.vsh.yaml
 ```
 
 Running this component will still list the contents of the current directory (like before).
@@ -134,8 +133,8 @@ For more information, see the documentation regarding the [functionality] specif
 
 The help from the last `intro_example3` does not show a lot of useful information. Let's add some documentation regarding the component and its parameters.
 
-```{sh}
-cat src/intro_example4.vsh.yaml
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/intro_example4.vsh.yaml
 ```
 
 In doing so, the help message becomes a lot more useful in reminding yourself and other users how to use the components.
@@ -171,8 +170,8 @@ In the above examples, we ran the components on our local system. This is simple
 
 To make use of this functionality, we need to get into the the 'platforms' section of the [viash config], which can contain one or more execution platforms. In this case, we defined platforms: a _native_ one (local machine) and a _docker_ one.
 
-```{sh}
-cat src/intro_example5.vsh.yaml
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/intro_example5.vsh.yaml
 ```
 
 By default, [viash] will use the first platform specified in the [viash config], which in this case the native platform. In order to build an executable which uses Docker in the backend, we need to pass this information as follows:
@@ -205,14 +204,14 @@ While running a command wrapped as a [viash] component could be useful in _some_
 Say you want to run the `intro_example5` component from above but this time filtering out certain files/directories based on their name.
 We could do just that by means of a simple CLI instruction that we put in a script:
 
-```{sh}
-cat src/script.sh
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/script.sh
 ```
 
 In combination with the following [viash config]:
 
-```{sh}
-cat src/intro_example6.vsh.yaml
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/intro_example6.vsh.yaml
 ```
 
 We get results like this:

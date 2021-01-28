@@ -12,7 +12,8 @@ functionality:
     - name: "--format"
       alternatives: [ "-f" ]
       type: string
-      required: true
+      required: false
+      default: ${VIASH_PAR_INPUT##*.}
       description: "Format for code block"
   resources:
     - type: bash_script

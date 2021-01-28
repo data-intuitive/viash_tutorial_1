@@ -12,9 +12,9 @@ title: Viash Workshop 1 - With Viash
 # set default chunk options
 knitr::opts_chunk$set(
   echo = TRUE,
-  comment = NA,
-  results = "markup",
-  prompt = FALSE
+  comment = "",
+  collapse = TRUE,
+  prompt = TRUE
 )
 ```
 
@@ -48,11 +48,11 @@ ls src/convert_plot
 Just like in the [viash] primer (of the previous section) there is a viash config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
 
 ```{sh echo = F, results = "asis"}
-../scripts/cat_format src/convert_plot/config.vsh.yaml -f yaml
+../scripts/cat_format src/convert_plot/config.vsh.yaml
 ```
 
 ```{sh echo = F, results = "asis"}
-../scripts/cat_format src/convert_plot/script.sh -f sh
+../scripts/cat_format src/convert_plot/script.sh
 ```
 
 Let us dissect these two files step by step.
