@@ -10,37 +10,34 @@ title: Viash Workshop 1 - Civilization Postgame
 
 # Setting the stage for viash
 
-The application domain of [viash] is not limited to just biomedical research. For the purposes of this workshop, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
+The application domain of [viash] is not limited to just biomedical research. In this workshop, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
 
 ## Background on Civilization
-Civilization is a series of six video strategy games where players oversee the development of a civilization, starting from the dawn of civilizations until present times.
-
-Not only is the series famous for having defined a lot of the game mechanics in the 4X genre (eXplore, eXpand, eXploit, and eXterminate), it is also frequently associated with the "One More Turn Syndrome".
+Civilization is a series of six video strategy games where players oversee the development of a civilization, starting from the dawn of civilizations until present times. Not only is the series famous for having defined a lot of the game mechanics in the 4X genre (eXplore, eXpand, eXploit, and eXterminate), it is also frequently associated with the "One More Turn Syndrome".
 
 ![Comic by Mart Virkus, https://arcaderage.co/2016/10/18/civilization-vi/](img/mart_virkus_every_civilization_game_ever.jpg)
 
-## Post-game replay map in Civilization V
-At the end of a game of Civilization V, the players would be able to watch a video of when each player owned which tile at any given point in time. 
+## Post-game replay map
+Multiplayer games can take a few hours to finish -- anywhere between 2 to 10 hours, depending on who you're playing with. 
+That's why a perfect way of closing a session of Civilization V is by being able to watch a 'postgame map replay' of which owner owned which time at any given point in time.
+
 
 ![](img/civ5_victory_.webm)
 
-## Post-game replay map in Civilization VI
-However, for whatever reason, this feature was not included in Civilization VI. This made a lot of people very angry and been widely regarded as a bad move. <!-- quoting Douglas Adams here -->
+However, for whatever reason, this feature did not make it in Civilization VI. This made a lot of people very angry and been widely regarded as a bad move. <!-- quoting Douglas Adams here -->
 
 ![](img/civ6_rant_.png)
 
-## Creating custom post-game replay maps
-At Data Intuitive, we're all about alleviating people's suffering, so we developed a few scripts for rendering a postgame video for Civilization VI using open-source tools.
+## Rendering post-game replay maps
+At Data Intuitive, we're all about alleviating people's suffering, so we developed a few scripts for rendering a postgame video for Civilization VI using open-source tools. 
+It works by letting the game automatically creates saves for every turn of the game (called 'autosaves'). An autosave contains all the information to resume the game from that point in time.
+Since the information that we need is stored in a format, we need scripts to: 1. extract the information from the binary format (in JavaScript), 2. generate a map visualisation (in R), 3. convert all the visualisations into a video (with ImageMagick and ffmpeg).
 
-![A workflow for rendering a postgame video for Civilization VI](img/workflow.png)
+You can see the general workflow for generating a postgame replay video in the diagram below. 
 
-The way this works is as follows. 
+![](img/workflow.png)
 
-* First, we configure Civilization VI such that it creates an autosave of the current progress at each turn in the game. 
-* For every save, we extract various pieces of information using two JavaScript scripts.
-* We combine this information in R and render a visualisation of the world map as a PDF.
-* We use ImageMagick to convert the PDF to a PNG.
-* Finally, we collect all PNGs and use ffmpeg to convert them into a webm movie file. 
+In the next sections, we briefly discuss how each component works, as it will be used later on in the workshop.
 
 ## Input files
 
@@ -121,7 +118,7 @@ plot <-
 ggsave(par$output, plot, width = 24, height = 13)
 ```
 
-Some (actually, a lot) of code was omitted from the above script, for the purposes of this tutorial. You can view the full script at the [viash_docs](https://github.com/data-intuitive/viash_docs/blob/master/examples/civ6_postgame/src/civ6_save_renderer/plot_map/script.R) GitHub repository.
+Some (actually, a lot) of code was omitted from the above script. You can view the full script at the [viash_docs](https://github.com/data-intuitive/viash_docs/blob/master/examples/civ6_postgame/src/civ6_save_renderer/plot_map/script.R) GitHub repository.
 
 
 
