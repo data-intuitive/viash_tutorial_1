@@ -8,13 +8,96 @@ monobackgroundcolor: lightgrey
 title: Viash Workshop 1 - With Viash
 ---
 
+```{r setup, include = FALSE}
+# set default chunk options
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = NA,
+  results = "markup",
+  prompt = FALSE
+)
+```
+
 # Introduction
 
-With the information from the previous section, we are now ready to start turning `combine_plots` into a [viash] component.
+With the information from the previous section, we will tackle two from the components in detail in this section:
 
-The transformation is based on [`ffmpeg`] 
+- `convert_plot`
+- `combine_plots`
+
+Both are explained in [section 1] above.
+
+# `convert_plot`
+
+`convert_plot` should convert a PDF map into a `.png` version. [ImageMagic] is a suite of command line tools for UNIX-like systems that can achieve this simply by running
+
+```
+convert input.pdf -flatten output.png
+```
+
+Additional arguments can be provided, but are not required since ImageMagic is pretty good at getting the defaults right. [ImageMagic] will probably not be on everyone's machine as a locally installed tool, however. We would to enable the conversion from pdf to png in a seamless way. Let's use [viash] for this...
+
+## The viash configuration
+
+First of all, we will store all files related to one _component_ in a separate directory and give it the name of the component:
+
+```{sh}
+ls src/convert_plot
+```
+
+Just like in the [viash] primer (of the previous section) there is a viash config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/convert_plot/config.vsh.yaml -f yaml
+```
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/convert_plot/script.sh -f sh
+```
+
+Let us dissect these two files step by step.
+
+### Arguments
+
+The script is not so much different from the CLI example we gave above. The only difference is that 2 variables are used: `$par_input` and `$par_output`. We use double quotes around the variables, this is a good policy in general.
+
+The argument `--input` defined in the config is automatically associated with `$par_input` and likewise for `--output`. This makes it easy to write scripts and immediately get a command-line parser for free when using [viash].
+
+If the script is more complicated than just this one instruction (and it can be, believe me) it is possible to set default values for those parameters in the script itself. This way, the script can be developed on its own without requiring [viash] directly.
+
+If we focus on `--input` for a second, we notice the following attributes:
+
+- `-i` is a (short) alternative for the longer `--input`
+- The value for this argument is of type `file` which means it's either a file or a directory.
+- With `required: true` we make this argument a mandatory one
+- The default value for the argument is `input.pdf`
+- For argument of type file like this one, we can ask [viash] to check if the file/directory exists prior to running.
+- The `description` attribute contains a human-readable description of this argument/parameter.
+
+Similar attributes can be found for `--output` with one difference:
+
+- `direction: output` denotes that this argument denotes an output file/option.
+
+In fact, `--input` also has a (hidden) `direction: input` associated to it by default.
+
+### Resources
+
+We've covered how to specify resources earlier in the previous section. Suffice to say here that we point to a bash script that contains the actual command-line instruction.
+
+### Platforms
+
+Two platforms are defined in the present case: a Docker one and a native one. We point the Docker platform to an [ existing Docker image](https://hub.docker.com/r/dpokidov/imagemagick/) available on Docker Hub.
+
+## Building the executable
+
+Building an executable can be done just like before. We assume ImageMagic is not installed on the local system and thus build the Docker version:
+
+```{sh}
+viash build src/convert_plot/config.vsh.yaml -o bin/ -p docker
+bin/convert_plot ---setup
+bin/convert_plot -h
+```
 
 
-[`ffmpeg`]: 
 
 [viash]: https://github.com/data-intuitive/viash
