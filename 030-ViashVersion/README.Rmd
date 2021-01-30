@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   comment = "",
   collapse = TRUE,
   prompt = TRUE
+  # engine.opts = list(bash = "-l")
 )
 ```
 
@@ -45,7 +46,7 @@ First of all, we will store all files related to one _component_ in a separate d
 ls src/convert_plot
 ```
 
-Just like in the [viash] primer (of the previous section) there is a viash config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
+Just like in the [viash] primer (of the previous section) there is a [viash] config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
 
 ```{sh echo = F, results = "asis"}
 ../scripts/cat_format src/convert_plot/config.vsh.yaml
@@ -124,7 +125,7 @@ Now that everything is up and running, we can start converting images. Let us fi
 mkdir -p data/
 ```
 
-And then use a simple mechanism to create a (very basic) PDF:
+And then use a simple mechanism to create a very basis PDF from the [viash] help output:
 
 ```{sh}
 viash -h | groff -mom -T pdf > data/viash.pdf
@@ -132,7 +133,7 @@ viash -h | groff -mom -T pdf > data/viash.pdf
 
 This generates `data/viash.pdf` in order to verify if our conversion step works:
 
-```{sh}
+```{sh, engine.opts='-l'}
 bin/convert_plot -i data/viash.pdf -o data/viash.png
 ```
 
@@ -169,9 +170,102 @@ In other words:
 
 > Using [viash] all this is greatly simplified and wrapped in one executable, command-line parsing comes for free.
 
-## `combine_plots`
+# `combine_plots`
 
+This _component_ combines a number of `png` files in to one single movie (`webm` format).
 
+## The viash configuration
 
+First of all, we will store all files related to one _component_ in a separate directory and give it the name of the component:
+
+```{sh}
+ls src/combine_plots
+```
+
+Again, there is a [viash] config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/combine_plots/config.vsh.yaml
+```
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/combine_plots/script.sh
+```
+
+### Arguments
+
+This component is similar to the one above with one major difference: we need to specify _multiple_ input file names. This can easily be done with [viash] by specifying `multiple: true` in the configuration of the `--input` argument. By default [viash] will pass the value of this option to the wrapped script depending on the type of script. In the case of `bash`, this is simply a string with a delimiter for the individual values (`:` by default). For `Python` and `R` etc., it is passed as a simple collection (list, array).
+
+The script that is run converts the following value `--input`:
+
+```
+path1:path2:path3
+```
+
+into
+
+```
+-i path1 -i path2 -o path3
+```
+
+by means of the `sed` instruction.
+
+The rest is only a matter of getting the command line parameters for `ffmpeg` right.
+
+### Platforms
+
+Two platforms are again defined in the present case: a Docker one and a native one. We point the Docker platform to an [ existing Docker image](https://hub.docker.com/r/jrottenbergj/ffmpeg/) available on Docker Hub.
+
+## Running the executable
+
+Let us create one additional `png` file by using the same _technique_ as before, this time creating a PDF file with just the output of an empty [viash] run.
+
+```{sh}
+viash | groff -mom -T pdf > data/viash1.pdf
+```
+
+This generates `data/viash.pdf` in order to verify if our conversion step works:
+
+```{sh, engine.opts='-l'}
+bin/convert_plot -i data/viash1.pdf -o data/viash1.png
+```
+
+Ok, so this should work now:
+
+![PNG from PDF using convert_plot](data/viash1.png){height=400px}
+
+<!--
+See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/
+-->
+
+<style>
+img[alt="PNG from PDF using convert_plot"] {
+   border: 1px solid black;
+}
+</style>
+
+We now have 2 `png` files and should be able to run our `combine_plots` component. But first, we'll build the executable:
+
+```{sh}
+viash build src/combine_plots/config.vsh.yaml -o bin/ -p docker
+```
+
+Make sure the container is present:
+
+```{sh}
+bin/combine_plots ---setup
+```
+
+And than executing the executable:
+
+```{sh}
+bin/combine_plots --input data/viash.png:data/viash1.png --output data/output.webm --framerate 1
+```
+
+The result this simple _video_ that can hardly be called a video:
+
+![](data/output.webm)
+
+In the next section, we will cover _all_ the components of the postgame pipeline one by one.
 
 [viash]: https://github.com/data-intuitive/viash

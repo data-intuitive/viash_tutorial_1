@@ -45,8 +45,10 @@ script.sh
 ```
 
 Just like in the [viash](https://github.com/data-intuitive/viash) primer
-(of the previous section) there is a viash config (`config.vsh.yaml`)
-and a script (`script.sh`). Let us take a closer look at both of these:
+(of the previous section) there is a
+[viash](https://github.com/data-intuitive/viash) config
+(`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer
+look at both of these:
 
 `src/convert_plot/config.vsh.yaml`:
 
@@ -647,7 +649,7 @@ info:
   output: "bin/"
   executable: "bin/convert_plot"
   viash_version: "0.3.1"
-  git_commit: "184f594ef83680f501967174eeff2401ed3a05e2"
+  git_commit: "048efeefe2c67d65bb74a903d582e9fa3c4b2950"
   git_remote: "https://github.com/data-intuitive/viash_workshop_1"
 ```
 
@@ -691,7 +693,8 @@ a directory to store the data:
 > mkdir -p data/
 ```
 
-And then use a simple mechanism to create a (very basic) PDF:
+And then use a simple mechanism to create a very basis PDF from the
+[viash](https://github.com/data-intuitive/viash) help output:
 
 ``` {.sh}
 > viash -h | groff -mom -T pdf > data/viash.pdf
@@ -758,4 +761,196 @@ In other words:
 > greatly simplified and wrapped in one executable, command-line parsing
 > comes for free.
 
-## `combine_plots`
+# `combine_plots`
+
+This *component* combines a number of `png` files in to one single movie
+(`webm` format).
+
+## The viash configuration
+
+First of all, we will store all files related to one *component* in a
+separate directory and give it the name of the component:
+
+``` {.sh}
+> ls src/combine_plots
+config.vsh.yaml
+script.sh
+```
+
+Again, there is a [viash](https://github.com/data-intuitive/viash)
+config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a
+closer look at both of these:
+
+`src/combine_plots/config.vsh.yaml`:
+
+``` {.yaml}
+functionality:
+  name: combine_plots
+  namespace: civ6_save_renderer
+  description: Combine multiple images into a movie using ffmpeg.
+  arguments:
+    - name: "--input"
+      alternatives: [-i]
+      type: file
+      required: true
+      default: "/path/to/my/dir"
+      must_exist: true
+      multiple: true
+      description: A list of images.
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.webm"
+      direction: output
+      description: A path to output the movie to.
+    - name: "--framerate"
+      alternatives: [-f]
+      type: integer
+      default: 4
+      description: Number of frames per second.
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: docker
+    image: jrottenberg/ffmpeg
+  - type: native
+```
+
+`src/combine_plots/script.sh`:
+
+``` {.sh}
+#!/bin/bash
+
+# render movie
+inputs=`echo $par_input | sed 's#:# -i #g'`
+ffmpeg -framerate $par_framerate -f image2 -i $inputs -c:v libvpx-vp9 -pix_fmt yuva420p -y $par_output
+```
+
+### Arguments
+
+This component is similar to the one above with one major difference: we
+need to specify *multiple* input file names. This can easily be done
+with [viash](https://github.com/data-intuitive/viash) by specifying
+`multiple: true` in the configuration of the `--input` argument. By
+default [viash](https://github.com/data-intuitive/viash) will pass the
+value of this option to the wrapped script depending on the type of
+script. In the case of `bash`, this is simply a string with a delimiter
+for the individual values (`:` by default). For `Python` and `R` etc.,
+it is passed as a simple collection (list, array).
+
+The script that is run converts the following value `--input`:
+
+    path1:path2:path3
+
+into
+
+    -i path1 -i path2 -o path3
+
+by means of the `sed` instruction.
+
+The rest is only a matter of getting the command line parameters for
+`ffmpeg` right.
+
+### Platforms
+
+Two platforms are again defined in the present case: a Docker one and a
+native one. We point the Docker platform to an [existing Docker
+image](https://hub.docker.com/r/jrottenbergj/ffmpeg/) available on
+Docker Hub.
+
+## Running the executable
+
+Let us create one additional `png` file by using the same *technique* as
+before, this time creating a PDF file with just the output of an empty
+[viash](https://github.com/data-intuitive/viash) run.
+
+``` {.sh}
+> viash | groff -mom -T pdf > data/viash1.pdf
+```
+
+This generates `data/viash.pdf` in order to verify if our conversion
+step works:
+
+``` {.sh}
+> bin/convert_plot -i data/viash1.pdf -o data/viash1.png
+convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/viash1.png' @ warning/png.c/MagickPNGWarningHandler/1748.
+```
+
+Ok, so this should work now:
+
+![PNG from PDF using convert_plot](data/viash1.png){height="400px"}
+
+```{=html}
+<!--
+See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/
+-->
+```
+```{=html}
+<style>
+img[alt="PNG from PDF using convert_plot"] {
+   border: 1px solid black;
+}
+</style>
+```
+We now have 2 `png` files and should be able to run our `combine_plots`
+component. But first, we'll build the executable:
+
+``` {.sh}
+> viash build src/combine_plots/config.vsh.yaml -o bin/ -p docker
+```
+
+Make sure the container is present:
+
+``` {.sh}
+> bin/combine_plots ---setup
+> docker pull jrottenberg/ffmpeg
+Using default tag: latest
+latest: Pulling from jrottenberg/ffmpeg
+Digest: sha256:21eb739725c43bd7187982e5fa4b5371b495d1d1f6f61ae1719ca794817f8641
+Status: Image is up to date for jrottenberg/ffmpeg:latest
+docker.io/jrottenberg/ffmpeg:latest
+```
+
+And than executing the executable:
+
+``` {.sh}
+> bin/combine_plots --input data/viash.png:data/viash1.png --output data/output.webm --framerate 1
+ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
+  built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 20160609
+  configuration: --disable-debug --disable-doc --disable-ffplay --enable-shared --enable-avresample --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-gpl --enable-libass --enable-libfreetype --enable-libvidstab --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx265 --enable-libxvid --enable-libx264 --enable-nonfree --enable-openssl --enable-libfdk_aac --enable-libkvazaar --enable-libaom --extra-libs=-lpthread --enable-postproc --enable-small --enable-version3 --extra-cflags=-I/opt/ffmpeg/include --extra-ldflags=-L/opt/ffmpeg/lib --extra-libs=-ldl --prefix=/opt/ffmpeg
+  libavutil      56. 22.100 / 56. 22.100
+  libavcodec     58. 35.100 / 58. 35.100
+  libavformat    58. 20.100 / 58. 20.100
+  libavdevice    58.  5.100 / 58.  5.100
+  libavfilter     7. 40.101 /  7. 40.101
+  libavresample   4.  0.  0 /  4.  0.  0
+  libswscale      5.  3.100 /  5.  3.100
+  libswresample   3.  3.100 /  3.  3.100
+  libpostproc    55.  3.100 / 55.  3.100
+Input #0, image2, from '/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/viash.png':
+  Duration: 00:00:01.00, start: 0.000000, bitrate: N/A
+    Stream #0:0: Video: png, gray(pc), 612x792 [SAR 72:72 DAR 17:22], 1 tbr, 1 tbn, 1 tbc
+Input #1, png_pipe, from '/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/viash1.png':
+  Duration: N/A, bitrate: N/A
+    Stream #1:0: Video: png, gray(pc), 612x792 [SAR 72:72 DAR 17:22], 25 tbr, 25 tbn, 25 tbc
+Stream mapping:
+  Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
+Press [q] to stop, [?] for help
+[libvpx-vp9 @ 0x2354300] v1.8.0
+Output #0, webm, to '/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/output.webm':
+  Metadata:
+    encoder         : Lavf58.20.100
+    Stream #0:0: Video: vp9 (libvpx-vp9), yuva420p, 612x792 [SAR 1:1 DAR 17:22], q=-1--1, 200 kb/s, 1 fps, 1k tbn, 1 tbc
+    Metadata:
+      encoder         : Lavc58.35.100 libvpx-vp9
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1
+frame=    1 fps=0.0 q=0.0 Lsize=      17kB time=00:00:00.00 bitrate=141496.0kbits/s speed=0.00397x    
+video:16kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 4.743575%
+```
+
+The result this simple *video*:
+
+![](data/output.webm)
