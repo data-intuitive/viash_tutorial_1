@@ -1,6 +1,5 @@
 functionality:
   name: parse_header
-  namespace: civ6_save_renderer
   description: "Extract game settings from a Civ6 save file as a yaml."
   arguments:
     - name: "--input"

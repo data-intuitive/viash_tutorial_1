@@ -64,12 +64,7 @@ functionality:
     - type: executable
       path: cat
 platforms:
-  - type: docker
-    id: docker1
-    image: alpine:latest
-  - type: docker
-    id: docker2
-    image: alpine:2.6
+...
 ```
 
 We introduce two Docker platforms that can be distinguished by id
@@ -99,7 +94,7 @@ fe00::0 ip6-localnet
 ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-172.17.0.2  301c0e03ba3f
+172.17.0.2  1487f2c567f3
 ```
 
 **Remark**: Please note that we did not specify the argument as
@@ -111,13 +106,7 @@ look inside the container.
 
 Our `container_cat` example fits nicely in a collection of components to
 deal with containers and so we want to attach the namespace
-`container_tools` to it.
-
-First, we will build the executable for `docker1`:
-
-``` {.sh}
-> viash build src/container_cat/config.vsh.yaml -p docker1 -o bin/
-```
+`container_tools` to it. Let's see how this can be done.
 
 ## The example in a namespace
 
@@ -189,6 +178,229 @@ src/civ6_save_renderer
 5 directories, 12 files
 ```
 
+We cover the components one by one in what follows and discuss any
+specificities that we encounter underway.
+
+## `parse_header`
+
+Let us start with `parse_header`, it parses the headers of the save
+files.
+
+`src/civ6_save_renderer/parse_header/config.vsh.yaml`:
+
+``` {.yaml}
+functionality:
+  name: parse_header
+  description: "Extract game settings from a Civ6 save file as a yaml."
+  arguments:
+    - name: "--input"
+      alternatives: [-i]
+      type: file
+      required: true
+      default: "save.Civ6Save"
+      must_exist: true
+...
+```
+
+`src/civ6_save_renderer/parse_header/script.sh`:
+
+``` {.sh}
+#!/bin/bash
+
+node /home/node/node_modules/civ6-save-parser/index.js "$par_input" --simple > "$par_output"
+...
+```
+
+## `parse_map`
+
+The next component is `parse_map`. It is similar in nature that
+`parse_header` but this time we need a Javascript library to get the
+file parsed properly:
+
+`src/civ6_save_renderer/parse_map/config.vsh.yaml`:
+
+``` {.yaml}
+functionality:
+  name: parse_map
+  description: "Extract map information from a Civ6 save file as a tsv."
+  arguments:
+    - name: "--input"
+      alternatives: [-i]
+      type: file
+      required: true
+      default: "save.Civ6Save"
+      must_exist: true
+...
+```
+
+`src/civ6_save_renderer/parse_map/script.js`:
+
+``` {.js}
+// read helper libraries & functions
+const fs = require("fs");
+const helper = require(resources_dir + "/helper.js");
+
+// read data from file
+const json = helper.savetomap(fs.readFileSync(par["input"]));
+
+// convert to tsv
+const headers = Object.keys(json.tiles[0]);
+const header = headers.join("\t") + "\n";
+...
+```
+
+This last script uses the following helper script:
+`src/civ6_save_renderer/parse_map/helper.js` but it is a bit too long to
+represent here in this document.
+
+The container to run in is an off-the-shelve `node` container that will
+be pulled automatically at first use (or when calling `---setup` on the
+executable).
+
+This component is not very special in itself, but we would like to point
+out that the power of [viash](https://github.com/data-intuitive/viash)
+lies in making sure that not only `script.js` are passed to the
+container at runtime, but also the `helper.js` file that is used by
+`script.js`. This is all done seamlessly without a need for the user to
+understand what is happening under the hood.
+
+Please note the ease of use of having `par["input"]` etc. automatically
+at your disposal coming from the CLI arguments specified with the
+component configuration.
+
+Imagine you would have to do this manually using the Docker CLI?
+
+## `plot_map`
+
+Based on the output from `parse_header` and `parse_map`, we can now
+generate a plot using `plot_map`. We have some R code to do this but the
+code in itself uses some R libraries that are not standard. This is
+again a perfect use-case for a containerized solution that is leveraged
+using [viash](https://github.com/data-intuitive/viash)!
+
+`src/civ6_save_renderer/plot_map/config.vsh.yaml`:
+
+``` {.yaml}
+functionality:
+  name: plot_map
+  description: "Use the settings yaml and the map tsv to generate a plot (as PDF)."
+  arguments:
+    - name: "--yaml"
+      alternatives: [-y]
+      type: file
+      required: true
+      default: "header.yaml"
+      must_exist: true
+...
+```
+
+`src/civ6_save_renderer/plot_map/script.R`:
+
+``` {.r}
+library(tidyverse)
+library(cowplot)
+
+source(paste0(resources_dir, "/helper.R"))
+
+# par <- list(
+#   yaml = "<...>/workspace/di/viash_workshop_1/data.yaml",
+#   tsv = "<...>/workspace/di/viash_workshop_1/data.tsv"
+# )
+
+...
+```
+
+Again there is a helper script `helper.R` that we do not completely
+render in this document but can easily be retrieved by looking at the
+sources.
+
+This component takes 2 input files, a `yaml` file and a `tsv` file
+
+The container for this component is based on `rocker/tidyverse` but
+there are some modifications that are applied. Additional R libraries
+are installed, 5 from the CRAN database, 1 from Github. This
+functionality covers a major reason to create a custom `Dockerfile` an
+thus container image: customizing a base container to suite ones needs.
+Adding the customizations using the
+[viash](https://github.com/data-intuitive/viash) configuration entails
+similar benefits to [viash](https://github.com/data-intuitive/viash)
+generating the command-line parsing code, namely standardization.
+
+**Remark**: Please note that also here `par$yaml`, `par$tsv`, ... are
+automatically at your disposal and are passed from the wrapped (and
+containerized) executable. The `script.R` file even contains a
+(commented) code block that if uncommented allows one to develop and run
+the script (in or outside a container) without
+[viash](https://github.com/data-intuitive/viash). Often times, component
+development will be done like this, using tools like RStudio or Jupyter
+notebooks on the native system and once the script is ready it is then
+converted to a ([viash](https://github.com/data-intuitive/viash))
+component.
+
+## `convert_plot`
+
+We covered the `convert_plot` component in the previous section and so
+will only quickly render the relevant source files here:
+
+`src/civ6_save_renderer/convert_plot/config.vsh.yaml`:
+
+``` {.yaml}
+functionality:
+  name: convert_plot
+  description: Convert a plot from pdf to png.
+  arguments:
+    - name: "--input"
+      alternatives: [-i]
+      type: file
+      required: true
+      default: "input.pdf"
+      must_exist: true
+...
+```
+
+`src/civ6_save_renderer/convert_plot/script.sh`:
+
+``` {.sh}
+#!/bin/bash
+
+convert "$par_input" -flatten "$par_output"
+...
+```
+
+## `combine_plots`
+
+We covered the `combine_plots` component in the previous section and so
+will only quickly render the relevant source files here:
+
+`src/civ6_save_renderer/combine_plots/config.vsh.yaml`:
+
+``` {.yaml}
+functionality:
+  name: combine_plots
+  description: Combine multiple images into a movie using ffmpeg.
+  arguments:
+    - name: "--input"
+      alternatives: [-i]
+      type: file
+      required: true
+      default: "/path/to/my/dir"
+      must_exist: true
+...
+```
+
+`src/civ6_save_renderer/combine_plots/script.sh`:
+
+``` {.sh}
+#!/bin/bash
+
+# render movie
+inputs=`echo $par_input | sed 's#:# -i #g'`
+ffmpeg -framerate $par_framerate -f image2 -i $inputs -c:v libvpx-vp9 -pix_fmt yuva420p -y $par_output
+...
+```
+
+# Building the namespace
+
 We can easily convert the full contents this namespace into executables
 using:
 
@@ -206,52 +418,83 @@ Exporting src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =docker=> ta
 Exporting src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =native=> target/native/civ6_save_renderer/parse_header
 ```
 
-We cover the components one by one in what follows and discuss any
-specificities that we encounter underway.
-
-## `parse_header`
-
-Let us start with `parse_header`, it parses the headers of the save
-files.
-
-`src/civ6_save_renderer/parse_header/config.vsh.yaml`:
-
-``` {.yaml}
-functionality:
-  name: parse_header
-  namespace: civ6_save_renderer
-  description: "Extract game settings from a Civ6 save file as a yaml."
-  arguments:
-    - name: "--input"
-      alternatives: [-i]
-      type: file
-      required: true
-      default: "save.Civ6Save"
-      must_exist: true
-      description: "A Civ6 save file."
-    - name: "--output"
-      alternatives: [-o]
-      type: file
-      required: true
-      default: "output.yaml"
-      direction: output
-      description: "Path to store the output YAML at."
-  resources:
-    - type: bash_script
-      path: script.sh
-platforms:
-  - type: docker
-    image: node
-    docker:
-      run:
-        - cd /home/node && npm install civ6-save-parser
-  - type: native
-```
-
-`src/civ6_save_renderer/parse_header/script.sh`:
+**Remark**: Please note that both the `docker` platform as well as the
+`native` platform are taken into account. Because most people will not
+have the necessary tools for running the different steps, we will not
+build the executables for the `native` platform:
 
 ``` {.sh}
-#!/bin/bash
+> rm -r target
+```
 
-node /home/node/node_modules/civ6-save-parser/index.js "$par_input" --simple > "$par_output"
+And then:
+
+``` {.sh}
+> viash ns build -n civ6_save_renderer -p docker
+Exporting src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/combine_plots
+Exporting src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/convert_plot
+Exporting src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/plot_map
+Exporting src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_map
+Exporting src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_header
+```
+
+This is what the `target` directory looks like now:
+
+``` {.sh}
+> tree target/
+target/
+└── docker
+    └── civ6_save_renderer
+        ├── combine_plots
+        │   ├── combine_plots
+        │   └── viash.yaml
+        ├── convert_plot
+        │   ├── convert_plot
+        │   └── viash.yaml
+        ├── parse_header
+        │   ├── parse_header
+        │   └── viash.yaml
+        ├── parse_map
+        │   ├── helper.js
+        │   ├── parse_map
+        │   └── viash.yaml
+        └── plot_map
+            ├── helper.R
+            ├── plot_map
+            └── viash.yaml
+
+7 directories, 12 files
+```
+
+Please notice a few things:
+
+-   Every components has its own directory under
+    `target/<platform>/<namespace>/`
+-   The `script.R`, `script.sh`, ... files are contained in the
+    respective executables, helper files are passed at runtime.
+-   Every *target* component directory contains a `viash.yaml` file
+    which contains necessary (meta) information for reproducing the
+    component
+
+Using the respective (containerized) tools is now as easy as, for
+instance,
+
+``` {.sh}
+> target/docker/civ6_save_renderer/parse_header/parse_header -i ../data/AutoSave_0158.Civ6Save -o /tmp/output.yaml
+```
+
+`/tmp/output.yaml`:
+
+``` {.yaml}
+{
+  ACTORS: [
+    {
+      START_ACTOR: 4159575459,
+      ACTOR_NAME: 'CIVILIZATION_FREE_CITIES',
+      ACTOR_TYPE: 'CIVILIZATION_LEVEL_FREE_CITIES',
+      ACTOR_AI_HUMAN: 1,
+      LEADER_NAME: 'LEADER_FREE_CITIES'
+    },
+    {
+...
 ```

@@ -1,6 +1,5 @@
 functionality:
   name: parse_map
-  namespace: civ6_save_renderer
   description: "Extract map information from a Civ6 save file as a tsv."
   arguments:
     - name: "--input"

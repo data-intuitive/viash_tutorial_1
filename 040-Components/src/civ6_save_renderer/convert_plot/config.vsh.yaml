@@ -1,6 +1,5 @@
 functionality:
   name: convert_plot
-  namespace: civ6_save_renderer
   description: Convert a plot from pdf to png.
   arguments:
     - name: "--input"

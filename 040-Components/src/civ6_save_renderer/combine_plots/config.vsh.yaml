@@ -1,6 +1,5 @@
 functionality:
   name: combine_plots
-  namespace: civ6_save_renderer
   description: Combine multiple images into a movie using ffmpeg.
   arguments:
     - name: "--input"
