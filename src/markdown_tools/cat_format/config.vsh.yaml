@@ -15,6 +15,10 @@ functionality:
       required: false
       default: ${VIASH_PAR_INPUT##*.}
       description: "Format for code block"
+    - name: "--cut"
+      alternative: [ "-c" ]
+      type: boolean_true
+      description: "Cut the file after 10 lines"
   resources:
     - type: bash_script
       path: script.sh
