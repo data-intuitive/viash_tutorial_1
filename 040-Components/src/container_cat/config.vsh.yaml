@@ -1,0 +1,16 @@
+functionality:
+  name: container_cat
+  arguments:
+    - name: "file"
+      type: string
+      default: /etc/alpine-release
+  resources:
+    - type: executable
+      path: cat
+platforms:
+  - type: docker
+    id: docker1
+    image: alpine:latest
+  - type: docker
+    id: docker2
+    image: alpine:2.6
