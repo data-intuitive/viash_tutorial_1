@@ -5,9 +5,9 @@ echo "\`$par_input\`:"
 echo ""
 
 echo '```'"$par_format"
-if [ $par_cut ]; then 
+if [ "$par_cut" == "true" ]; then
   head "$par_input"
-  echo ... (cut) ...
+  echo "... (cut) ..."
 else
   cat "$par_input"
   echo ""
