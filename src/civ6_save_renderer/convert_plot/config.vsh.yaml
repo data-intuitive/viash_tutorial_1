@@ -4,14 +4,14 @@ functionality:
   description: Convert a plot from pdf to png.
   arguments:
     - name: "--input"
-      alternatives: [-i]
+      alternatives: [ "-i" ]
       type: file
       required: true
       default: "input.pdf"
       must_exist: true
       description: "A PDF input file."
     - name: "--output"
-      alternatives: [-o]
+      alternatives: [ "-o" ]
       type: file
       required: true
       default: "output.png"
