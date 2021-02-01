@@ -5,5 +5,198 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workflow - Part 1
+title: Viash Workshop 1 - Running the components
 ---
+
+```{r setup, include = FALSE}
+# set default chunk options
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  collapse = TRUE,
+  prompt = TRUE,
+  cache = T
+  # engine.opts = list(bash = "-l")
+)
+```
+
+# Introduction
+
+In this section, we demonstrate how to run the components of the Civilization postgame generation pipeline in order to generate the postgame video manually. The next section will be about automation.
+
+We refer to earlier sections for an in-depth overview of how the different components are configured.
+
+# Building the namespace
+
+Let's build the namespace from the `src` directory in the root of this project/repository:
+
+```{sh}
+viash ns build \
+  -n civ6_save_renderer \
+  -s ../src \
+  -p docker
+```
+
+The result is stored under `target/docker` because we chose to only build the `docker` platform executables.
+
+We have to run the _setup_ for the containers that are not just available on Docker Hub. This can be done in one go by using the following CLI:
+
+```sh
+cd ..
+viash ns build \
+  -n civ6_save_renderer \
+  -s ../src \
+  -p docker
+```
+
+Or, we can run them one-by-one.
+
+
+# All steps
+
+We took 2 save games from the example data (a very limited set) under `data/` in the root of this repository and stored it locally under `data/`:
+
+```{sh}
+ls data/
+```
+
+Intermediate files will be stored under `temp/`, results will go under `output/`.
+
+## `parse_header`
+
+We start by looking at the syntax of `parse_header` to refresh our memory:
+
+```{sh}
+target/docker/civ6_save_renderer/parse_header/parse_header -h
+```
+
+We run the component (in its `docker` platform variant) on the two save games:
+
+```{sh}
+target/docker/civ6_save_renderer/parse_header/parse_header \
+  --input data/AutoSave_0158.Civ6Save \
+  --output temp/0158.yaml
+```
+
+and
+
+```{sh}
+target/docker/civ6_save_renderer/parse_header/parse_header \
+  --input data/AutoSave_0159.Civ6Save \
+  --output temp/0159.yaml
+```
+
+The result is two YAML files:
+
+```{sh}
+ls temp/
+```
+
+## `parse_map`
+
+Likewise, we run the `parse_map` component. This component uses a node.js library under the hood, but we need not know that in order to run the component:
+
+```{sh}
+target/docker/civ6_save_renderer/parse_map/parse_map -h
+```
+
+We run the component (in its `docker` platform variant) on the two save games:
+
+```{sh}
+target/docker/civ6_save_renderer/parse_map/parse_map \
+  --input data/AutoSave_0158.Civ6Save \
+  --output temp/0158.tsv
+```
+
+and
+
+```{sh}
+target/docker/civ6_save_renderer/parse_map/parse_map \
+  --input data/AutoSave_0159.Civ6Save \
+  --output temp/0159.tsv
+```
+
+The result is two CSV files next to the already created YAML files:
+
+```{sh}
+ls temp/
+```
+
+## `plot_map`
+
+Using both the YAML and CSV files above, we can plot a map for each stage in the game process. We use the `plot_map` to achieve this, first the help:
+
+```{sh}
+target/docker/civ6_save_renderer/plot_map/plot_map -h
+```
+
+We run the component (in its `docker` platform variant) on the two save games:
+
+```{sh}
+target/docker/civ6_save_renderer/plot_map/plot_map \
+  --tsv temp/0158.tsv --yaml temp/0158.yaml \
+  --output temp/0158.pdf
+```
+
+and
+
+```{sh}
+target/docker/civ6_save_renderer/plot_map/plot_map \
+  --tsv temp/0159.tsv --yaml temp/0159.yaml \
+  --output temp/0159.pdf
+```
+
+The result is two PDF files:
+
+```{sh}
+ls temp/
+```
+
+## `convert_plot`
+
+It's now time to convert our PDF version of the plot to PNG format. We do this using the `convert_plot` component:
+
+```{sh}
+target/docker/civ6_save_renderer/convert_plot/convert_plot -h
+```
+
+And run the tool on the 2 PDF map files we have:
+
+```{sh}
+target/docker/civ6_save_renderer/convert_plot/convert_plot \
+  --input temp/0158.pdf \
+  --output temp/0158.png
+```
+
+and
+
+```{sh}
+target/docker/civ6_save_renderer/convert_plot/convert_plot \
+  --input temp/0159.pdf \
+  --output temp/0159.png
+```
+
+It's as simple as that.
+
+```{sh}
+ls temp/
+```
+
+## `combine_plots`
+
+The last step is to render the video based on the (only 2) PNG image files:
+
+```{sh}
+target/docker/civ6_save_renderer/combine_plots/combine_plots -h
+```
+
+```{sh}
+target/docker/civ6_save_renderer/combine_plots/combine_plots \
+  -i temp/0158.png:temp/0159.png:temp/0159.png \
+  -o output/video.webm \
+  -f 1
+```
+
+This concludes the manual approach to running the scripts. In the next section, we will automate this by means of a bash script.
+
+[viash]: https://github.com/data-intuitive/viash
