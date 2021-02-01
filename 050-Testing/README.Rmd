@@ -5,5 +5,130 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workflow - Part 1
+title: Viash Workshop 1 - Testing
 ---
+
+```{r setup, include = FALSE}
+# set default chunk options
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  collapse = TRUE,
+  prompt = TRUE
+  # engine.opts = list(bash = "-l")
+)
+```
+
+# Introduction
+
+> blabla
+
+We will introduce testing using the same components we used earlier to introduce the [viash] approach:
+
+- `convert_plot`
+- `combine_plots`
+
+# `convert_plot`
+
+`convert_plot` converts a PDF (map) into a `.png` version.
+
+## The viash configuration
+
+We covered the functionality of this component already in the previous sections. In this section, we show how to add (unit) tests to the component. Let see what the directory structure of the (updated) component looks like. We put the components in the `civ6_save_renderer` namespace now that we know how this works:
+
+```{sh}
+tree src/civ6_save_renderer/convert_plot
+```
+
+Just like in the [viash] primer (of the previous section) there is a [viash] config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/civ6_save_renderer/convert_plot/config.vsh.yaml
+```
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/civ6_save_renderer/convert_plot/test/run_test.sh
+```
+
+The only differences with before are:
+
+1. The addition of the `tests`
+2. An extra `apt` package to be installed for running the tests (see later).
+
+### Tests
+
+Specifying the tests is not different from specifying the `resources` in the [viash] configuration. In this case, we have two resources: one is the script that contains the test code and one is a dummy PDF file that is fetched from the web during testing. We could also add a PDF file to the repository and point to that instead.
+
+The test script itself defines two tests:
+
+1. A test to see if an output file is effectively created by our component
+2. A test that extracts the text from the resulting `png` file in order to verify the content is still the same as the original.
+
+In order to run the second step, we install a package [`tesseract`] that performs the OCR.
+
+### Platforms
+
+The only difference with the `platforms` definition earlier is the installation of an additional package in the container.
+
+## Running the tests
+
+In order to run the tests using the default platform (`docker` in our current example), we can simply run:
+
+```{sh}
+viash test src/civ6_save_renderer/convert_plot/config.vsh.yaml
+```
+
+Let us break down what happens here:
+
+1. [viash] creates a temporary directory (configurable via `$VIASH_TEMP`)
+2. The setup of the appropriate platform is executed
+3. The executable for the component is built in the temporary directory
+4. The test script is run
+
+If tests are successful, the temporary directory is removed (unless `--keep` is provided as an option to `viash test`).
+
+This is a quick way to run a test on a component.
+
+# `combine_plots`
+
+We do something similar for the component that combines different `png` (map) files into one `webm` video. Let us see how we can do something similar as before so that a test can run on its own.
+
+We refer to an [article](http://hplgit.github.io/animate/doc/pub/video.html) that discussed the generation of an animation from `png` image sources and does this using ... ImageMagic. We use a selection of the images stored on [Github](https://github.com/hplgit/animate/tree/master/doc/src/animate/src-animate/testfiles/frames).
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/civ6_save_renderer/combine_plots/config.vsh.yaml
+```
+
+```{sh echo = F, results = "asis"}
+../scripts/cat_format src/civ6_save_renderer/combine_plots/test/run_test.sh
+```
+
+We added the `tests` and point to the frames explicitly. The test script basically generates a command line instructions (list of `png` files) based on the images that have been downloaded as resources.
+
+```{sh}
+viash test src/civ6_save_renderer/combine_plots/config.vsh.yaml
+```
+
+In order to avoid [viash] deleting the directory when a test succeeds, the `-k` option can be used.
+
+# Testing a namespace
+
+In the previous examples we tested individual components, but we can test a suite of components as well. Since we stored the 2 components above in the (namespace) `civ6_save_renderer` again, we can do the following:
+
+```{sh}
+viash ns test -p docker --parallel --tsv report.tsv
+```
+
+The contents of (the optional) `report.tsv` contains a report of the test run:
+
+```{sh results = "asis", echo = F}
+../scripts/cat_format report.tsv -f 
+```
+
+
+
+
+
+[viash]: https://github.com/data-intuitive/viash
+[`tesseract`]: https://opensource.google/projects/tesseract
+

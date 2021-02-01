@@ -1,0 +1,33 @@
+functionality:
+  name: convert_plot
+  namespace: civ6_save_renderer
+  description: Convert a plot from pdf to png.
+  arguments:
+    - name: "--input"
+      alternatives: [ "-i" ]
+      type: file
+      required: true
+      default: "input.pdf"
+      must_exist: true
+      description: "A PDF input file."
+    - name: "--output"
+      alternatives: [ "-o" ]
+      type: file
+      required: true
+      default: "output.png"
+      direction: output
+      description: "Output path."
+  resources:
+    - type: bash_script
+      path: script.sh
+  tests:
+    - type: bash_script
+      path: test/run_test.sh
+    - path: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+platforms:
+  - type: docker
+    image: dpokidov/imagemagick
+    setup:
+      - type: apt
+        packages: [ "tesseract-ocr" ]
+  - type: native
