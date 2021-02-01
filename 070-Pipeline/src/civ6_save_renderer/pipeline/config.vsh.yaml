@@ -1,0 +1,33 @@
+functionality:
+  name: pipeline
+  arguments:
+    - name: "--input"
+      alternatives: [ "-i" ]
+      type: file
+      description: "Input directory with savegames"
+      required: true
+    - name: "--temp"
+      alternatives: [ "-t" ]
+      type: file
+      description: "Temporary directory"
+      direction: output
+      default: "temp"
+    - name: "--output"
+      alternatives: [ "-o" ]
+      type: file
+      description: "Output video filename"
+      direction: output
+      required: true
+    - name: "--sed"
+      type: string
+      description: "Path to the GNU version of sed"
+      default: 'which gsed || echo -n "/usr/bin/sed"'
+    - name: "--component_dir"
+      type: file
+      description: "Path to the namespace target dir"
+      default: "./target"
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: native
