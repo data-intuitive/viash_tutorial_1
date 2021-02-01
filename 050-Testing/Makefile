@@ -5,6 +5,7 @@ $(FILE).md: $(FILE).Rmd
 	# Use viash component from viash_docs
 	knit $(FILE).Rmd
 	# Strip local paths
+	$(SED) -i 's,\x1B\[[0-9;]*m,,g' $(FILE).md
 	$(SED) -i 's|/\([/a-zA-Z0-9]*\)/work|<...>/work|g' $(FILE).md
 
 $(FILE).html: $(FILE).md

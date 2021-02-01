@@ -115,18 +115,21 @@ In order to avoid [viash] deleting the directory when a test succeeds, the `-k` 
 
 In the previous examples we tested individual components, but we can test a suite of components as well. Since we stored the 2 components above in the (namespace) `civ6_save_renderer` again, we can do the following:
 
-```{sh}
-viash ns test -p docker --parallel --tsv report.tsv
+```{sh color}
+viash ns test -p docker --parallel --tsv /tmp/report.tsv
 ```
+
+With the `--parallel` option multiple tests are run in parallel (depending on your setup and the way Docker is configured).
 
 The contents of (the optional) `report.tsv` contains a report of the test run:
 
 ```{sh results = "asis", echo = F}
-../scripts/cat_format report.tsv -f 
+../scripts/render_table /tmp/report.tsv
 ```
 
+For each component, you see the 2 steps from above: 1) build the executable and 2) run the actual test.
 
-
+It should be noted that the tests are still running in their respective containers.
 
 
 [viash]: https://github.com/data-intuitive/viash

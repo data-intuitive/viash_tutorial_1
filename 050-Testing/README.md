@@ -148,23 +148,23 @@ current example), we can simply run:
 
 ``` {.sh}
 > viash test src/civ6_save_renderer/convert_plot/config.vsh.yaml
-Running tests in temporary directory: '/tmp/viash_test_convert_plot8032031727942331152'
+Running tests in temporary directory: '/tmp/viash_test_convert_plot2025494967311839984'
 ====================================================================
-+/tmp/viash_test_convert_plot8032031727942331152/build_executable/convert_plot ---setup
-> docker build -t civ6_save_renderer/convert_plot:latest --no-cache /tmp/viashsetupdocker-convert_plot-zI9tDu
++/tmp/viash_test_convert_plot2025494967311839984/build_executable/convert_plot ---setup
+> docker build -t civ6_save_renderer/convert_plot:latest --no-cache /tmp/viashsetupdocker-convert_plot-M29FeJ
 Sending build context to Docker daemon  17.41kB
 
 Step 1/2 : FROM dpokidov/imagemagick
  ---> 0ce61e775be8
 Step 2/2 : RUN apt-get update &&   apt-get install -y tesseract-ocr &&   rm -rf /var/lib/apt/lists/*
- ---> Running in 4f16ee452621
+ ---> Running in 95244249288c
 Get:1 http://security.debian.org/debian-security buster/updates InRelease [65.4 kB]
 Get:2 http://deb.debian.org/debian buster InRelease [121 kB]
 Get:3 http://deb.debian.org/debian buster-updates InRelease [51.9 kB]
 Get:4 http://security.debian.org/debian-security buster/updates/main amd64 Packages [270 kB]
 Get:5 http://deb.debian.org/debian buster/main amd64 Packages [7907 kB]
 Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [7848 B]
-Fetched 8424 kB in 3s (3301 kB/s)
+Fetched 8424 kB in 2s (3668 kB/s)
 Reading package lists...
 Reading package lists...
 Building dependency tree...
@@ -218,8 +218,8 @@ Get:29 http://deb.debian.org/debian buster/main amd64 tesseract-ocr-eng all 1:4.
 Get:30 http://deb.debian.org/debian buster/main amd64 tesseract-ocr-osd all 1:4.00~git30-7274cfa-1 [2991 kB]
 Get:31 http://deb.debian.org/debian buster/main amd64 tesseract-ocr amd64 4.0.0-2 [262 kB]
 Get:32 http://deb.debian.org/debian buster/main amd64 xdg-user-dirs amd64 0.17-2 [53.8 kB]
-[91mdebconf: delaying package configuration, since apt-utils is not installed
-[0mFetched 15.4 MB in 1s (12.3 MB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 15.4 MB in 1s (21.2 MB/s)
 Selecting previously unselected package fontconfig.
 (Reading database ... 
 (Reading database ... 5%
@@ -373,12 +373,12 @@ Setting up libpangoft2-1.0-0:amd64 (1.42.4-8~deb10u1) ...
 Setting up libpangocairo-1.0-0:amd64 (1.42.4-8~deb10u1) ...
 Setting up tesseract-ocr (4.0.0-2) ...
 Processing triggers for libc-bin (2.28-10) ...
-Removing intermediate container 4f16ee452621
- ---> 984977dde9b0
-Successfully built 984977dde9b0
+Removing intermediate container 95244249288c
+ ---> 382e318a8391
+Successfully built 382e318a8391
 Successfully tagged civ6_save_renderer/convert_plot:latest
 ====================================================================
-+/tmp/viash_test_convert_plot8032031727942331152/test_run_test.sh/run_test.sh
++/tmp/viash_test_convert_plot2025494967311839984/test_run_test.sh/run_test.sh
 + convert_plot -i dummy.pdf -o dummy.png
 convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `dummy.png' @ warning/png.c/MagickPNGWarningHandler/1748.
 + [[ ! -f dummy.png ]]
@@ -387,11 +387,11 @@ Tesseract Open Source OCR Engine v4.0.0 with Leptonica
 Warning: Invalid resolution 0 dpi. Using 70 instead.
 Estimating resolution as 157
 ++ grep Dummy dummy-ocr.txt
->>> Test finished successfully
 + [[ ! -n Dummy PDF file ]]
+>>> Test finished successfully
 + echo '>>> Test finished successfully'
 ====================================================================
-[32mSUCCESS! All 1 out of 1 test scripts succeeded![0m
+SUCCESS! All 1 out of 1 test scripts succeeded!
 Cleaning up temporary directory
 ```
 
@@ -498,9 +498,9 @@ based on the images that have been downloaded as resources.
 
 ``` {.sh}
 > viash test src/civ6_save_renderer/combine_plots/config.vsh.yaml
-Running tests in temporary directory: '/tmp/viash_test_combine_plots7348196360299078692'
+Running tests in temporary directory: '/tmp/viash_test_combine_plots8957513845281034328'
 ====================================================================
-+/tmp/viash_test_combine_plots7348196360299078692/build_executable/combine_plots ---setup
++/tmp/viash_test_combine_plots8957513845281034328/build_executable/combine_plots ---setup
 > docker pull jrottenberg/ffmpeg
 Using default tag: latest
 latest: Pulling from jrottenberg/ffmpeg
@@ -508,7 +508,7 @@ Digest: sha256:21eb739725c43bd7187982e5fa4b5371b495d1d1f6f61ae1719ca794817f8641
 Status: Image is up to date for jrottenberg/ffmpeg:latest
 docker.io/jrottenberg/ffmpeg:latest
 ====================================================================
-+/tmp/viash_test_combine_plots7348196360299078692/test_run_test.sh/run_test.sh
++/tmp/viash_test_combine_plots8957513845281034328/test_run_test.sh/run_test.sh
 ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
   built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 20160609
   configuration: --disable-debug --disable-doc --disable-ffplay --enable-shared --enable-avresample --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-gpl --enable-libass --enable-libfreetype --enable-libvidstab --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx265 --enable-libxvid --enable-libx264 --enable-nonfree --enable-openssl --enable-libfdk_aac --enable-libkvazaar --enable-libaom --extra-libs=-lpthread --enable-postproc --enable-small --enable-version3 --extra-cflags=-I/opt/ffmpeg/include --extra-ldflags=-L/opt/ffmpeg/lib --extra-libs=-ldl --prefix=/opt/ffmpeg
@@ -551,7 +551,7 @@ Input #8, png_pipe, from 'frame_0008.png':
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
 Press [q] to stop, [?] for help
-[libvpx-vp9 @ 0xdecdc0] v1.8.0
+[libvpx-vp9 @ 0x1e00dc0] v1.8.0
 Output #0, webm, to 'output.webm':
   Metadata:
     encoder         : Lavf58.20.100
@@ -560,11 +560,11 @@ Output #0, webm, to 'output.webm':
       encoder         : Lavc58.35.100 libvpx-vp9
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1
-frame=    1 fps=0.0 q=0.0 Lsize=       8kB time=00:00:00.00 bitrate=65720.0kbits/s speed=0.00434x    
+frame=    1 fps=0.0 q=0.0 Lsize=       8kB time=00:00:00.00 bitrate=65720.0kbits/s speed=0.00425x    
 video:7kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 10.714286%
 >>> Test finished successfully
 ====================================================================
-[32mSUCCESS! All 1 out of 1 test scripts succeeded![0m
+SUCCESS! All 1 out of 1 test scripts succeeded!
 Cleaning up temporary directory
 ```
 
@@ -580,31 +580,31 @@ above in the (namespace) `civ6_save_renderer` again, we can do the
 following:
 
 ``` {.sh}
-> viash ns test -p docker --parallel --tsv report.tsv
-           namespace        functionality             platform            test_name exit_code duration               result[0m
-  civ6_save_renderer        combine_plots               docker                start                                        [0m
-  civ6_save_renderer         convert_plot               docker                start                                        [0m
-[32m  civ6_save_renderer        combine_plots               docker     build_executable         0        1              SUCCESS[0m
-[32m  civ6_save_renderer        combine_plots               docker          run_test.sh         0        4              SUCCESS[0m
-[32m  civ6_save_renderer         convert_plot               docker     build_executable         0     3488              SUCCESS[0m
-[32m  civ6_save_renderer         convert_plot               docker          run_test.sh         0        8              SUCCESS[0m
+> viash ns test -p docker --parallel --tsv /tmp/report.tsv
+           namespace        functionality             platform            test_name exit_code duration               result
+  civ6_save_renderer        combine_plots               docker                start                                        
+  civ6_save_renderer         convert_plot               docker                start                                        
+  civ6_save_renderer        combine_plots               docker     build_executable         0        1              SUCCESS
+  civ6_save_renderer        combine_plots               docker          run_test.sh         0        4              SUCCESS
+  civ6_save_renderer         convert_plot               docker     build_executable         0       15              SUCCESS
+  civ6_save_renderer         convert_plot               docker          run_test.sh         0        3              SUCCESS
 ```
+
+With the `--parallel` option multiple tests are run in parallel
+(depending on your setup and the way Docker is configured).
 
 The contents of (the optional) `report.tsv` contains a report of the
 test run:
 
-``` {.sh}
-> ../scripts/cat_format report.tsv
-```
+  namespace            functionality   platform   test_name            exit_code   duration result
+  -------------------- --------------- ---------- ------------------ ----------- ---------- ---------
+  civ6_save_renderer   combine_plots   docker     build_executable             0          1 SUCCESS
+  civ6_save_renderer   combine_plots   docker     run_test.sh                  0          4 SUCCESS
+  civ6_save_renderer   convert_plot    docker     build_executable             0         15 SUCCESS
+  civ6_save_renderer   convert_plot    docker     run_test.sh                  0          3 SUCCESS
 
+For each component, you see the 2 steps from above: 1) build the
+executable and 2) run the actual test.
 
-    `report.tsv`:
-
-    ```tsv
-    namespace   functionality   platform    test_name   exit_code   duration    result
-    civ6_save_renderer  combine_plots   docker  build_executable    0   1   SUCCESS
-    civ6_save_renderer  combine_plots   docker  run_test.sh 0   4   SUCCESS
-    civ6_save_renderer  convert_plot    docker  build_executable    0   3488    SUCCESS
-    civ6_save_renderer  convert_plot    docker  run_test.sh 0   8   SUCCESS
-
-    ```
+It should be noted that the tests are still running in their respective
+containers.
