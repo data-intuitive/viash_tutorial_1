@@ -5,3 +5,4 @@ README_cache
 .Rhistory
 node_modules
 package-lock.json
+viash.yaml
