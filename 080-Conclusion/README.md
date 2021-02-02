@@ -1,11 +1,11 @@
 ---
 author: Data Intuitive
-date: Tuesday - January 26, 2021
+date: 'Tuesday - January 26, 2021'
 mainfont: Roboto Condensed
 monobackgroundcolor: lightgrey
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
-title: Viash Workshop 1 - Conclusion
+title: 'Viash Workshop 1 - Conclusion'
 ---
 
 This concludes part 1 of the
