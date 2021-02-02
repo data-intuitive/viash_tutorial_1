@@ -14,8 +14,7 @@ knitr::opts_chunk$set(
   echo = TRUE,
   comment = "",
   collapse = TRUE,
-  prompt = TRUE,
-  cache = T
+  prompt = TRUE
   # engine.opts = list(bash = "-l")
 )
 ```
@@ -41,12 +40,12 @@ The result is stored under `target/docker` because we chose to only build the `d
 
 We have to run the _setup_ for the containers that are not just available on Docker Hub. This can be done in one go by using the following CLI:
 
-```sh
-cd ..
+```{sh}
 viash ns build \
   -n civ6_save_renderer \
   -s ../src \
-  -p docker
+  -p docker \
+  --setup > /dev/null
 ```
 
 Or, we can run them one-by-one.
@@ -192,7 +191,7 @@ target/docker/civ6_save_renderer/combine_plots/combine_plots -h
 
 ```{sh}
 target/docker/civ6_save_renderer/combine_plots/combine_plots \
-  -i temp/0158.png:temp/0159.png:temp/0159.png \
+  -i temp/0158.png:temp/0159.png \
   -o output/video.webm \
   -f 1
 ```

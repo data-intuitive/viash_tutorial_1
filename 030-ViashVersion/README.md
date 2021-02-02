@@ -1,15 +1,14 @@
 ---
 author: Data Intuitive
-date: 'Tuesday - January 26, 2021'
+date: Tuesday - January 26, 2021
 mainfont: Roboto Condensed
 monobackgroundcolor: lightgrey
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
-title: 'Viash Workshop 1 - With Viash'
+title: Viash Workshop 1 - With Viash
 ---
 
-Introduction
-============
+# Introduction
 
 With the information from the previous section, we will tackle two from
 the components in detail in this section:
@@ -19,8 +18,7 @@ the components in detail in this section:
 
 Both are explained in \[section 1\] above.
 
-`convert_plot`
-==============
+# `convert_plot`
 
 `convert_plot` should convert a PDF map into a `.png` version.
 \[ImageMagick\] is a suite of command line tools for UNIX-like systems
@@ -35,8 +33,7 @@ installed tool, however. We would to enable the conversion from pdf to
 png in a seamless way. Let's use
 [viash](https://github.com/data-intuitive/viash) for this...
 
-The viash configuration
------------------------
+## The viash configuration
 
 First of all, we will store all files related to one *component* in a
 separate directory and give it the name of the component:
@@ -162,8 +159,7 @@ one. We point the Docker platform to an [existing Docker
 image](https://hub.docker.com/r/dpokidov/imagemagick/) available on
 Docker Hub.
 
-Building the executable
------------------------
+## Building the executable
 
 Building an executable can be done just like before. We assume
 ImageMagick is not installed on the local system and thus build the
@@ -681,8 +677,8 @@ info:
   output: "bin/"
   executable: "bin/convert_plot"
   viash_version: "0.3.1"
-  git_commit: "2f4f52c6954793050d2171b0d66e1ad54bb54794"
-  git_remote: "git@github.com:data-intuitive/viash_workshop_1.git"
+  git_commit: "63eadce956bf7ae073bb92515332ad834f725258"
+  git_remote: "https://github.com/data-intuitive/viash_workshop_1"
 ```
 
 We ask the generated executable to run the necessary setup. In this
@@ -714,8 +710,7 @@ Options:
         Output path.
 ```
 
-Running the executable
-----------------------
+## Running the executable
 
 Now that everything is up and running, we can start converting images.
 Let us first generate a simple PDF file with the help of
@@ -738,7 +733,7 @@ step works:
 
 ``` {.sh}
 > bin/convert_plot -i data/viash.pdf -o data/viash.png
-convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `/viash_automount<...>/workspace/di/viash_workshop_1/030-ViashVersion/data/viash.png' @ warning/png.c/MagickPNGWarningHandler/1748.
+convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/viash.png' @ warning/png.c/MagickPNGWarningHandler/1748.
 ```
 
 Ok, so this should work now:
@@ -746,10 +741,9 @@ Ok, so this should work now:
 ```{=html}
 <!-- See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/ -->
 ```
-![PNG from PDF using convert\_plot](data/viash.png)
+![PNG from PDF using convert_plot](data/viash.png)
 
-Without viash
--------------
+## Without viash
 
 Please note that in the above example, the input file and output file
 reside on the host image while the conversion process is running inside
@@ -786,14 +780,12 @@ In other words:
 > greatly simplified and wrapped in one executable, command-line parsing
 > comes for free.
 
-`combine_plots`
-===============
+# `combine_plots`
 
 This *component* combines a number of `png` files in to one single movie
 (`webm` format).
 
-The viash configuration
------------------------
+## The viash configuration
 
 First of all, we will store all files related to one *component* in a
 separate directory and give it the name of the component:
@@ -892,8 +884,7 @@ native one. We point the Docker platform to an [existing Docker
 image](https://hub.docker.com/r/jrottenbergj/ffmpeg/) available on
 Docker Hub.
 
-Running the executable
-----------------------
+## Running the executable
 
 Let us create one additional `png` file by using the same *technique* as
 before, this time creating a PDF file with just the output of an empty
@@ -908,12 +899,12 @@ step works:
 
 ``` {.sh}
 > bin/convert_plot -i data/viash1.pdf -o data/viash1.png
-convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `/viash_automount<...>/workspace/di/viash_workshop_1/030-ViashVersion/data/viash1.png' @ warning/png.c/MagickPNGWarningHandler/1748.
+convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/viash1.png' @ warning/png.c/MagickPNGWarningHandler/1748.
 ```
 
 Ok, so this should work now:
 
-![PNG from PDF using convert\_plot](data/viash1.png)
+![PNG from PDF using convert_plot](data/viash1.png)
 
 We now have 2 `png` files and should be able to run our `combine_plots`
 component. But first, we'll build the executable:
@@ -950,14 +941,14 @@ ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
   libswscale      5.  3.100 /  5.  3.100
   libswresample   3.  3.100 /  3.  3.100
   libpostproc    55.  3.100 / 55.  3.100
-Input #0, png_pipe, from 'concat:/viash_automount<...>/workspace/di/viash_workshop_1/030-ViashVersion/data/viash.png|/viash_automount<...>/workspace/di/viash_workshop_1/030-ViashVersion/data/viash1.png':
+Input #0, png_pipe, from 'concat:/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/viash.png|/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/viash1.png':
   Duration: N/A, bitrate: N/A
     Stream #0:0: Video: png, gray(pc), 612x792 [SAR 72:72 DAR 17:22], 1 tbr, 1 tbn, 1 tbc
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
 Press [q] to stop, [?] for help
-[libvpx-vp9 @ 0xc6c740] v1.8.0
-Output #0, webm, to '/viash_automount<...>/workspace/di/viash_workshop_1/030-ViashVersion/data/output.webm':
+[libvpx-vp9 @ 0x1ef21c0] v1.8.0
+Output #0, webm, to '/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/030-ViashVersion/data/output.webm':
   Metadata:
     encoder         : Lavf58.20.100
     Stream #0:0: Video: vp9 (libvpx-vp9), yuva420p, 612x792 [SAR 1:1 DAR 17:22], q=-1--1, 200 kb/s, 1 fps, 1k tbn, 1 tbc
@@ -965,7 +956,7 @@ Output #0, webm, to '/viash_automount<...>/workspace/di/viash_workshop_1/030-Via
       encoder         : Lavc58.35.100 libvpx-vp9
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1
-frame=    2 fps=0.0 q=0.0 Lsize=      19kB time=00:00:01.00 bitrate= 151.6kbits/s speed=4.76x    
+frame=    2 fps=0.0 q=0.0 Lsize=      19kB time=00:00:01.00 bitrate= 151.6kbits/s speed=3.52x    
 video:18kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 4.848786%
 ```
 

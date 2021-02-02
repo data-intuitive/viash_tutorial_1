@@ -250,11 +250,11 @@
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> ../src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header</span></span></code></pre></div>
 <p>The result is stored under <code>target/docker</code> because we chose to only build the <code>docker</code> platform executables.</p>
 <p>We have to run the <em>setup</em> for the containers that are not just available on Docker Hub. This can be done in one go by using the following CLI:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">viash</span> ns build <span class="kw">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-n</span> civ6_save_renderer <span class="kw">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-s</span> ../src <span class="kw">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-p</span> docker</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns build <span class="kw">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   -n civ6_save_renderer <span class="kw">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   -s ../src <span class="kw">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   -p docker <span class="kw">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   --setup <span class="op">&gt;</span> /dev/null</span></code></pre></div>
 <p>Or, we can run them one-by-one.</p>
 <h1 id="all-steps">All steps</h1>
 <p>We took 2 save games from the example data (a very limited set) under <code>data/</code> in the root of this repository and stored it locally under <code>data/</code>:</p>
@@ -285,8 +285,11 @@
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   --output temp/0159.yaml</span></code></pre></div>
 <p>The result is two YAML files:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">ls</span> temp/</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">0158.yaml</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.yaml</span></span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">0158.tsv</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">0158.yaml</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.tsv</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.yaml</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">empty</span></span></code></pre></div>
 <h2 id="parse_map"><code>parse_map</code></h2>
 <p>Likewise, we run the <code>parse_map</code> component. This component uses a node.js library under the hood, but we need not know that in order to run the component:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_map/parse_map</span> -h</span>
@@ -304,7 +307,7 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_map/parse_map</span> <span class="kw">\</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   --input data/AutoSave_0158.Civ6Save <span class="kw">\</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   --output temp/0158.tsv</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">node</span>:9<span class="kw">)</span> [<span class="ex">DEP0005</span>] DeprecationWarning: Buffer() <span class="ex">is</span> deprecated due to security and usability issues. Please use the Buffer.alloc(), <span class="ex">Buffer.allocUnsafe</span>(), <span class="ex">or</span> Buffer.from() <span class="ex">methods</span> instead.</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">node</span>:10<span class="kw">)</span> [<span class="ex">DEP0005</span>] DeprecationWarning: Buffer() <span class="ex">is</span> deprecated due to security and usability issues. Please use the Buffer.alloc(), <span class="ex">Buffer.allocUnsafe</span>(), <span class="ex">or</span> Buffer.from() <span class="ex">methods</span> instead.</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">Use</span> <span class="kw">`</span><span class="ex">node</span> --trace-deprecation ...<span class="kw">`</span> to show where the warning was created<span class="kw">)</span></span></code></pre></div>
 <p>and</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_map/parse_map</span> <span class="kw">\</span></span>
@@ -317,7 +320,8 @@
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">0158.tsv</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">0158.yaml</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.tsv</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.yaml</span></span></code></pre></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.yaml</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">empty</span></span></code></pre></div>
 <h2 id="plot_map"><code>plot_map</code></h2>
 <p>Using both the YAML and CSV files above, we can plot a map for each stage in the game process. We use the <code>plot_map</code> to achieve this, first the help:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/plot_map/plot_map</span> -h</span>
@@ -366,7 +370,8 @@
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">0158.yaml</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.pdf</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.tsv</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.yaml</span></span></code></pre></div>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.yaml</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="ex">empty</span></span></code></pre></div>
 <h2 id="convert_plot"><code>convert_plot</code></h2>
 <p>It’s now time to convert our PDF version of the plot to PNG format. We do this using the <code>convert_plot</code> component:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/convert_plot/convert_plot</span> -h</span>
@@ -397,7 +402,8 @@
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.pdf</span></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.png</span></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.tsv</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.yaml</span></span></code></pre></div>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ex">0159.yaml</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="ex">empty</span></span></code></pre></div>
 <h2 id="combine_plots"><code>combine_plots</code></h2>
 <p>The last step is to render the video based on the (only 2) PNG image files:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/combine_plots/combine_plots</span> -h</span>
@@ -405,7 +411,7 @@
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Options</span>:</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-i</span> file1:file2:..., --input=file1:file2:...</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, required parameter, multiple values allowed, default: /path/to/my/dir</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: file, required parameter, multiple values allowed, default: plot1.png:plot2.png</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">A</span> list of images.</span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-o</span> file, --output=file</span>
@@ -416,8 +422,8 @@
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">type</span>: integer, default: 4</span>
 <span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Number</span> of frames per second.</span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/combine_plots/combine_plots</span> <span class="kw">\</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   -i temp/0158.png:temp/0159.png:temp/0159.png <span class="kw">\</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   -o video.webm <span class="kw">\</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   -i temp/0158.png:temp/0159.png <span class="kw">\</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   -o output/video.webm <span class="kw">\</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>   -f 1</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> version 4.1 Copyright (c) <span class="ex">2000-2018</span> the FFmpeg developers</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">built</span> with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) <span class="ex">20160609</span></span>
@@ -431,28 +437,23 @@
 <span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">libswscale</span>      5.  3.100 /  5.  3.100</span>
 <span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">libswresample</span>   3.  3.100 /  3.  3.100</span>
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">libpostproc</span>    55.  3.100 / 55.  3.100</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Input</span> #0, image2, from <span class="st">&#39;/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/temp/0158.png&#39;</span>:</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Duration</span>: 00:00:01.00, start: 0.000000, bitrate: N/A</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Input</span> #0, png_pipe, from <span class="st">&#39;concat:/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/temp/0158.png|/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/temp/0159.png&#39;</span>:</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Duration</span>: N/A, bitrate: N/A</span>
 <span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Stream</span> #0:0: Video: png, rgba64be(pc), <span class="ex">1728x936</span> [SAR 72:72 DAR 24:13], 1 tbr, 1 tbn, 1 tbc</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="ex">Input</span> #1, png_pipe, from <span class="st">&#39;/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/temp/0159.png&#39;</span>:</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Duration</span>: N/A, bitrate: N/A</span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Stream</span> #1:0: Video: png, rgba64be(pc), <span class="ex">1728x936</span> [SAR 72:72 DAR 24:13], 25 tbr, 25 tbn, 25 tbc</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="ex">Input</span> #2, png_pipe, from <span class="st">&#39;/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/temp/0159.png&#39;</span>:</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Duration</span>: N/A, bitrate: N/A</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Stream</span> #2:0: Video: png, rgba64be(pc), <span class="ex">1728x936</span> [SAR 72:72 DAR 24:13], 25 tbr, 25 tbn, 25 tbc</span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="ex">Stream</span> mapping:</span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Stream</span> #0:0 -<span class="op">&gt;</span> #0:0 (png (native) <span class="ex">-</span><span class="op">&gt;</span> vp9 (libvpx-vp9))</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="ex">Press</span> [q] to stop, [?] for help</span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>[<span class="ex">libvpx-vp9</span> @ 0xdfb940] v1.8.0</span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="ex">Output</span> #0, webm, to <span class="st">&#39;/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/video.webm&#39;</span>:</span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Metadata</span>:</span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>    <span class="ex">encoder</span>         : Lavf58.20.100</span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Stream</span> #0:0: Video: vp9 (libvpx-vp9), <span class="ex">yuva420p</span>, 1728x936 [SAR 1:1 DAR 24:13], q=-1--1, 200 kb/s, 1 fps, 1k tbn, 1 tbc</span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Metadata</span>:</span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>      <span class="ex">encoder</span>         : Lavc58.35.100 libvpx-vp9</span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Side</span> data:</span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>      <span class="ex">cpb</span>: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1</span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="va">frame=</span>    <span class="ex">1</span> fps=0.0 q=0.0 Lsize=     110kB time=00:00:00.00 bitrate=898256.0kbits/s speed=0.00105x    </span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="ex">video</span>:109kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.804410%</span></code></pre></div>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="ex">Stream</span> mapping:</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Stream</span> #0:0 -<span class="op">&gt;</span> #0:0 (png (native) <span class="ex">-</span><span class="op">&gt;</span> vp9 (libvpx-vp9))</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="ex">Press</span> [q] to stop, [?] for help</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>[<span class="ex">libvpx-vp9</span> @ 0x2251100] v1.8.0</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="ex">Output</span> #0, webm, to <span class="st">&#39;/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/output/video.webm&#39;</span>:</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Metadata</span>:</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">encoder</span>         : Lavf58.20.100</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Stream</span> #0:0: Video: vp9 (libvpx-vp9), <span class="ex">yuva420p</span>, 1728x936 [SAR 1:1 DAR 24:13], q=-1--1, 200 kb/s, 1 fps, 1k tbn, 1 tbc</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Metadata</span>:</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>      <span class="ex">encoder</span>         : Lavc58.35.100 libvpx-vp9</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Side</span> data:</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>      <span class="ex">cpb</span>: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="va">frame=</span>    <span class="ex">2</span> fps=1.7 q=0.0 Lsize=     137kB time=00:00:01.00 bitrate=1122.3kbits/s speed=0.839x    </span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="ex">video</span>:136kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.707094%</span></code></pre></div>
+<p>This concludes the manual approach to running the scripts. In the next section, we will automate this by means of a bash script.</p>
 </body>
 </html>
