@@ -64,7 +64,7 @@ Let us start with the smallest possible [viash config], which is an almost trivi
 [`viash run`] is a command for running a component as defined by the [viash config].
 You can run it as follows:
 
-```{sh echo = F, results = "asis"}
+```{sh}
 viash run src/intro_example1.vsh.yaml
 ```
 
