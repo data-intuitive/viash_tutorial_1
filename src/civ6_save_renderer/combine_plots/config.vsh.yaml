@@ -2,12 +2,18 @@ functionality:
   name: combine_plots
   namespace: civ6_save_renderer
   description: Combine multiple images into a movie using ffmpeg.
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--input"
       alternatives: [-i]
       type: file
       required: true
-      default: "/path/to/my/dir"
+      default: "plot1.png:plot2.png"
       must_exist: true
       multiple: true
       description: A list of images.

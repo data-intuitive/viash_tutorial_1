@@ -30,13 +30,13 @@ Both are explained in [section 1] above.
 
 # `convert_plot`
 
-`convert_plot` should convert a PDF map into a `.png` version. [ImageMagic] is a suite of command line tools for UNIX-like systems that can achieve this simply by running
+`convert_plot` should convert a PDF map into a `.png` version. [ImageMagick] is a suite of command line tools for UNIX-like systems that can achieve this simply by running
 
 ```
 convert input.pdf -flatten output.png
 ```
 
-Additional arguments can be provided, but are not required since ImageMagic is pretty good at getting the defaults right. [ImageMagic] will probably not be on everyone's machine as a locally installed tool, however. We would to enable the conversion from pdf to png in a seamless way. Let's use [viash] for this...
+Additional arguments can be provided, but are not required since [ImageMagick] is pretty good at getting the defaults right. [ImageMagick] will probably not be on everyone's machine as a locally installed tool, however. We would to enable the conversion from pdf to png in a seamless way. Let's use [viash] for this...
 
 ## The viash configuration
 
@@ -64,7 +64,13 @@ The script is not so much different from the CLI example we gave above. The only
 
 The argument `--input` defined in the config is automatically associated with `$par_input` and likewise for `--output`. This makes it easy to write scripts and immediately get a command-line parser for free when using [viash].
 
-If the script is more complicated than just this one instruction (and it can be, believe me) it is possible to set default values for those parameters in the script itself. This way, the script can be developed on its own without requiring [viash] directly.
+If the script is more complicated than just this one instruction (it usually is), it is possible to set default values for those parameters in the script itself. This way, the script can be developed on its own without requiring [viash] directly. This can be achieved by including the following code block at the top of the file. This syntax is similar but slightly different depending on the scripting lanuage used.
+```sh
+## VIASH START
+par_input=input.pdf
+par_output=output.png
+## VIASH END
+```
 
 If we focus on `--input` for a second, we notice the following attributes:
 
@@ -87,11 +93,11 @@ We've covered how to specify resources earlier in the previous section. Suffice 
 
 ### Platforms
 
-Two platforms are defined in the present case: a Docker one and a native one. We point the Docker platform to an [ existing Docker image](https://hub.docker.com/r/dpokidov/imagemagick/) available on Docker Hub.
+Two platforms are defined in the present case: a Docker one and a native one. We point the Docker platform to an [existing Docker image](https://hub.docker.com/r/dpokidov/imagemagick/) available on Docker Hub.
 
 ## Building the executable
 
-Building an executable can be done just like before. We assume ImageMagic is not installed on the local system and thus build the Docker version:
+Building an executable can be done just like before. We assume ImageMagick is not installed on the local system and thus build the Docker version:
 
 ```{sh}
 viash build src/convert_plot/config.vsh.yaml -o bin/ -p docker
@@ -139,27 +145,20 @@ bin/convert_plot -i data/viash.pdf -o data/viash.png
 
 Ok, so this should work now:
 
-![PNG from PDF using convert_plot](data/viash.png){height=400px}
+<!-- See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/ -->
 
-<!--
-See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/
--->
+![PNG from PDF using convert_plot](data/viash.png)
 
-<style>
-img[alt="PNG from PDF using convert_plot"] {
-   border: 1px solid black;
-}
-</style>
 
 ## Without viash
 
 Please note that in the above example, the input file and output file reside on the host image while the conversion process is running inside a Docker container. If we would want to achieve this without [viash], we would need something like this:
 
 ```sh
-docker run -i -v `pwd`:/mount dpokidov/imagemagick /mount/data/viash.pdf -flatten /mount/data/viash.png
+docker run -i -v `pwd`:/mount dpokidov/ImageMagick /mount/data/viash.pdf -flatten /mount/data/viash.png
 ```
 
-This requires some mental bookkeeping to understand the difference between the host's file system and the one inside the container. It also requires one to know how the container's commands are parsed. In this case the `convert` command from ImageMagic is automatically called with the options we provide. But that may be different for every container and depends on the contents of the `Dockerfile`.
+This requires some mental bookkeeping to understand the difference between the host's file system and the one inside the container. It also requires one to know how the container's commands are parsed. In this case the `convert` command from ImageMagick is automatically called with the options we provide. But that may be different for every container and depends on the contents of the `Dockerfile`.
 
 Also, while the above explicit `docker` command achieves our aim, it does not fully cover the use-case that we tackle using [viash]. For a correct comparison, we would have to run our custom script in the container. But then, we would have to make a few updates:
 
@@ -232,17 +231,8 @@ bin/convert_plot -i data/viash1.pdf -o data/viash1.png
 
 Ok, so this should work now:
 
-![PNG from PDF using convert_plot](data/viash1.png){height=400px}
+![PNG from PDF using convert_plot](data/viash1.png)
 
-<!--
-See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/
--->
-
-<style>
-img[alt="PNG from PDF using convert_plot"] {
-   border: 1px solid black;
-}
-</style>
 
 We now have 2 `png` files and should be able to run our `combine_plots` component. But first, we'll build the executable:
 
