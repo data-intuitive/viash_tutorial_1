@@ -6,3 +6,4 @@ README_cache
 node_modules
 package-lock.json
 viash.yaml
+.DS_Store
