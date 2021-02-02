@@ -9,10 +9,6 @@ title: Viash Workshop 1 - Civilization Postgame
 ---
 
 
-```{r, setup, include=FALSE}
-knitr::opts_knit$set(root.dir = '..')
-```
-
 # Setting the stage for viash
 
 The application domain of [viash] is not limited to just biomedical research. In this workshop, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
@@ -58,7 +54,7 @@ Your first task in this workshop is to play a game of Civilization VI, yay! See 
 
 Just kidding. We did the fun part and already created autosaves for you. If you check the `data` folder, you will see five autosave files.
 
-```{bash, }
+```{bash}
 ls -l data
 ```
 
@@ -146,7 +142,7 @@ fs.writeFileSync(par["output"], tsvLines);
 
 Note that at this stage, the imported data looks very raw. These are the first 10 rows and 10 columns of the generated tsv.
 ```{r, echo=FALSE}
-tab <- readr::read_tsv("010-Description/img/AutoSave_0159.tsv", col_types = readr::cols(.default = "f", buffer1 = "c", buffer2 = "c"))
+tab <- readr::read_tsv("img/AutoSave_0159.tsv", col_types = readr::cols(.default = "f", buffer1 = "c", buffer2 = "c"))
 knitr::kable(tab[1:10, 1:10])
 ```
 
