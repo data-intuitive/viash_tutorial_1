@@ -1,14 +1,15 @@
 ---
 author: Data Intuitive
-date: Tuesday - January 26, 2021
+date: 'Tuesday - January 26, 2021'
 mainfont: Roboto Condensed
 monobackgroundcolor: lightgrey
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
-title: Viash Workshop 1 - Testing
+title: 'Viash Workshop 1 - Testing'
 ---
 
-# Introduction
+Introduction
+============
 
 > blabla
 
@@ -18,11 +19,13 @@ introduce the [viash](https://github.com/data-intuitive/viash) approach:
 -   `convert_plot`
 -   `combine_plots`
 
-# `convert_plot`
+`convert_plot`
+==============
 
 `convert_plot` converts a PDF (map) into a `.png` version.
 
-## The viash configuration
+The viash configuration
+-----------------------
 
 We covered the functionality of this component already in the previous
 sections. In this section, we show how to add (unit) tests to the
@@ -57,16 +60,22 @@ functionality:
   name: convert_plot
   namespace: civ6_save_renderer
   description: Convert a plot from pdf to png.
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--input"
-      alternatives: [ "-i" ]
+      alternatives: [-i]
       type: file
       required: true
       default: "input.pdf"
       must_exist: true
       description: "A PDF input file."
     - name: "--output"
-      alternatives: [ "-o" ]
+      alternatives: [-o]
       type: file
       required: true
       default: "output.png"
@@ -141,30 +150,31 @@ performs the OCR.
 The only difference with the `platforms` definition earlier is the
 installation of an additional package in the container.
 
-## Running the tests
+Running the tests
+-----------------
 
 In order to run the tests using the default platform (`docker` in our
 current example), we can simply run:
 
 ``` {.sh}
 > viash test src/civ6_save_renderer/convert_plot/config.vsh.yaml
-Running tests in temporary directory: '/tmp/viash_test_convert_plot2025494967311839984'
+Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_convert_plot12685427276632255088'
 ====================================================================
-+/tmp/viash_test_convert_plot2025494967311839984/build_executable/convert_plot ---setup
-> docker build -t civ6_save_renderer/convert_plot:latest --no-cache /tmp/viashsetupdocker-convert_plot-M29FeJ
++<...>/workspace/viash_temp/viash_test_convert_plot12685427276632255088/build_executable/convert_plot ---setup
+> docker build -t civ6_save_renderer/convert_plot:1.0 --no-cache <...>/workspace/viash_temp/viashsetupdocker-convert_plot-y2oicX
 Sending build context to Docker daemon  17.41kB
 
 Step 1/2 : FROM dpokidov/imagemagick
  ---> 0ce61e775be8
 Step 2/2 : RUN apt-get update &&   apt-get install -y tesseract-ocr &&   rm -rf /var/lib/apt/lists/*
- ---> Running in 95244249288c
+ ---> Running in b2ef5cb3e708
 Get:1 http://security.debian.org/debian-security buster/updates InRelease [65.4 kB]
 Get:2 http://deb.debian.org/debian buster InRelease [121 kB]
 Get:3 http://deb.debian.org/debian buster-updates InRelease [51.9 kB]
-Get:4 http://security.debian.org/debian-security buster/updates/main amd64 Packages [270 kB]
+Get:4 http://security.debian.org/debian-security buster/updates/main amd64 Packages [266 kB]
 Get:5 http://deb.debian.org/debian buster/main amd64 Packages [7907 kB]
 Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [7848 B]
-Fetched 8424 kB in 2s (3668 kB/s)
+Fetched 8420 kB in 2s (3373 kB/s)
 Reading package lists...
 Reading package lists...
 Building dependency tree...
@@ -183,7 +193,7 @@ The following NEW packages will be installed:
   libthai-data libthai0 libx11-6 libx11-data libxau6 libxcb-render0
   libxcb-shm0 libxcb1 libxdmcp6 libxext6 libxrender1 shared-mime-info
   tesseract-ocr tesseract-ocr-eng tesseract-ocr-osd xdg-user-dirs
-0 upgraded, 32 newly installed, 0 to remove and 2 not upgraded.
+0 upgraded, 32 newly installed, 0 to remove and 3 not upgraded.
 Need to get 15.4 MB of archives.
 After this operation, 51.1 MB of additional disk space will be used.
 Get:1 http://deb.debian.org/debian buster/main amd64 fontconfig amd64 2.13.1-2 [405 kB]
@@ -219,7 +229,7 @@ Get:30 http://deb.debian.org/debian buster/main amd64 tesseract-ocr-osd all 1:4.
 Get:31 http://deb.debian.org/debian buster/main amd64 tesseract-ocr amd64 4.0.0-2 [262 kB]
 Get:32 http://deb.debian.org/debian buster/main amd64 xdg-user-dirs amd64 0.17-2 [53.8 kB]
 debconf: delaying package configuration, since apt-utils is not installed
-Fetched 15.4 MB in 1s (21.2 MB/s)
+Fetched 15.4 MB in 2s (7122 kB/s)
 Selecting previously unselected package fontconfig.
 (Reading database ... 
 (Reading database ... 5%
@@ -373,12 +383,12 @@ Setting up libpangoft2-1.0-0:amd64 (1.42.4-8~deb10u1) ...
 Setting up libpangocairo-1.0-0:amd64 (1.42.4-8~deb10u1) ...
 Setting up tesseract-ocr (4.0.0-2) ...
 Processing triggers for libc-bin (2.28-10) ...
-Removing intermediate container 95244249288c
- ---> 382e318a8391
-Successfully built 382e318a8391
-Successfully tagged civ6_save_renderer/convert_plot:latest
+Removing intermediate container b2ef5cb3e708
+ ---> 05d0499153aa
+Successfully built 05d0499153aa
+Successfully tagged civ6_save_renderer/convert_plot:1.0
 ====================================================================
-+/tmp/viash_test_convert_plot2025494967311839984/test_run_test.sh/run_test.sh
++<...>/workspace/viash_temp/viash_test_convert_plot12685427276632255088/test_run_test.sh/run_test.sh
 + convert_plot -i dummy.pdf -o dummy.png
 convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `dummy.png' @ warning/png.c/MagickPNGWarningHandler/1748.
 + [[ ! -f dummy.png ]]
@@ -388,8 +398,8 @@ Warning: Invalid resolution 0 dpi. Using 70 instead.
 Estimating resolution as 157
 ++ grep Dummy dummy-ocr.txt
 + [[ ! -n Dummy PDF file ]]
->>> Test finished successfully
 + echo '>>> Test finished successfully'
+>>> Test finished successfully
 ====================================================================
 SUCCESS! All 1 out of 1 test scripts succeeded!
 Cleaning up temporary directory
@@ -408,7 +418,8 @@ If tests are successful, the temporary directory is removed (unless
 
 This is a quick way to run a test on a component.
 
-# `combine_plots`
+`combine_plots`
+===============
 
 We do something similar for the component that combines different `png`
 (map) files into one `webm` video. Let us see how we can do something
@@ -428,12 +439,18 @@ functionality:
   name: combine_plots
   namespace: civ6_save_renderer
   description: Combine multiple images into a movie using ffmpeg.
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--input"
       alternatives: [-i]
       type: file
       required: true
-      default: "/path/to/my/dir"
+      default: "plot1.png:plot2.png"
       must_exist: true
       multiple: true
       description: A list of images.
@@ -498,9 +515,9 @@ based on the images that have been downloaded as resources.
 
 ``` {.sh}
 > viash test src/civ6_save_renderer/combine_plots/config.vsh.yaml
-Running tests in temporary directory: '/tmp/viash_test_combine_plots8957513845281034328'
+Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_combine_plots17213171316286762657'
 ====================================================================
-+/tmp/viash_test_combine_plots8957513845281034328/build_executable/combine_plots ---setup
++<...>/workspace/viash_temp/viash_test_combine_plots17213171316286762657/build_executable/combine_plots ---setup
 > docker pull jrottenberg/ffmpeg
 Using default tag: latest
 latest: Pulling from jrottenberg/ffmpeg
@@ -508,7 +525,7 @@ Digest: sha256:21eb739725c43bd7187982e5fa4b5371b495d1d1f6f61ae1719ca794817f8641
 Status: Image is up to date for jrottenberg/ffmpeg:latest
 docker.io/jrottenberg/ffmpeg:latest
 ====================================================================
-+/tmp/viash_test_combine_plots8957513845281034328/test_run_test.sh/run_test.sh
++<...>/workspace/viash_temp/viash_test_combine_plots17213171316286762657/test_run_test.sh/run_test.sh
 ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
   built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 20160609
   configuration: --disable-debug --disable-doc --disable-ffplay --enable-shared --enable-avresample --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-gpl --enable-libass --enable-libfreetype --enable-libvidstab --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx265 --enable-libxvid --enable-libx264 --enable-nonfree --enable-openssl --enable-libfdk_aac --enable-libkvazaar --enable-libaom --extra-libs=-lpthread --enable-postproc --enable-small --enable-version3 --extra-cflags=-I/opt/ffmpeg/include --extra-ldflags=-L/opt/ffmpeg/lib --extra-libs=-ldl --prefix=/opt/ffmpeg
@@ -521,37 +538,13 @@ ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
   libswscale      5.  3.100 /  5.  3.100
   libswresample   3.  3.100 /  3.  3.100
   libpostproc    55.  3.100 / 55.  3.100
-Input #0, image2, from 'frame_0000.png':
-  Duration: 00:00:01.00, start: 0.000000, bitrate: N/A
-    Stream #0:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 1 tbr, 1 tbn, 1 tbc
-Input #1, png_pipe, from 'frame_0001.png':
+Input #0, png_pipe, from 'concat:frame_0000.png|frame_0001.png|frame_0002.png|frame_0003.png|frame_0004.png|frame_0005.png|frame_0006.png|frame_0007.png|frame_0008.png':
   Duration: N/A, bitrate: N/A
-    Stream #1:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 25 tbr, 25 tbn, 25 tbc
-Input #2, png_pipe, from 'frame_0002.png':
-  Duration: N/A, bitrate: N/A
-    Stream #2:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 25 tbr, 25 tbn, 25 tbc
-Input #3, png_pipe, from 'frame_0003.png':
-  Duration: N/A, bitrate: N/A
-    Stream #3:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 25 tbr, 25 tbn, 25 tbc
-Input #4, png_pipe, from 'frame_0004.png':
-  Duration: N/A, bitrate: N/A
-    Stream #4:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 25 tbr, 25 tbn, 25 tbc
-Input #5, png_pipe, from 'frame_0005.png':
-  Duration: N/A, bitrate: N/A
-    Stream #5:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 25 tbr, 25 tbn, 25 tbc
-Input #6, png_pipe, from 'frame_0006.png':
-  Duration: N/A, bitrate: N/A
-    Stream #6:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 25 tbr, 25 tbn, 25 tbc
-Input #7, png_pipe, from 'frame_0007.png':
-  Duration: N/A, bitrate: N/A
-    Stream #7:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 25 tbr, 25 tbn, 25 tbc
-Input #8, png_pipe, from 'frame_0008.png':
-  Duration: N/A, bitrate: N/A
-    Stream #8:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 25 tbr, 25 tbn, 25 tbc
+    Stream #0:0: Video: png, rgba(pc), 812x612 [SAR 3937:3937 DAR 203:153], 1 fps, 1 tbr, 1 tbn, 1 tbc
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
 Press [q] to stop, [?] for help
-[libvpx-vp9 @ 0x1e00dc0] v1.8.0
+[libvpx-vp9 @ 0x830580] v1.8.0
 Output #0, webm, to 'output.webm':
   Metadata:
     encoder         : Lavf58.20.100
@@ -560,8 +553,8 @@ Output #0, webm, to 'output.webm':
       encoder         : Lavc58.35.100 libvpx-vp9
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1
-frame=    1 fps=0.0 q=0.0 Lsize=       8kB time=00:00:00.00 bitrate=65720.0kbits/s speed=0.00425x    
-video:7kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 10.714286%
+frame=    9 fps=0.0 q=0.0 Lsize=      13kB time=00:00:08.00 bitrate=  13.2kbits/s speed=17.5x    
+video:12kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 11.627710%
 >>> Test finished successfully
 ====================================================================
 SUCCESS! All 1 out of 1 test scripts succeeded!
@@ -572,7 +565,8 @@ In order to avoid [viash](https://github.com/data-intuitive/viash)
 deleting the directory when a test succeeds, the `-k` option can be
 used.
 
-# Testing a namespace
+Testing a namespace
+===================
 
 In the previous examples we tested individual components, but we can
 test a suite of components as well. Since we stored the 2 components
@@ -585,8 +579,8 @@ following:
   civ6_save_renderer        combine_plots               docker                start                                        
   civ6_save_renderer         convert_plot               docker                start                                        
   civ6_save_renderer        combine_plots               docker     build_executable         0        1              SUCCESS
-  civ6_save_renderer        combine_plots               docker          run_test.sh         0        4              SUCCESS
-  civ6_save_renderer         convert_plot               docker     build_executable         0       15              SUCCESS
+  civ6_save_renderer        combine_plots               docker          run_test.sh         0        3              SUCCESS
+  civ6_save_renderer         convert_plot               docker     build_executable         0       27              SUCCESS
   civ6_save_renderer         convert_plot               docker          run_test.sh         0        3              SUCCESS
 ```
 
@@ -596,12 +590,12 @@ With the `--parallel` option multiple tests are run in parallel
 The contents of (the optional) `report.tsv` contains a report of the
 test run:
 
-  namespace            functionality   platform   test_name            exit_code   duration result
-  -------------------- --------------- ---------- ------------------ ----------- ---------- ---------
-  civ6_save_renderer   combine_plots   docker     build_executable             0          1 SUCCESS
-  civ6_save_renderer   combine_plots   docker     run_test.sh                  0          4 SUCCESS
-  civ6_save_renderer   convert_plot    docker     build_executable             0         15 SUCCESS
-  civ6_save_renderer   convert_plot    docker     run_test.sh                  0          3 SUCCESS
+  namespace              functionality    platform   test\_name            exit\_code   duration result
+  ---------------------- ---------------- ---------- ------------------- ------------ ---------- ---------
+  civ6\_save\_renderer   combine\_plots   docker     build\_executable              0          1 SUCCESS
+  civ6\_save\_renderer   combine\_plots   docker     run\_test.sh                   0          3 SUCCESS
+  civ6\_save\_renderer   convert\_plot    docker     build\_executable              0         27 SUCCESS
+  civ6\_save\_renderer   convert\_plot    docker     run\_test.sh                   0          3 SUCCESS
 
 For each component, you see the 2 steps from above: 1) build the
 executable and 2) run the actual test.

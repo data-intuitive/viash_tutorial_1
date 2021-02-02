@@ -1,14 +1,15 @@
 ---
 author: Data Intuitive
-date: Tuesday - January 26, 2021
+date: 'Tuesday - January 26, 2021'
 mainfont: Roboto Condensed
 monobackgroundcolor: lightgrey
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
-title: Viash Workshop 1 - Viash Primer
+title: 'Viash Workshop 1 - Viash Primer'
 ---
 
-# What constitutes a step?
+What constitutes a step?
+========================
 
 A step in the rendering of the video contains of one aspect that can be
 considered on its own. Understanding the logic of a step, however, is
@@ -31,7 +32,8 @@ let's first look at some small examples to gradually demonstrate how
 installing the latest release of
 [viash](https://github.com/data-intuitive/viash)!
 
-## Installing viash
+Installing viash
+----------------
 
 Installation of [viash](https://github.com/data-intuitive/viash) is
 explained in
@@ -89,7 +91,8 @@ Subcommands:
   ns
 ```
 
-## Example 1: a minimal viash config file
+Example 1: a minimal viash config file
+--------------------------------------
 
 A core concept in [viash](https://github.com/data-intuitive/viash) is
 the [viash config](https://www.data-intuitive.com/viash_docs/config),
@@ -116,7 +119,15 @@ a command for running a component as defined by the [viash
 config](https://www.data-intuitive.com/viash_docs/config). You can run
 it as follows:
 
-Makefile README.Rmd README.html README.md README_cache bin casts src
+``` {.sh}
+> viash run src/intro_example1.vsh.yaml
+casts
+Makefile
+README.html
+README.md
+README.Rmd
+src
+```
 
 Perhaps unsurprisingly, this performs an `ls` in the *current* directory
 which in this case is where
@@ -127,7 +138,8 @@ It's just a wrapper around the `ls` command.
 
 Let's go one step further.
 
-## Example 2: adding some arguments
+Example 2: adding some arguments
+--------------------------------
 
 Software components are (usually) not useful unless they have some
 arguments which you can specify and change.
@@ -157,13 +169,11 @@ scenarios:
 
 ``` {.sh}
 > viash run src/intro_example2.vsh.yaml
+casts
 Makefile
-README.Rmd
 README.html
 README.md
-README_cache
-bin
-casts
+README.Rmd
 src
 ```
 
@@ -172,22 +182,21 @@ let us pass the argument `-l` to `intro_example2`:
 
 ``` {.sh}
 > viash run src/intro_example2.vsh.yaml -- -l
-total 336
--rw-r--r--   1 toni  staff    608 Jan 27 15:46 Makefile
--rw-r--r--   1 toni  staff  10654 Jan 28 11:10 README.Rmd
--rw-r--r--@  1 toni  staff  78267 Jan 28 09:10 README.html
--rw-r--r--   1 toni  staff  23172 Jan 28 09:10 README.md
-drwxr-xr-x   3 toni  staff     96 Jan 27 10:56 README_cache
-drwxr-xr-x   9 toni  staff    288 Jan 28 09:10 bin
-drwxr-xr-x  35 toni  staff   1120 Jan 27 16:00 casts
-drwxr-xr-x   9 toni  staff    288 Jan 27 14:17 src
+total 120
+drwxr-xr-x. 1 rcannood rcannood   644 Jan 28 08:35 casts
+-rw-r--r--. 1 rcannood rcannood   627 Feb  2 14:25 Makefile
+-rw-r--r--. 1 rcannood rcannood 78267 Jan 28 11:26 README.html
+-rw-r--r--. 1 rcannood rcannood 23172 Jan 28 11:26 README.md
+-rw-r--r--. 1 rcannood rcannood 10627 Feb  2 12:08 README.Rmd
+drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
 ```
 
 Please note that options *before* the `--` are considered for
 [viash](https://github.com/data-intuitive/viash) while options after the
 `--` are for the tool that is wrapped (in this case `ls`).
 
-## Example 3: setting different argument types
+Example 3: setting different argument types
+-------------------------------------------
 
 Not all arguments are boolean flags such as specified in the previous
 example. In this [viash
@@ -217,29 +226,27 @@ directory (like before).
 
 ``` {.sh}
 > viash run src/intro_example3.vsh.yaml -- -l
-total 336
--rw-r--r--   1 toni  staff    608 Jan 27 15:46 Makefile
--rw-r--r--   1 toni  staff  10654 Jan 28 11:10 README.Rmd
--rw-r--r--@  1 toni  staff  78267 Jan 28 09:10 README.html
--rw-r--r--   1 toni  staff  23172 Jan 28 09:10 README.md
-drwxr-xr-x   3 toni  staff     96 Jan 27 10:56 README_cache
-drwxr-xr-x   9 toni  staff    288 Jan 28 09:10 bin
-drwxr-xr-x  35 toni  staff   1120 Jan 27 16:00 casts
-drwxr-xr-x   9 toni  staff    288 Jan 27 14:17 src
+total 120
+drwxr-xr-x. 1 rcannood rcannood   644 Jan 28 08:35 casts
+-rw-r--r--. 1 rcannood rcannood   627 Feb  2 14:25 Makefile
+-rw-r--r--. 1 rcannood rcannood 78267 Jan 28 11:26 README.html
+-rw-r--r--. 1 rcannood rcannood 23172 Jan 28 11:26 README.md
+-rw-r--r--. 1 rcannood rcannood 10627 Feb  2 12:08 README.Rmd
+drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
 ```
 
 However, we can now also list the contents of a different directory.
 
 ``` {.sh}
 > viash run src/intro_example3.vsh.yaml -- src/ -l
-total 56
--rw-r--r--  1 toni  staff   89 Jan 27 14:17 intro_example1.vsh.yaml
--rw-r--r--  1 toni  staff  186 Jan 27 14:17 intro_example2.vsh.yaml
--rw-r--r--  1 toni  staff  239 Jan 27 14:17 intro_example3.vsh.yaml
--rw-r--r--  1 toni  staff  543 Jan 27 14:17 intro_example4.vsh.yaml
--rw-r--r--  1 toni  staff  613 Jan 27 14:17 intro_example5.vsh.yaml
--rw-r--r--  1 toni  staff  593 Jan 27 14:17 intro_example6.vsh.yaml
--rw-r--r--  1 toni  staff   58 Jan 27 14:17 script.sh
+total 28
+-rw-r--r--. 1 rcannood rcannood  89 Jan 28 08:35 intro_example1.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 186 Jan 28 08:35 intro_example2.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 239 Jan 28 08:35 intro_example3.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 543 Jan 28 08:35 intro_example4.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 613 Jan 28 08:35 intro_example5.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example6.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood  58 Jan 28 08:35 script.sh
 ```
 
 You can always retrieve information about the component by requesting
@@ -267,7 +274,8 @@ regarding the
 [functionality](https://www.data-intuitive.com/viash_docs/config/functionality)
 specifications.
 
-## Example 4: adding documentation
+Example 4: adding documentation
+-------------------------------
 
 The help from the last `intro_example3` does not show a lot of useful
 information. Let's add some documentation regarding the component and
@@ -320,7 +328,8 @@ Options:
         Which directory to list the contents of.
 ```
 
-## Example 4 part 2: building an *executable*
+Example 4 part 2: building an *executable*
+------------------------------------------
 
 Suppose `intro_example4` from above is exactly what we need as
 standalone tool for ourselves or other people to use. Obviously,
@@ -365,20 +374,21 @@ Options:
 
 ``` {.sh}
 > bin/intro_example4 src/ -l
-total 56
--rw-r--r--  1 toni  staff   89 Jan 27 14:17 intro_example1.vsh.yaml
--rw-r--r--  1 toni  staff  186 Jan 27 14:17 intro_example2.vsh.yaml
--rw-r--r--  1 toni  staff  239 Jan 27 14:17 intro_example3.vsh.yaml
--rw-r--r--  1 toni  staff  543 Jan 27 14:17 intro_example4.vsh.yaml
--rw-r--r--  1 toni  staff  613 Jan 27 14:17 intro_example5.vsh.yaml
--rw-r--r--  1 toni  staff  593 Jan 27 14:17 intro_example6.vsh.yaml
--rw-r--r--  1 toni  staff   58 Jan 27 14:17 script.sh
+total 28
+-rw-r--r--. 1 rcannood rcannood  89 Jan 28 08:35 intro_example1.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 186 Jan 28 08:35 intro_example2.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 239 Jan 28 08:35 intro_example3.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 543 Jan 28 08:35 intro_example4.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 613 Jan 28 08:35 intro_example5.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example6.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood  58 Jan 28 08:35 script.sh
 ```
 
 You can now share this `bin/intro_example4` file with others, or add it
 to your `~/bin` directory to turn it into a system-wide command.
 
-## Example 5: running the component inside a Docker container
+Example 5: running the component inside a Docker container
+----------------------------------------------------------
 
 In the above examples, we ran the components on our local system. This
 is simple as long as the wrapped tool at hand (`ls` in this case) is
@@ -437,30 +447,27 @@ Docker.
 
 ``` {.sh}
 > bin/intro_example5 / -l
-total 52
-lrwxrwxrwx   1 root root    7 Jul 29  2020 bin -> usr/bin
-drwxr-xr-x   2 root root 4096 Apr 15  2020 boot
-drwxr-xr-x   5 root root  340 Jan 28 10:11 dev
-drwxr-xr-x   1 root root 4096 Jan 28 10:11 etc
-drwxr-xr-x   2 root root 4096 Apr 15  2020 home
-drwxr-xr-x   3 root root 4096 Jan 28 10:11 host_mnt
-lrwxrwxrwx   1 root root    7 Jul 29  2020 lib -> usr/lib
-lrwxrwxrwx   1 root root    9 Jul 29  2020 lib32 -> usr/lib32
-lrwxrwxrwx   1 root root    9 Jul 29  2020 lib64 -> usr/lib64
-lrwxrwxrwx   1 root root   10 Jul 29  2020 libx32 -> usr/libx32
-drwxr-xr-x   2 root root 4096 Jul 29  2020 media
-drwxr-xr-x   2 root root 4096 Jul 29  2020 mnt
-drwxr-xr-x   2 root root 4096 Jul 29  2020 opt
-dr-xr-xr-x 188 root root    0 Jan 28 10:11 proc
-drwx------   2 root root 4096 Jul 29  2020 root
-drwxr-xr-x   1 root root 4096 Aug 19 21:14 run
-lrwxrwxrwx   1 root root    8 Jul 29  2020 sbin -> usr/sbin
-drwxr-xr-x   2 root root 4096 Jul 29  2020 srv
-dr-xr-xr-x  13 root root    0 Jan 26 14:00 sys
-drwxrwxrwt   2 root root 4096 Jul 29  2020 tmp
-drwxr-xr-x   1 root root 4096 Jul 29  2020 usr
-drwxr-xr-x   1 root root 4096 Jul 29  2020 var
-drwxr-xr-x   1 root root 1380 Jan 19 14:29 viash_automount
+total 20
+lrwxrwxrwx.   1 root root    7 Jul 27  2020 bin -> usr/bin
+dr-xr-xr-x.   7 root root 4096 Jan 21 13:11 boot
+drwxr-xr-x.  24 root root 5280 Feb  2 13:38 dev
+drwxr-xr-x.   1 root root 5336 Feb  2 12:25 etc
+drwxr-xr-x.   1 root root   16 Dec 13 05:08 home
+lrwxrwxrwx.   1 root root    7 Jul 27  2020 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Jul 27  2020 lib64 -> usr/lib64
+drwx------.   1 root root    0 Oct 19 23:33 lost+found
+drwxr-xr-x.   1 root root    0 Jul 27  2020 media
+drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
+drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
+dr-xr-xr-x. 740 root root    0 Jan 26 09:37 proc
+dr-xr-x---.   1 root root  246 Jan 22 05:38 root
+drwxr-xr-x.  54 root root 1480 Feb  2 05:39 run
+lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
+drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
+dr-xr-xr-x.  13 root root    0 Jan 26 08:37 sys
+drwxrwxrwt.  95 root root 2440 Feb  2 13:39 tmp
+drwxr-xr-x.   1 root root  106 Dec 24 09:13 usr
+drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
 ```
 
 If the `ubuntu` image is not yet available on your system, this command
@@ -473,86 +480,27 @@ itself, you would have to use a CLI instruction like
 
 ``` {.sh}
 > docker run --rm -v /:/mount ubuntu:latest ls /mount/ -l
-total 36
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 A -> /host_mnt/a
-lrwxrwxrwx   1 root root   22 Jan 19 14:29 Applications -> /host_mnt/Applications
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 B -> /host_mnt/b
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 C -> /host_mnt/c
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 D -> /host_mnt/d
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 E -> /host_mnt/e
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 F -> /host_mnt/f
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 G -> /host_mnt/g
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 H -> /host_mnt/h
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 I -> /host_mnt/i
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 J -> /host_mnt/j
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 K -> /host_mnt/k
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 L -> /host_mnt/l
-lrwxrwxrwx   1 root root   17 Jan 19 14:29 Library -> /host_mnt/Library
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 M -> /host_mnt/m
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 N -> /host_mnt/n
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 O -> /host_mnt/o
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 P -> /host_mnt/p
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 Q -> /host_mnt/q
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 R -> /host_mnt/r
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 S -> /host_mnt/s
-lrwxrwxrwx   1 root root   16 Jan 19 14:29 System -> /host_mnt/System
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 T -> /host_mnt/t
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 U -> /host_mnt/u
-lrwxrwxrwx   1 root root   15 Jan 19 14:29 Users -> /host_mnt/Users
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 V -> /host_mnt/v
-lrwxrwxrwx   1 root root   17 Jan 19 14:29 Volumes -> /host_mnt/Volumes
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 W -> /host_mnt/w
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 X -> /host_mnt/x
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 Y -> /host_mnt/y
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 Z -> /host_mnt/z
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 a -> /host_mnt/a
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 b -> /host_mnt/b
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 bin
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 boot
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 c -> /host_mnt/c
-lrwxrwxrwx   1 root root   15 Jan 19 14:29 cores -> /host_mnt/cores
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 d -> /host_mnt/d
-drwxr-xr-x  10 root root 3140 Jan 19 14:29 dev
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 e -> /host_mnt/e
-drwxr-xr-x   1 root root  200 Jan 19 14:29 etc
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 f -> /host_mnt/f
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 g -> /host_mnt/g
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 h -> /host_mnt/h
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 home
-drwxr-xr-x  23 root root  736 May 17  2020 host_mnt
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 i -> /host_mnt/i
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 j -> /host_mnt/j
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 k -> /host_mnt/k
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 l -> /host_mnt/l
-drwxr-xr-x   1 root root   60 Jan 19 14:29 lib
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 lib64
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 m -> /host_mnt/m
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 media
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 mnt
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 n -> /host_mnt/n
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 o -> /host_mnt/o
-drwxr-xr-x   1 root root   60 Jan 19 14:29 opt
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 p -> /host_mnt/p
-lrwxrwxrwx   1 root root   17 Jan 19 14:29 private -> /host_mnt/private
-dr-xr-xr-x 189 root root    0 Jan 19 14:29 proc
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 q -> /host_mnt/q
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 r -> /host_mnt/r
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 root
-drwxr-xr-x   1 root root  360 Jan 19 16:03 run
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 s -> /host_mnt/s
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 sbin
-drwxr-xr-x   2 root root 4096 Jan 19 14:29 srv
-dr-xr-xr-x  13 root root    0 Jan 26 14:00 sys
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 t -> /host_mnt/t
-drwxr-xr-x   1 root root   40 Jan 26 15:55 tmp
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 u -> /host_mnt/u
-drwxr-xr-x   1 root root  100 Jan 19 14:29 usr
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 v -> /host_mnt/v
-drwxr-xr-x   1 root root   60 Jan 19 14:29 var
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 w -> /host_mnt/w
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 x -> /host_mnt/x
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 y -> /host_mnt/y
-lrwxrwxrwx   1 root root   11 Jan 19 14:29 z -> /host_mnt/z
+total 20
+lrwxrwxrwx.   1 root root    7 Jul 27  2020 bin -> usr/bin
+dr-xr-xr-x.   7 root root 4096 Jan 21 13:11 boot
+drwxr-xr-x.  24 root root 5280 Feb  2 13:38 dev
+drwxr-xr-x.   1 root root 5336 Feb  2 12:25 etc
+drwxr-xr-x.   1 root root   16 Dec 13 05:08 home
+lrwxrwxrwx.   1 root root    7 Jul 27  2020 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Jul 27  2020 lib64 -> usr/lib64
+drwx------.   1 root root    0 Oct 19 23:33 lost+found
+drwxr-xr-x.   1 root root    0 Jul 27  2020 media
+drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
+drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
+dr-xr-xr-x. 745 root root    0 Jan 26 09:37 proc
+dr-xr-x---.   1 root root  246 Jan 22 05:38 root
+drwxr-xr-x.  54 root root 1480 Feb  2 05:39 run
+lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
+drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
+dr-xr-xr-x.  13 root root    0 Jan 26 08:37 sys
+drwxrwxrwt.  95 root root 2440 Feb  2 13:39 tmp
+drwxr-xr-x.   1 root root  106 Dec 24 09:13 usr
+drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
 ```
 
 While this is all still manageable, it could quickly become more
@@ -560,7 +508,8 @@ complicated, but that is for a later section. In what follows, we will
 also come back not only to running inside a container but also
 generating a container (based on a base image), tagging and versioning.
 
-## Example 6: Wrapping a script
+Example 6: Wrapping a script
+----------------------------
 
 While running a command wrapped as a
 [viash](https://github.com/data-intuitive/viash) component could be
@@ -612,8 +561,11 @@ We get results like this:
 
 ``` {.sh}
 > viash run src/intro_example6.vsh.yaml -p docker -- /etc --filter "^h.*"
+host.conf
+hostname
 hosts
-hosts.equiv
+hp
+httpd
 ```
 
 A lot is happening here at once, so let's unwrap this. We did not

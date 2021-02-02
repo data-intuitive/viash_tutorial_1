@@ -1,21 +1,23 @@
 ---
 author: Data Intuitive
-date: Tuesday - January 26, 2021
+date: 'Tuesday - January 26, 2021'
 mainfont: Roboto Condensed
 monobackgroundcolor: lightgrey
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
-title: Viash Workshop 1 - Viahs Components
+title: 'Viash Workshop 1 - Viahs Components'
 ---
 
-# Introduction
+Introduction
+============
 
 In this section, we cover all the components of the Civilization
 postgame generation pipeline one by one, just like in the \[introductory
 section\]. Before doing so, we first introduce the concept of a
 *namespace*.
 
-# Namespaces in [viash](https://github.com/data-intuitive/viash)
+Namespaces in [viash](https://github.com/data-intuitive/viash)
+==============================================================
 
 Once you start to make components with
 [viash](https://github.com/data-intuitive/viash) and combining them in
@@ -45,7 +47,8 @@ associate a namespace to a components:
 Let us give an example of the first 2, option 3 will be used later in
 this section.
 
-## An example
+An example
+----------
 
 We introduce a very simple component, one that only reports the release
 of an Alpine docker container, albeit the component could be used to
@@ -64,7 +67,12 @@ functionality:
     - type: executable
       path: cat
 platforms:
-...
+  - type: docker
+    id: docker1
+    image: alpine:latest
+  - type: docker
+    id: docker2
+    image: alpine:2.6
 ```
 
 We introduce two Docker platforms that can be distinguished by id
@@ -94,7 +102,7 @@ fe00::0 ip6-localnet
 ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-172.17.0.2  1487f2c567f3
+172.17.0.2  eea0648f24bf
 ```
 
 **Remark**: Please note that we did not specify the argument as
@@ -102,13 +110,15 @@ ff02::2 ip6-allrouters
 container (or at least attempt to). In this case, we effectively want to
 look inside the container.
 
-## A namespace: `container_tools`
+A namespace: `container_tools`
+------------------------------
 
 Our `container_cat` example fits nicely in a collection of components to
 deal with containers and so we want to attach the namespace
 `container_tools` to it. Let's see how this can be done.
 
-## The example in a namespace
+The example in a namespace
+--------------------------
 
 We take the example from above, but now store it in a directory
 hierarchy like this:
@@ -148,7 +158,8 @@ different directories or even source repositories and then combined on
 the level of `viash` by specifying the *target* directory (`target/` by
 default).
 
-# `civ6_save_renderer` namespace
+`civ6_save_renderer` namespace
+==============================
 
 Looking at the contents of `src/civ6_save_renderer`, we notice that
 `civ6_save_renderer` is a namespace that contains a number of
@@ -181,7 +192,8 @@ src/civ6_save_renderer
 We cover the components one by one in what follows and discuss any
 specificities that we encounter underway.
 
-## `parse_header`
+`parse_header`
+--------------
 
 Let us start with `parse_header`, it parses the headers of the save
 files.
@@ -191,7 +203,14 @@ files.
 ``` {.yaml}
 functionality:
   name: parse_header
+  namespace: civ6_save_renderer
   description: "Extract game settings from a Civ6 save file as a yaml."
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--input"
       alternatives: [-i]
@@ -199,7 +218,24 @@ functionality:
       required: true
       default: "save.Civ6Save"
       must_exist: true
-...
+      description: "A Civ6 save file."
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.yaml"
+      direction: output
+      description: "Path to store the output YAML at."
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: docker
+    image: node
+    docker:
+      run:
+        - cd /home/node && npm install civ6-save-parser
+  - type: native
 ```
 
 `src/civ6_save_renderer/parse_header/script.sh`:
@@ -208,10 +244,10 @@ functionality:
 #!/bin/bash
 
 node /home/node/node_modules/civ6-save-parser/index.js "$par_input" --simple > "$par_output"
-...
 ```
 
-## `parse_map`
+`parse_map`
+-----------
 
 The next component is `parse_map`. It is similar in nature that
 `parse_header` but this time we need a Javascript library to get the
@@ -222,7 +258,14 @@ file parsed properly:
 ``` {.yaml}
 functionality:
   name: parse_map
+  namespace: civ6_save_renderer
   description: "Extract map information from a Civ6 save file as a tsv."
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--input"
       alternatives: [-i]
@@ -230,7 +273,22 @@ functionality:
       required: true
       default: "save.Civ6Save"
       must_exist: true
-...
+      description: "A Civ6 save file."
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.tsv"
+      direction: output
+      description: "Path to store the output TSV file at."
+  resources:
+    - type: javascript_script
+      path: script.js
+    - path: helper.js
+platforms:
+  - type: docker
+    image: node
+  - type: native
 ```
 
 `src/civ6_save_renderer/parse_map/script.js`:
@@ -246,7 +304,13 @@ const json = helper.savetomap(fs.readFileSync(par["input"]));
 // convert to tsv
 const headers = Object.keys(json.tiles[0]);
 const header = headers.join("\t") + "\n";
-...
+const lines = json.tiles.map(o => {
+  return Object.values(o).map(b => JSON.stringify(b)).join("\t") + "\n";
+});
+const tsvLines = header + lines.join('')
+
+// save to file
+fs.writeFileSync(par["output"], tsvLines);
 ```
 
 This last script uses the following helper script:
@@ -270,7 +334,8 @@ component configuration.
 
 Imagine you would have to do this manually using the Docker CLI?
 
-## `plot_map`
+`plot_map`
+----------
 
 Based on the output from `parse_header` and `parse_map`, we can now
 generate a plot using `plot_map`. We have some R code to do this but the
@@ -283,7 +348,14 @@ using [viash](https://github.com/data-intuitive/viash)!
 ``` {.yaml}
 functionality:
   name: plot_map
+  namespace: civ6_save_renderer
   description: "Use the settings yaml and the map tsv to generate a plot (as PDF)."
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--yaml"
       alternatives: [-y]
@@ -291,7 +363,38 @@ functionality:
       required: true
       default: "header.yaml"
       must_exist: true
-...
+      description: "A YAML file containing civ6 game settings information."
+    - name: "--tsv"
+      alternatives: [-t]
+      type: file
+      required: true
+      default: "map.tsv"
+      must_exist: true
+      description: "A TSV file containing civ6 map information."
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.pdf"
+      direction: output
+      description: "Path to store the output PDF file at."
+  resources:
+    - type: r_script
+      path: script.R
+    - path: helper.R
+platforms:
+  - type: docker
+    image: rocker/tidyverse
+    r:
+      cran:
+        - ggforce
+        - yaml
+        - bit64
+        - ggnewscale
+        - cowplot
+      github:
+        - rcannood/civ6saves
+  - type: native
 ```
 
 `src/civ6_save_renderer/plot_map/script.R`:
@@ -307,7 +410,18 @@ source(paste0(resources_dir, "/helper.R"))
 #   tsv = "<...>/workspace/di/viash_workshop_1/data.tsv"
 # )
 
-...
+# read data
+game_data <- read_header(par$yaml)
+map_data <- read_map(par$tsv)
+
+# make visualisation
+g <- make_map_plot(game_data, map_data)
+
+# save map to file
+gleg <- cowplot::get_legend(g)
+gnoleg <- g + theme(legend.position = "none")
+gout <- cowplot::plot_grid(gnoleg, gleg, rel_widths = c(8, 1))
+ggsave(par$output, gout, width = 24, height = 13)
 ```
 
 Again there is a helper script `helper.R` that we do not completely
@@ -337,7 +451,8 @@ notebooks on the native system and once the script is ready it is then
 converted to a ([viash](https://github.com/data-intuitive/viash))
 component.
 
-## `convert_plot`
+`convert_plot`
+--------------
 
 We covered the `convert_plot` component in the previous section and so
 will only quickly render the relevant source files here:
@@ -347,7 +462,14 @@ will only quickly render the relevant source files here:
 ``` {.yaml}
 functionality:
   name: convert_plot
+  namespace: civ6_save_renderer
   description: Convert a plot from pdf to png.
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--input"
       alternatives: [-i]
@@ -355,7 +477,21 @@ functionality:
       required: true
       default: "input.pdf"
       must_exist: true
-...
+      description: "A PDF input file."
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.png"
+      direction: output
+      description: "Output path."
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: docker
+    image: dpokidov/imagemagick
+  - type: native
 ```
 
 `src/civ6_save_renderer/convert_plot/script.sh`:
@@ -364,10 +500,10 @@ functionality:
 #!/bin/bash
 
 convert "$par_input" -flatten "$par_output"
-...
 ```
 
-## `combine_plots`
+`combine_plots`
+---------------
 
 We covered the `combine_plots` component in the previous section and so
 will only quickly render the relevant source files here:
@@ -377,15 +513,42 @@ will only quickly render the relevant source files here:
 ``` {.yaml}
 functionality:
   name: combine_plots
+  namespace: civ6_save_renderer
   description: Combine multiple images into a movie using ffmpeg.
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
   arguments:
     - name: "--input"
       alternatives: [-i]
       type: file
       required: true
-      default: "/path/to/my/dir"
+      default: "plot1.png:plot2.png"
       must_exist: true
-...
+      multiple: true
+      description: A list of images.
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.webm"
+      direction: output
+      description: A path to output the movie to.
+    - name: "--framerate"
+      alternatives: [-f]
+      type: integer
+      default: 4
+      description: Number of frames per second.
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: docker
+    image: jrottenberg/ffmpeg
+  - type: native
 ```
 
 `src/civ6_save_renderer/combine_plots/script.sh`:
@@ -393,13 +556,12 @@ functionality:
 ``` {.sh}
 #!/bin/bash
 
-# render movie
-inputs=`echo $par_input | sed 's#:# -i #g'`
-ffmpeg -framerate $par_framerate -f image2 -i $inputs -c:v libvpx-vp9 -pix_fmt yuva420p -y $par_output
-...
+inputs=$(echo $par_input | tr ':' '|')
+ffmpeg -framerate $par_framerate -i "concat:$inputs" -c:v libvpx-vp9 -pix_fmt yuva420p -y "$par_output"
 ```
 
-# Building the namespace
+Building the namespace
+======================
 
 We can easily convert the full contents this namespace into executables
 using:
@@ -410,12 +572,12 @@ Exporting src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =docker=> t
 Exporting src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =native=> target/native/civ6_save_renderer/combine_plots
 Exporting src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/convert_plot
 Exporting src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =native=> target/native/civ6_save_renderer/convert_plot
-Exporting src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/plot_map
-Exporting src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =native=> target/native/civ6_save_renderer/plot_map
-Exporting src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_map
-Exporting src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =native=> target/native/civ6_save_renderer/parse_map
 Exporting src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_header
 Exporting src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =native=> target/native/civ6_save_renderer/parse_header
+Exporting src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_map
+Exporting src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =native=> target/native/civ6_save_renderer/parse_map
+Exporting src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/plot_map
+Exporting src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =native=> target/native/civ6_save_renderer/plot_map
 ```
 
 **Remark**: Please note that both the `docker` platform as well as the
@@ -433,9 +595,9 @@ And then:
 > viash ns build -n civ6_save_renderer -p docker
 Exporting src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/combine_plots
 Exporting src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/convert_plot
-Exporting src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/plot_map
-Exporting src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_map
 Exporting src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_header
+Exporting src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_map
+Exporting src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/plot_map
 ```
 
 This is what the `target` directory looks like now:
@@ -496,5 +658,5 @@ instance,
       LEADER_NAME: 'LEADER_FREE_CITIES'
     },
     {
-...
+... (cut) ...
 ```
