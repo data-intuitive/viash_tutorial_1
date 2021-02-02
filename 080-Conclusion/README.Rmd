@@ -1,0 +1,33 @@
+---
+author: Data Intuitive
+date: Tuesday - January 26, 2021
+mainfont: Roboto Condensed
+monofont: Source Code Pro
+monofontoptions: Scale=0.7
+monobackgroundcolor: lightgrey
+title: Viash Workshop 1 - Conclusion
+---
+
+```{r setup, include = FALSE}
+# set default chunk options
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  collapse = TRUE,
+  prompt = TRUE,
+  cache = T
+  # engine.opts = list(bash = "-l")
+)
+```
+
+This concludes part 1 of the [viash] workshop and tutorial. Not all aspects of [viash] have been covered:
+
+- directly running from a remote location `viash run https://...`
+- the integrated [viash] config format where config and script are stored in one file
+- advanced troubleshooting and testing scenarios
+- using [viash] for CI/CD purposes
+
+There is also one big topic that _will_ be covered in part 2 of this workshop/tutorial: Converting components/namespaces to [NextFlow] modules.
+
+
+[viash]: https://github.com/data-intuitive/viash
