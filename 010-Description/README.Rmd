@@ -55,7 +55,7 @@ Your first task in this workshop is to play a game of Civilization VI, yay! See 
 Just kidding. We did the fun part and already created autosaves for you. If you check the `data` folder, you will see five autosave files.
 
 ```{bash}
-ls -l data
+ls -l ../data
 ```
 
 ## Step 2, `parse_header`: Extract game info

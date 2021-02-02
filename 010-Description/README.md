@@ -88,7 +88,7 @@ Just kidding. We did the fun part and already created autosaves for you.
 If you check the `data` folder, you will see five autosave files.
 
 ``` {.bash}
-ls -l data
+ls -l ../data
 ```
 
     ## total 5048
@@ -122,26 +122,25 @@ command:
 node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple | head -20
 ```
 
-    ## {
-    ##   ACTORS: [
-    ##     {
-    ##       START_ACTOR: 4159575459,
-    ##       ACTOR_NAME: 'CIVILIZATION_FREE_CITIES',
-    ##       ACTOR_TYPE: 'CIVILIZATION_LEVEL_FREE_CITIES',
-    ##       ACTOR_AI_HUMAN: 1,
-    ##       LEADER_NAME: 'LEADER_FREE_CITIES'
-    ##     },
-    ##     {
-    ##       SLOT_HEADER: 19,
-    ##       ACTOR_NAME: 'CIVILIZATION_ARMAGH',
-    ##       ACTOR_TYPE: 'CIVILIZATION_LEVEL_CITY_STATE',
-    ##       ACTOR_AI_HUMAN: 1,
-    ##       LEADER_NAME: 'LEADER_MINOR_CIV_ARMAGH'
-    ##     },
-    ##     {
-    ##       START_ACTOR: 4058321742,
-    ##       ACTOR_NAME: 'CIVILIZATION_BOLOGNA',
-    ##       ACTOR_TYPE: 'CIVILIZATION_LEVEL_CITY_STATE',
+    ## internal/fs/utils.js:307
+    ##     throw err;
+    ##     ^
+    ## 
+    ## Error: ENOENT: no such file or directory, open 'data/AutoSave_0159.Civ6Save'
+    ##     at Object.openSync (fs.js:476:3)
+    ##     at Object.readFileSync (fs.js:377:35)
+    ##     at Object.<anonymous> (<...>/workspace/di/viash_workshop_1/010-Description/node_modules/civ6-save-parser/index.js:222:34)
+    ##     at Module._compile (internal/modules/cjs/loader.js:1063:30)
+    ##     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+    ##     at Module.load (internal/modules/cjs/loader.js:928:32)
+    ##     at Function.Module._load (internal/modules/cjs/loader.js:769:14)
+    ##     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    ##     at internal/main/run_main_module.js:17:47 {
+    ##   errno: -2,
+    ##   syscall: 'open',
+    ##   code: 'ENOENT',
+    ##   path: 'data/AutoSave_0159.Civ6Save'
+    ## }
 
 The output is a json file, which you save as follows.
 
