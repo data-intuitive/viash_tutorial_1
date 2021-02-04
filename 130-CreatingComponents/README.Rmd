@@ -21,86 +21,151 @@ knitr::opts_chunk$set(
 )
 ```
 
-With the information from the previous section, we will tackle two from the components in detail in this section:
+With the information from the previous section, we will wrap two components from the Civ6 use case in more detail (`convert_plot` and `plot_map`). Let's start with the easiest of the two.
 
-- `convert_plot`
-- `combine_plots`
+## `convert_plot` - a simple bash script
 
-Both are explained in [section 1] above.
+If you recall, `convert_plot` is responsible to converting the game map pdf to a png using [ImageMagick]. We will wrap this component first it is a perfect example of one of the most common type of viash components: wrapping a tool in a simple bash script.
 
-# `convert_plot`
+### Converting pdfs manually
 
-`convert_plot` should convert a PDF map into a `.png` version. [ImageMagick] is a suite of command line tools for UNIX-like systems that can achieve this simply by running
-
-```
-convert input.pdf -flatten output.png
+Installing [ImageMagick] on a Debian-based system very easy.
+```bash
+sudo apt-get install imagemagick
 ```
 
-Additional arguments can be provided, but are not required since [ImageMagick] is pretty good at getting the defaults right. [ImageMagick] will probably not be on everyone's machine as a locally installed tool, however. We would to enable the conversion from pdf to png in a seamless way. Let's use [viash] for this...
+Converting a pdf to a png is a simple one-line command.
+```bash
+#!/bin/bash
 
-## The viash configuration
+par_input=data/AutoSave_0159.pdf
+par_output=data/AutoSave_0159.png
 
-First of all, we will store all files related to one _component_ in a separate directory and give it the name of the component:
-
-```{sh}
-ls src/convert_plot
+convert "$par_input" -flatten "$par_output"
 ```
 
-Just like in the [viash] primer (of the previous section) there is a [viash] config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
+Additional arguments can be provided, but are not required since [ImageMagick] is pretty good at getting the defaults right.
 
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/convert_plot/config.vsh.yaml
+In order to wrap this script as a viash component, we need to write a viash config file. Let's start by describing the functionality in a yaml file.
+
+### Step 1: Functionality
+
+The functionality describes what the component is expected to do, with which arguments, and with which resources (files).
+For now, we provided a description on what the component does and who wrote it.
+
+```yaml
+functionality:
+  name: convert_plot
+  namespace: civ6_save_renderer
+  description: Convert a plot from pdf to png.
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
+  arguments: # to do, see step 2
+  resources: # to do, see step 3
 ```
 
-```{sh echo = F, results = "asis"}
+### Step 2: Functionality arguments
+
+Defining the arguments is also relatively simple, as there is only a single 'input' and a single 'output' file. 
+
+```yaml
+  arguments:
+    - name: "--input"
+      alternatives: [-i]
+      type: file
+      required: true
+      default: "input.pdf"
+      must_exist: true
+      description: "A PDF input file."
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.png"
+      direction: output
+      description: "Output path."
+```
+
+Arguments have many optional fields which allow to fine tweak their behaviour.
+
+* `alternatives: [-i]` - Alternative (shorter) flags to pass parameter values with.
+* `type: file` - The value for this argument is either a file or a directory.
+* `required: true` - A parameter value needs to be passed when the component is invoked.
+* `default: "input.pdf"` - Sets a default value. This is irrelevant when required is true, but the value will still be used when rendering the CLI help page.
+* `must_exist: true` - This file needs to exist when the component is invoked.
+* `direction: output` - This file is an output file, not an input file. If this value is not specified, then `"input"` is assumed by default.
+* `description: "..."` - A human-readable description of this argument. Note that multiline strings can be used, if desired.
+
+
+### Step 3: Bash script
+
+There is only a single Bash script called `script.sh`. We can specify its existence as follows:
+
+```yaml
+  resources:
+    - type: bash_script
+      path: script.sh
+```
+
+The file `script.sh` is not so much different from the example we gave above. 
+The only difference is that the `par_input` and `par_output` variables are surrounded by some comments. How can this script work properly if the values of `par_input` and `par_output` are always the same?
+
+```{sh echo=F, results='asis'}
 ../scripts/cat_format src/convert_plot/script.sh
 ```
 
-Let us dissect these two files step by step.
+Well, the code block between `## VIASH START` and `## VIASH END` is entirely optional. In fact, viash will not even look at its content. When you run a viash component, the code block above will be replaced with some code to create a command-line interface through which to pass the parameters.
 
-### Arguments
+Why is this code block there in the first place? It is simply a placeholder where you can store some testing parameters while you are writing the script (so you can run `./script.sh` while writing it). 
 
-The script is not so much different from the CLI example we gave above. The only difference is that 2 variables are used: `$par_input` and `$par_output`. We use double quotes around the variables, this is a good policy in general.
+Side note: This syntax is similar but slightly different depending on the scripting language used.
 
-The argument `--input` defined in the config is automatically associated with `$par_input` and likewise for `--output`. This makes it easy to write scripts and immediately get a command-line parser for free when using [viash].
+### Step 4: Define platform(s)
 
-If the script is more complicated than just this one instruction (it usually is), it is possible to set default values for those parameters in the script itself. This way, the script can be developed on its own without requiring [viash] directly. This can be achieved by including the following code block at the top of the file. This syntax is similar but slightly different depending on the scripting lanuage used.
-```sh
-## VIASH START
-par_input=input.pdf
-par_output=output.png
-## VIASH END
+Finally, we need to specify what the system requirements are for viash to be able to run this component. If nothing is specified, the script will automatically be run on the host system natively. By going one step further, we can specify how the component can run inside a docker container.
+Luckily, there is already a Docker image available on Docker Hub for running [ImageMagick], namely [dpokidov/imagemagick](https://hub.docker.com/r/dpokidov/imagemagick).
+We can thus specify the platforms as follows:
+
+```yaml
+platforms:
+  - type: docker
+    image: dpokidov/imagemagick
+  - type: native
 ```
 
-If we focus on `--input` for a second, we notice the following attributes:
+Note that had this not been the case, the solution would have been to use a standard container (e.g. Ubuntu) and install ImageMagick manually:
+```yaml
+platforms:
+  - type: native
+  - type: docker
+    image: ubuntu
+    setup: 
+      - type: apt
+        packages: imagemagick
+```
 
-- `-i` is a (short) alternative for the longer `--input`
-- The value for this argument is of type `file` which means it's either a file or a directory.
-- With `required: true` we make this argument a mandatory one
-- The default value for the argument is `input.pdf`
-- For argument of type file like this one, we can ask [viash] to check if the file/directory exists prior to running.
-- The `description` attribute contains a human-readable description of this argument/parameter.
+Luckily, we didn't need to resort to such drastic measures.
 
-Similar attributes can be found for `--output` with one difference:
+### Step 5: Final config
 
-- `direction: output` denotes that this argument denotes an output file/option.
+This is the final viash config for this component in its entirety.
 
-In fact, `--input` also has a (hidden) `direction: input` associated to it by default.
+```{sh echo=F, results='asis'}
+../scripts/cat_format src/convert_plot/config.vsh.yaml
+```
 
-### Resources
+By notation, the file extension of a viash config file should be `.vsh.yaml`, otherwise it will not be detected by viash.
 
-We've covered how to specify resources earlier in the previous section. Suffice to say here that we point to a bash script that contains the actual command-line instruction.
+### Step 6: Building the executable
 
-### Platforms
-
-Two platforms are defined in the present case: a Docker one and a native one. We point the Docker platform to an [existing Docker image](https://hub.docker.com/r/dpokidov/imagemagick/) available on Docker Hub.
-
-## Building the executable
-
-Building an executable can be done just like before. We assume ImageMagick is not installed on the local system and thus build the Docker version:
+Building an executable can be done just like before. We assume [ImageMagick] is not installed on the local system and thus build the Docker version:
 
 ```{sh}
-viash build src/convert_plot/config.vsh.yaml -o bin/ -p docker
+viash build src/convert_plot/config.vsh.yaml -o bin -p docker
 ```
 
 We specify the `docker` platform explicitly although that is not really necessary because of the order of the platforms in the viash config. The resulting script is stored under `bin` relative to the current working directory.
@@ -111,48 +176,39 @@ We ask the generated executable to run the necessary setup. In this case, it mea
 bin/convert_plot ---setup
 ```
 
-We can retrieve the _help_
+We can display the help page of the component as follows:
 
 ```{sh}
 bin/convert_plot -h
 ```
 
-## Running the executable
+### Step 7: Running the executable
 
 Now that everything is up and running, we can start converting images. Let us first generate a simple PDF file with the help of [viash]. We start by preparing a directory to store the data:
 
 ```{sh}
-mkdir -p data/
+mkdir -p output/
 ```
 
-And then use a simple mechanism to create a very basis PDF from the [viash] help output:
+We can generate a png file from a pdf file as follows.
 
 ```{sh}
-viash -h | groff -mom -T pdf > data/viash.pdf
+bin/convert_plot -i ../data/AutoSave_0159.pdf -o output/AutoSave_0159.png
 ```
 
-This generates `data/viash.pdf` in order to verify if our conversion step works:
+`output/AutoSave_0159.png`: 
 
-```{sh, engine.opts='-l'}
-bin/convert_plot -i data/viash.pdf -o data/viash.png
-```
+![](output/AutoSave_0159.png)
 
-Ok, so this should work now:
-
-<!-- See: https://www.xaprb.com/blog/how-to-style-images-with-markdown/ -->
-
-![PNG from PDF using convert_plot](data/viash.png)
-
-
-## Without viash
+### Note on file management when running Docker images
 
 Please note that in the above example, the input file and output file reside on the host image while the conversion process is running inside a Docker container. If we would want to achieve this without [viash], we would need something like this:
 
 ```sh
-docker run -i -v `pwd`:/mount dpokidov/ImageMagick /mount/data/viash.pdf -flatten /mount/data/viash.png
+docker run -i -v `pwd`:/mount dpokidov/ImageMagick /mount/data/input.pdf -flatten /mount/data/output.png
 ```
 
-This requires some mental bookkeeping to understand the difference between the host's file system and the one inside the container. It also requires one to know how the container's commands are parsed. In this case the `convert` command from ImageMagick is automatically called with the options we provide. But that may be different for every container and depends on the contents of the `Dockerfile`.
+This requires some mental bookkeeping to understand the difference between the host's file system and the one inside the container. It also requires one to know how the container's commands are parsed. In this case the `convert` command from [ImageMagick] is automatically called with the options we provide. But that may be different for every container and depends on the contents of the `Dockerfile`.
 
 Also, while the above explicit `docker` command achieves our aim, it does not fully cover the use-case that we tackle using [viash]. For a correct comparison, we would have to run our custom script in the container. But then, we would have to make a few updates:
 
@@ -163,93 +219,133 @@ In other words:
 
 > Using [viash] all this is greatly simplified and wrapped in one executable, command-line parsing comes for free.
 
-# `combine_plots`
 
-This _component_ combines a number of `png` files in to one single movie (`webm` format).
+## `plot_map` - a more complicated R script
 
-## The viash configuration
+This component is a great example of a script which is a bit more complicated. Currently, viash supports wrapping the following scripting languages: Bash, R, Python, JavaScript, and Scala. Of course, if your favourite scripting language is not supported (yet), you can simply run it from a Bash script.
 
-First of all, we will store all files related to one _component_ in a separate directory and give it the name of the component:
+The `plot_map` component takes a `yaml` and a `tsv` file as input and outputs a map view of the information as a pdf. Note that the output of this component is actually the input of the previously mentioned component, `convert_plot`. That's okay; you can develop viash components in any order you like!
 
+Let's start by defining the functionality-part of the viash config.
+
+### Step 1: Functionality
+
+The functionality metadata is largely the same when compared to that of the previous component.
+
+```yaml
+functionality:
+  name: plot_map
+  namespace: civ6_save_renderer
+  description: "Use the settings yaml and the map tsv to generate a plot (as PDF)."
+  version: "1.0"
+  authors:
+    - name: Robrecht Cannoodt
+      email: rcannood@gmail.com
+      roles: [maintainer, author]
+      props: {github: rcannood, orcid: 0000-0003-3641-729X}
+  arguments:
+    - name: "--yaml"
+      alternatives: [-y]
+      type: file
+      required: true
+      default: "header.yaml"
+      must_exist: true
+      description: "A YAML file containing civ6 game settings information."
+    - name: "--tsv"
+      alternatives: [-t]
+      type: file
+      required: true
+      default: "map.tsv"
+      must_exist: true
+      description: "A TSV file containing civ6 map information."
+    - name: "--output"
+      alternatives: [-o]
+      type: file
+      required: true
+      default: "output.pdf"
+      direction: output
+      description: "Path to store the output PDF file at."
+  resources:
+    - type: r_script
+      path: script.R
+    - path: helper.R
+```
+
+One notable difference is that the code is split up into two files: 
+the main script `script.R` and a helper file `helper.R`. By splitting of a portion 
+of the code into a second file, the main script becomes a bit more readable.
+
+### Step 2: R script
+
+This is the contents of the R script. The comments provide some sense of how this script works:
+
+```{sh echo=F, results='asis'}
+../scripts/cat_format src/plot_map/script.R
+```
+
+For the sake of brevity, we will not show the contents of the `helper.R` file,
+as all it contains are three functions which do some magic hocus pocus transformations
+of the yaml and the tsv file in order to render a [ggplot2] visualisation.
+
+### Step 3: Define platform(s)
+
+In order to run this component natively, we need a working R installation, 
+combined with a specific set of R packages (listed a the top of the different R files, e.g. `library(cowplot)`).
+
+We can start from the [`rocker/tidyverse:4.0.3`](https://hub.docker.com/r/rocker/tidyverse/) container, which already contains all of the tidyverse packages. 
+The extra dependencies can be installed as follows.
+
+```yaml
+platforms:
+  - type: docker
+    image: "rocker/tidyverse:4.0.3"
+    setup:
+      - type: r
+        cran:
+          - ggforce
+          - yaml
+          - bit64
+          - ggnewscale
+          - cowplot
+        github:
+          - rcannood/civ6saves
+  - type: native
+```
+
+While most dependencies can be installed directly from CRAN, one package is only available on a GitHub repository.
+
+### Step 4: Building and running the component
+
+Building an executable and running it is very similar to before. 
+Using the `--setup` flag, we can let viash run the `---setup` command after building
+the executable without much effort.
+Unfortunately, installing R packages can take a lot of time, so this command might take a while to run.
+
+```sh
+viash build src/plot_map/config.vsh.yaml -o bin -p docker --setup > /dev/null
+```
+
+
+This is the generated help page.
 ```{sh}
-ls src/combine_plots
+bin/plot_map -h
 ```
 
-Again, there is a [viash] config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
-
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/combine_plots/config.vsh.yaml
-```
-
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/combine_plots/script.sh
-```
-
-### Arguments
-
-This component is similar to the one above with one major difference: we need to specify _multiple_ input file names. This can easily be done with [viash] by specifying `multiple: true` in the configuration of the `--input` argument. By default [viash] will pass the value of this option to the wrapped script depending on the type of script. In the case of `bash`, this is simply a string with a delimiter for the individual values (`:` by default). For `Python` and `R` etc., it is passed as a simple collection (list, array).
-
-The script that is run converts the following value `--input`:
-
-```
-path1:path2:path3
-```
-
-into
-
-```
--i path1 -i path2 -o path3
-```
-
-by means of the `sed` instruction.
-
-The rest is only a matter of getting the command line parameters for `ffmpeg` right.
-
-### Platforms
-
-Two platforms are again defined in the present case: a Docker one and a native one. We point the Docker platform to an [ existing Docker image](https://hub.docker.com/r/jrottenbergj/ffmpeg/) available on Docker Hub.
-
-## Running the executable
-
-Let us create one additional `png` file by using the same _technique_ as before, this time creating a PDF file with just the output of an empty [viash] run.
-
+Finally, we can run the component as follows.
 ```{sh}
-viash | groff -mom -T pdf > data/viash1.pdf
+bin/plot_map \
+  --yaml ../data/AutoSave_0159.yaml \
+  --tsv ../data/AutoSave_0159.tsv \
+  --output output/AutoSave_0159.pdf
 ```
 
-This generates `data/viash.pdf` in order to verify if our conversion step works:
+## Conclusion
 
-```{sh, engine.opts='-l'}
-bin/convert_plot -i data/viash1.pdf -o data/viash1.png
-```
+In this part of the tutorial, we learned how to wrap Bash and R scripts from scratch.
 
-Ok, so this should work now:
+For more information on the specifications of viash config files, visit the 
+[documentation on viash configs](https://www.data-intuitive.com/viash_docs/config).
 
-![PNG from PDF using convert_plot](data/viash1.png)
-
-
-We now have 2 `png` files and should be able to run our `combine_plots` component. But first, we'll build the executable:
-
-```{sh}
-viash build src/combine_plots/config.vsh.yaml -o bin/ -p docker
-```
-
-Make sure the container is present:
-
-```{sh}
-bin/combine_plots ---setup
-```
-
-And than executing the executable:
-
-```{sh}
-bin/combine_plots --input data/viash.png:data/viash1.png --output data/output.webm --framerate 1
-```
-
-The result this simple _video_ that can hardly be called a video:
-
-[![](data/output.png)](data/output.webm)
-
-In the next section, we will cover _all_ the components of the postgame pipeline one by one.
+In the next section, we will take a look at how to build a collection of viash components.
 
 [viash]: https://github.com/data-intuitive/viash
