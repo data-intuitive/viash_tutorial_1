@@ -5,12 +5,12 @@ mainfont: Roboto Condensed
 monobackgroundcolor: lightgrey
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
-title: viash course 1 - Introduction
+title: viash tutorial 1 - Introduction
 ---
 
 # Introduction
 
-This course is all about viash! What is viash?
+This tutorial is all about viash! What is viash?
 
 viash is software that helps you turn a script into a reusable
 component, which you can use as a standalone executable or as part of a
@@ -54,6 +54,6 @@ on which you want to run the software, viash can help you:
 
 -   unit-test your component to ensure that it works at all times.
 
-## Outline of this course
+## Outline of this tutorial
 
 ![](img/outline.svg)

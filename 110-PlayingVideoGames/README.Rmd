@@ -5,13 +5,13 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workshop 1 - Civilization Postgame
+title: viash tutorial part 1 - Civilization Postgame
 ---
 
 
 # Setting the stage for viash
 
-The application domain of [viash] is not limited to just biomedical research. In this workshop, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
+The application domain of [viash] is not limited to just biomedical research. In this tutorial, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
 
 ## Background on Civilization
 Civilization is a series of six video strategy games where players oversee the development of a civilization, starting from the dawn of civilizations until present times. Not only is the series famous for having defined a lot of the game mechanics in the 4X genre (eXplore, eXpand, eXploit, and eXterminate), it is also frequently associated with the "One More Turn Syndrome".
@@ -38,7 +38,7 @@ You can see the general workflow for generating a postgame replay video in the d
 
 ![](img/workflow.png)
 
-In the next sections, we briefly discuss how each component works, as it will be used later on in the workshop.
+In the next sections, we briefly discuss how each component works, as it will be used later on in the tutorial.
 
 ## Step 1: Generate input files
 
@@ -46,7 +46,7 @@ Start up Civilization VI and go into the settings menu. You need to configure Ci
 
 ![](img/civ6_settings_.png)
 
-Your first task in this workshop is to play a game of Civilization VI, yay! See you in a few hours! Don't forget to come back for the remainder of this workshop!
+Your first task in this tutorial is to play a game of Civilization VI, yay! See you in a few hours! Don't forget to come back for the remainder of this tutorial!
 
 ...
 
@@ -64,7 +64,7 @@ So how do we parse the binary Civ6Save data format? Luckily, by the miracles of 
 GitHub users Mike "mrosack" Rosack and Tuomas "iqqmuT" Jaakola already developed a tool for extracting which
 players are playing which civilizations. You can install their software by running the following command.
 
-Note that you do not need to install these commands yourself, as we will see in a later part of the workshop how to do
+Note that you do not need to install these commands yourself, as we will see in a later part of the tutorial how to do
 this more easily with viash!
 
 ```bash
