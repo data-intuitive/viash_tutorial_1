@@ -5,8 +5,10 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workshop 1 - Running the components
+title: "Running components"
 ---
+
+# Running components
 
 ```{r setup, include = FALSE}
 # set default chunk options
@@ -18,8 +20,6 @@ knitr::opts_chunk$set(
   # engine.opts = list(bash = "-l")
 )
 ```
-
-# Introduction
 
 In this section, we demonstrate how to run the components of the Civilization postgame generation pipeline in order to generate the postgame video manually. The next section will be about automation.
 

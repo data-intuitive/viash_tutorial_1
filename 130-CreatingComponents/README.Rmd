@@ -5,8 +5,10 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workshop 1 - With Viash
+title: "Creating components"
 ---
+
+# Creating components
 
 ```{r setup, include = FALSE}
 # set default chunk options
@@ -18,8 +20,6 @@ knitr::opts_chunk$set(
   # engine.opts = list(bash = "-l")
 )
 ```
-
-# Introduction
 
 With the information from the previous section, we will tackle two from the components in detail in this section:
 

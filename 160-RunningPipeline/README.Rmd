@@ -5,8 +5,10 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workshop 1 - Running the pipeline
+title: "Running a simple pipeline"
 ---
+
+# Running a simple pipeline
 
 ```{r setup, include = FALSE}
 # set default chunk options
@@ -20,11 +22,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction
-
 In this section, we demonstrate how to run the full pipeline for the Civilization postgame generation.
 
-# Building the namespace
+## Building the namespace
 
 Let's build the namespace from the `src` directory in the root of this project/repository again, so we keep this directory self-contained:
 
@@ -49,7 +49,7 @@ viash ns build \
 
 Or, we can run them one-by-one.
 
-# A pipeline script
+## A pipeline script
 
 A small dataset with only a few steps from a game are stored under `../data/`. We will use that as a source for the pipeline. Furthermore, we'll _eat our own dogfoot_ and create a [viash] component for the pipeline code itself:
 
@@ -73,7 +73,7 @@ Build the `pipeline` component:
 viash ns build -p native
 ```
 
-# Running the pipeline
+## Running the pipeline
 
 Make sure you have run the required `--setup`'s. Then:
 

@@ -5,8 +5,10 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workshop 1 - Viahs Components
+title: "Building components"
 ---
+
+# Building components
 
 ```{r setup, include = FALSE}
 # set default chunk options
@@ -18,8 +20,6 @@ knitr::opts_chunk$set(
   # engine.opts = list(bash = "-l")
 )
 ```
-
-# Introduction
 
 In this section, we cover all the components of the Civilization postgame generation pipeline one by one, just like in the [introductory section]. Before doing so, we first introduce the concept of a _namespace_.
 

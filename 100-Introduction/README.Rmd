@@ -5,7 +5,7 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: viash tutorial part 1 - Introduction
+title: "Introduction"
 ---
 
 # Introduction

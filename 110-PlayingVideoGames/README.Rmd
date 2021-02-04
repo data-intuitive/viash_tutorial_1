@@ -5,11 +5,10 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: viash tutorial part 1 - Civilization Postgame
+title: "Use case: playing video games"
 ---
 
-
-# Setting the stage for viash
+# Use case: playing video games
 
 The application domain of [viash] is not limited to just biomedical research. In this tutorial, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
 

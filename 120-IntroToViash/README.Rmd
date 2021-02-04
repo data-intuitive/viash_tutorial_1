@@ -5,8 +5,10 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: Viash Workshop 1 - Viash Primer
+title: "Intro to viash"
 ---
+
+# Intro to viash
 
 ```{r setup, include = FALSE}
 # set default chunk options
@@ -17,8 +19,6 @@ knitr::opts_chunk$set(
   prompt = TRUE
 )
 ```
-
-# What constitutes a step?
 
 A step in the rendering of the video contains of one aspect that can be considered on its own. Understanding the logic of a step, however, is not sufficient as we have seen before. We also need to define the environment in which the step has to be performed.
 
