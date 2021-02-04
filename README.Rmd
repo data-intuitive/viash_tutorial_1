@@ -25,7 +25,7 @@ for (readme in readmes) {
   pdf <- gsub("Rmd$", "pdf", readme)
   
   folder <- gsub("/.*", "", readme)
-  cat("* [", title, "](", folder, ") ([html](blob/main/", html, "), [pdf](blob/main/", pdf, "))\n", sep = "")
+  cat("* [", title, "](", folder, ") ([html](", html, "), [pdf](", pdf, "))\n", sep = "")
 }
 ```
 
