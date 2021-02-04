@@ -1,23 +1,11 @@
----
-author: Data Intuitive
-date: 'Tuesday - January 26, 2021'
-mainfont: Roboto Condensed
-monobackgroundcolor: lightgrey
-monofont: Source Code Pro
-monofontoptions: Scale=0.7
-title: 'Use case: playing video games'
----
-
-Use case: playing video games
-=============================
+# Use case: playing video games
 
 The application domain of
 [viash](https://www.data-intuitive.com/viash_docs) is not limited to
 just biomedical research. In this tutorial, we will solve one of our pet
 peeves in a video game called Sid Meier's Civilization.
 
-Background on Civilization
---------------------------
+## Background on Civilization
 
 Civilization is a series of six video strategy games where players
 oversee the development of a civilization, starting from the dawn of
@@ -29,8 +17,7 @@ the "One More Turn Syndrome".
 ![Comic by Mart Virkus,
 <https://arcaderage.co/2016/10/18/civilization-vi/>](img/mart_virkus_every_civilization_game_ever.jpg)
 
-Post-game replay map
---------------------
+## Post-game replay map
 
 Multiplayer games can take a few hours to finish -- anywhere between 2
 to 10 hours, depending on who you're playing with. That's why a perfect
@@ -38,10 +25,7 @@ way of closing a session of Civilization V is by being able to watch a
 'postgame map replay' of which owner owned which time at any given point
 in time.
 
-```{=html}
-<!--![](img/civ5_victory_.webm)-->
-```
-[![](img/civ5_victory_.png)](img/civ5_victory_.webm)
+\^ [![](img/civ5_victory_.png)](img/civ5_victory_.webm)
 
 However, for whatever reason, this feature did not make it in
 Civilization VI. This made a lot of people very angry and been widely
@@ -49,8 +33,7 @@ regarded as a bad move. `<!-- quoting Douglas Adams here -->`{=html}
 
 ![](img/civ6_rant_.png)
 
-Rendering post-game replay maps
--------------------------------
+## Rendering post-game replay maps
 
 At Data Intuitive, we're all about alleviating people's suffering, so we
 developed a few scripts for rendering a postgame video for Civilization
@@ -70,8 +53,7 @@ in the diagram below.
 In the next sections, we briefly discuss how each component works, as it
 will be used later on in the tutorial.
 
-Step 1: Generate input files
-----------------------------
+## Step 1: Generate input files
 
 Start up Civilization VI and go into the settings menu. You need to
 configure Civilization VI to create an autosave every turn, and to keep
@@ -94,15 +76,18 @@ If you check the `data` folder, you will see five autosave files.
 ls -l ../data
 ```
 
-    ## total 5048
+    ## total 6592
     ## -rw-rw-r--. 1 rcannood rcannood  612404 Jan 26 10:42 AutoSave_0158.Civ6Save
     ## -rw-rw-r--. 1 rcannood rcannood 1061697 Jan 26 10:42 AutoSave_0159.Civ6Save
+    ## -rw-r--r--. 1 rcannood rcannood  107948 Feb  4 17:14 AutoSave_0159.pdf
+    ## -rw-r--r--. 1 rcannood rcannood  673420 Feb  4 17:14 AutoSave_0159.png
+    ## -rw-r--r--. 1 rcannood rcannood  779029 Feb  4 17:14 AutoSave_0159.tsv
+    ## -rw-r--r--. 1 rcannood rcannood    8236 Feb  4 17:14 AutoSave_0159.yaml
     ## -rw-rw-r--. 1 rcannood rcannood 1140352 Jan 26 10:42 AutoSave_0160.Civ6Save
     ## -rw-rw-r--. 1 rcannood rcannood 1164860 Jan 26 10:42 AutoSave_0161.Civ6Save
     ## -rw-rw-r--. 1 rcannood rcannood 1179409 Jan 26 10:42 AutoSave_0162.Civ6Save
 
-Step 2, `parse_header`: Extract game info
------------------------------------------
+## Step 2, `parse_header`: Extract game info
 
 So how do we parse the binary Civ6Save data format? Luckily, by the
 miracles of open-source software development, GitHub users Mike
@@ -149,11 +134,15 @@ node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple
 The output is a json file, which you save as follows.
 
 ``` {.bash}
-node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple > data/AutoSave_0159.json
+#!/bin/bash
+
+par_input=data/AutoSave_0159.Civ6Save
+par_output=data/AutoSave_0159.yaml
+
+node node_modules/civ6-save-parser/index.js "$par_input" --simple > "$par_output"
 ```
 
-Step 3, `parse_map`: Extract map info
--------------------------------------
+## Step 3, `parse_map`: Extract map info
 
 Alright, so we know which games are playing the game, but which tiles do
 they own? As there are no ready to use npm packages available to do this
@@ -226,32 +215,31 @@ fs.writeFileSync(par["output"], tsvLines);
 Note that at this stage, the imported data looks very raw. These are the
 first 10 rows and 10 columns of the generated tsv.
 
-  -------------------------------------------------------------------------------------------------------------------------------------------
-  x   y   hex\_location   travel\_regions   connected\_regions   landmass     terrain      feature      natural\_wonder\_order   continent
-  --- --- --------------- ----------------- -------------------- ------------ ------------ ------------ ------------------------ ------------
-  0   0   1429433         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  --------------------------------------------------------------------------------------------------------------------------------------
+  x   y   hex_location   travel_regions   connected_regions   landmass     terrain      feature      natural_wonder_order   continent
+  --- --- -------------- ---------------- ------------------- ------------ ------------ ------------ ---------------------- ------------
+  0   0   1429433        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  1   0   1429488         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  1   0   1429488        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  2   0   1429543         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  2   0   1429543        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  3   0   1429598         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  3   0   1429598        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  4   0   1429653         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  4   0   1429653        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  5   0   1429708         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  5   0   1429708        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  6   0   1429763         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  6   0   1429763        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  7   0   1429818         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  7   0   1429818        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  8   0   1429873         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
+  8   0   1429873        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
 
-  9   0   1429928         65536             65536                4294967295   1204357597   4294967295   0                        4294967295
-  -------------------------------------------------------------------------------------------------------------------------------------------
+  9   0   1429928        65536            65536               4294967295   1204357597   4294967295   0                      4294967295
+  --------------------------------------------------------------------------------------------------------------------------------------
 
-Step 4, `plot_map`: Generate map visualisation
-----------------------------------------------
+## Step 4, `plot_map`: Generate map visualisation
 
 With both the game metadata in the yaml file and the map information in
 the tsv file, we can finally go ahead and generate our first map
@@ -329,8 +317,7 @@ ggsave(par$output, gout, width = 24, height = 13)
 This is what the generated PDF file looks like.
 ![](img/AutoSave_0159.png)
 
-Step 5, `convert_plot`: Convert PDF to PNG
-------------------------------------------
+## Step 5, `convert_plot`: Convert PDF to PNG
 
 Setup:
 
@@ -341,11 +328,15 @@ sudo apt-get install imagemagick
 Convert:
 
 ``` {.bash}
-convert data/AutoSave_0159.pdf -flatten data/AutoSave_0159.png
+#!/bin/bash
+
+par_input=data/AutoSave_0159.pdf
+par_output=data/AutoSave_0159.png
+
+convert "$par_input" -flatten "$par_output"
 ```
 
-Step 6, `combine_plots`: Create movie
--------------------------------------
+## Step 6, `combine_plots`: Create movie
 
 Setup:
 
@@ -356,11 +347,15 @@ sudo apt-get install ffmpeg
 Convert:
 
 ``` {.bash}
-ffmpeg -framerate 4 -i "concat:data/AutoSave_0159.png|data/AutoSave_0002.png|..." -c:v libvpx-vp9 -pix_fmt yuva420p -y "data/Movie.webm"
+#!/bin/bash
+
+par_input="data/AutoSave_0159.png|data/AutoSave_0002.png|..."
+par_output="data/Movie.webm"
+
+ffmpeg -framerate 4 -i "concat:$par_input" -c:v libvpx-vp9 -pix_fmt yuva420p -y "$par_output"
 ```
 
-Enter viash, stage left
------------------------
+## Enter viash, stage left
 
 While we at Data Intuitive can now happily churn out postgame videos of
 all of our Civilization VI, installing the requirements on a different

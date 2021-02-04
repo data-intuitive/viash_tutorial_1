@@ -21,8 +21,7 @@ Civilization is a series of six video strategy games where players oversee the d
 Multiplayer games can take a few hours to finish -- anywhere between 2 to 10 hours, depending on who you're playing with. 
 That's why a perfect way of closing a session of Civilization V is by being able to watch a 'postgame map replay' of which owner owned which time at any given point in time.
 
-
-<!--![](img/civ5_victory_.webm)-->
+^
 [![](img/civ5_victory_.png)](img/civ5_victory_.webm)
 
 However, for whatever reason, this feature did not make it in Civilization VI. This made a lot of people very angry and been widely regarded as a bad move. <!-- quoting Douglas Adams here -->
@@ -78,7 +77,12 @@ node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple
 
 The output is a json file, which you save as follows.
 ```bash
-node node_modules/civ6-save-parser/index.js data/AutoSave_0159.Civ6Save --simple > data/AutoSave_0159.json
+#!/bin/bash
+
+par_input=data/AutoSave_0159.Civ6Save
+par_output=data/AutoSave_0159.yaml
+
+node node_modules/civ6-save-parser/index.js "$par_input" --simple > "$par_output"
 ```
 
 ## Step 3, `parse_map`: Extract map info
@@ -221,7 +225,12 @@ sudo apt-get install imagemagick
 
 Convert:
 ```bash
-convert data/AutoSave_0159.pdf -flatten data/AutoSave_0159.png
+#!/bin/bash
+
+par_input=data/AutoSave_0159.pdf
+par_output=data/AutoSave_0159.png
+
+convert "$par_input" -flatten "$par_output"
 ```
 
 ## Step 6, `combine_plots`: Create movie
@@ -233,7 +242,12 @@ sudo apt-get install ffmpeg
 
 Convert:
 ```bash
-ffmpeg -framerate 4 -i "concat:data/AutoSave_0159.png|data/AutoSave_0002.png|..." -c:v libvpx-vp9 -pix_fmt yuva420p -y "data/Movie.webm"
+#!/bin/bash
+
+par_input="data/AutoSave_0159.png|data/AutoSave_0002.png|..."
+par_output="data/Movie.webm"
+
+ffmpeg -framerate 4 -i "concat:$par_input" -c:v libvpx-vp9 -pix_fmt yuva420p -y "$par_output"
 ```
 
 ## Enter viash, stage left
