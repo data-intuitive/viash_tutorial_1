@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="402.59647mm"
+   height="321.20386mm"
+   viewBox="0 0 402.59647 321.20386"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="outline.svg"
+   inkscape:export-filename="/home/rcannood/workspace/di/viash_workshop_1/010-Description/img/workflow.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="marker1751"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1749" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1181"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1179" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1171"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1169" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5226"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path5224" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker4265"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path4263" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker4255"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path4253" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker3532"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path3530" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1953"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1951" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1933"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1931" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1923"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1921" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1396" />
+    </marker>
+    <rect
+       x="97.327507"
+       y="17.241323"
+       width="241.22589"
+       height="100.55254"
+       id="rect1090" />
+    <marker
+       style="overflow:visible"
+       id="marker3532-61"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path3530-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1751-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1749-9" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="1075.5244"
+     inkscape:cy="820.47143"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="3840"
+     inkscape:window-height="2096"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(382.69583,61.628712)">
+    <rect
+       style="fill:#ffffff;stroke:none;stroke-width:0.0700042;stop-color:#000000"
+       id="rect990"
+       width="402.59647"
+       height="321.20386"
+       x="-382.69583"
+       y="-61.628712" />
+    <text
+       xml:space="preserve"
+       id="text1088"
+       style="font-weight:300;font-size:7.05556px;line-height:1.1;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:center;letter-spacing:0px;white-space:pre;shape-inside:url(#rect1090);" />
+    <g
+       id="g1046"
+       transform="translate(4.5617784,-0.41589239)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.03601"
+         y="-12.151695"
+         id="text1086-7"><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="-12.151695"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1236">000 - Introduction - 15m</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="-2.8659022"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1248">    Why viash?</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.03601"
+         y="12.479959"
+         id="text1214"><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="12.479959"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1212">010 - Playing video games - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="21.765751"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1256">    How playing Sid Meiers' Civilizations</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="30.585201"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1274">    leads to a programming crisis:</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="39.404652"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1278">    a perfect use-case for viash</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.03601"
+         y="54.678165"
+         id="text1242"><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="54.678165"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1240">020 - viash primer - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="63.963959"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1246">    How to create viash components</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.03601"
+         y="78.993568"
+         id="text1254"><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="78.993568"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1250">030 - Creating components - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="88.279358"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1252">    Translating the Civ6 scripts into proper</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="97.098808"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1280">    viash components</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.03601"
+         y="112.37232"
+         id="text1288"><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="112.37232"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1282">040 - Building components - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="121.65811"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1296">    Letting viash build reusable executables</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="130.47757"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1300">    from the components</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.03601"
+         y="145.50717"
+         id="text1308"><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="145.50717"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1302">050 - Running components - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="154.79297"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1306">    First time running each of the components</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="163.61241"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1585">    using Docker</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.03601"
+         y="178.94106"
+         id="text1316"><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="178.94106"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1312">060 - Running a simple pipeline - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="188.22685"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1314">    First time running the whole pipeline on </tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="197.0463"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1318">    on a local system</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.03601"
+         y="212.39215"
+         id="text1330"><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="212.39215"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1324">070 - Good practices - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="221.67795"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1328">    Adding documentation, unit testing, and</tspan><tspan
+           sodipodi:role="line"
+           x="-350.03601"
+           y="230.49739"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1334">    code versioning</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:9.87778px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Medium';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-350.12283"
+         y="-26.088511"
+         id="text1340"><tspan
+           sodipodi:role="line"
+           x="-350.12283"
+           y="-26.088511"
+           style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:9.87778px;font-family:Roboto;-inkscape-font-specification:'Roboto Medium';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1338">VIASH COURSE PART 1</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-168.16431"
+         y="-12.151695"
+         id="text1510"><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="-12.151695"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1506">000 - Introduction - 15m</tspan><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="-2.8659022"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1508">    Help, my pipeline needs to be scaleable</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-168.16431"
+         y="14.54262"
+         id="text1520"><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="14.54262"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1512">010 - Nextflow pipelines - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="23.828413"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1518">    Pointers to Nextflow course materials</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-168.16431"
+         y="39.800331"
+         id="text1526"><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="39.800331"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1522">020 - Nextflow components - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="49.086124"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1575">    Letting viash build Nextflow modules</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-168.16431"
+         y="66.477417"
+         id="text1534"><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="66.477417"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1528">030 - Running a Nextflow pipeline - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="75.763206"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1579">    Running the whole pipeline locally</tspan><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="84.582657"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1583">    using Docker and Nextflow</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-168.16431"
+         y="101.88715"
+         id="text1542"><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="101.88715"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1536">040 - Scaling up - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="111.17294"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1540">    Running the pipeline on Kubernetes</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-168.16431"
+         y="128.47742"
+         id="text1548"><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="128.47742"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1544">050 - Conclusions - 30m</tspan><tspan
+           sodipodi:role="line"
+           x="-168.16431"
+           y="137.76321"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1546">    What now?</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:9.87778px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Medium';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
+         x="-168.25113"
+         y="-26.088511"
+         id="text1568"><tspan
+           sodipodi:role="line"
+           x="-168.25113"
+           y="-26.088511"
+           style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:9.87778px;font-family:Roboto;-inkscape-font-specification:'Roboto Medium';text-align:start;text-anchor:start;stroke-width:0.264583"
+           id="tspan1566">VIASH COURSE PART 2</tspan></text>
+    </g>
+  </g>
+</svg>
