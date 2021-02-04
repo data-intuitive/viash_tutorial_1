@@ -105,12 +105,6 @@ viash build src/convert_plot/config.vsh.yaml -o bin/ -p docker
 
 We specify the `docker` platform explicitly although that is not really necessary because of the order of the platforms in the viash config. The resulting script is stored under `bin` relative to the current working directory.
 
-A second file is written next to the executable: `viash.yaml`. This file contains (almost) all information contained in the original config file, including a serialized version of the script to run. `viash.yaml` aims at providing the ability to reproduce the original viash configuration but also to actually `viash run` that `viash.yaml` file. Such functionality is called [idempotence](https://en.wikipedia.org/wiki/Idempotence).
-
-```{sh echo = F, results = "asis"}
-../scripts/cat_format bin/viash.yaml
-```
-
 We ask the generated executable to run the necessary setup. In this case, it means _pulling_ the appropriate docker image from Docker Hub.
 
 ```{sh results="hold"}
@@ -254,7 +248,7 @@ bin/combine_plots --input data/viash.png:data/viash1.png --output data/output.we
 
 The result this simple _video_ that can hardly be called a video:
 
-![](data/output.webm)
+[![](data/output.png)](data/output.webm)
 
 In the next section, we will cover _all_ the components of the postgame pipeline one by one.
 

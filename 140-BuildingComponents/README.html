@@ -4,143 +4,8 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Data Intuitive" />
-  <title>Viash Workshop 1 - Viahs Components</title>
+  <title>README</title>
   <style>
-    html {
-      line-height: 1.5;
-      font-family: Roboto Condensed;
-      font-size: 20px;
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      word-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 1em;
-      }
-    }
-    @media print {
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Source Code Pro;
-      background-color: lightgrey;
-      padding: .2em .4em;
-      font-size: 85%;
-      margin: 0;
-    }
-    pre {
-      margin: 1em 0;
-      background-color: lightgrey;
-      padding: 1em;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     span.underline{text-decoration: underline;}
@@ -208,21 +73,21 @@
     code span.va { } /* Variable */
     code span.vs { color: #049b0a; } /* VerbatimString */
     code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
+    <style>
+    body {
+      max-width: 60em
+    }
+    </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">Viash Workshop 1 - Viahs Components</h1>
-<p class="author">Data Intuitive</p>
-<p class="date">Tuesday - January 26, 2021</p>
-</header>
 <nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Table of Contents</h2>
 <ul>
-<li><a href="#introduction">Introduction</a></li>
+<li><a href="#building-components">Building components</a></li>
 <li><a href="#namespaces-in-viash">Namespaces in <span>viash</span></a>
 <ul>
 <li><a href="#an-example">An example</a></li>
@@ -240,7 +105,7 @@
 <li><a href="#building-the-namespace">Building the namespace</a></li>
 </ul>
 </nav>
-<h1 id="introduction">Introduction</h1>
+<h1 id="building-components">Building components</h1>
 <p>In this section, we cover all the components of the Civilization postgame generation pipeline one by one, just like in the [introductory section]. Before doing so, we first introduce the concept of a <em>namespace</em>.</p>
 <h1 id="namespaces-in-viash">Namespaces in <a href="https://github.com/data-intuitive/viash">viash</a></h1>
 <p>Once you start to make components with <a href="https://github.com/data-intuitive/viash">viash</a> and combining them in larger scripts, workflows or pipelines you will quickly notice that some kind of grouping comes in handy:</p>
@@ -260,177 +125,177 @@
 <h2 id="an-example">An example</h2>
 <p>We introduce a very simple component, one that only reports the release of an Alpine docker container, albeit the component could be used to <code>cat</code> the contents of other dockerized files as well:</p>
 <p><code>src/container_cat/config.vsh.yaml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container_cat</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;file&quot;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> /etc/alpine-release</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> executable</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> cat</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">id</span><span class="kw">:</span><span class="at"> docker1</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> alpine:latest</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">id</span><span class="kw">:</span><span class="at"> docker2</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> alpine:2.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container_cat</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;file&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> /etc/alpine-release</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> executable</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> cat</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="at">    </span><span class="fu">id</span><span class="kw">:</span><span class="at"> docker1</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> alpine:latest</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="at">    </span><span class="fu">id</span><span class="kw">:</span><span class="at"> docker2</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> alpine:2.6</span></span></code></pre></div>
 <p>We introduce two Docker platforms that can be distinguished by id (<code>docker1</code> and <code>docker2</code>). Let us illustrate their use:</p>
 <p><code>docker1</code> platform:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/container_cat/config.vsh.yaml -p docker1</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">3.13.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/container_cat/config.vsh.yaml -p docker1</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="ex">3.13.0</span></span></code></pre></div>
 <p><code>docker2</code> platform:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/container_cat/config.vsh.yaml -p docker2</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2.6.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/container_cat/config.vsh.yaml -p docker2</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="ex">2.6.6</span></span></code></pre></div>
 <p>The component can be used to <code>cat</code> the contents of other files as well:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/container_cat/config.vsh.yaml -p docker1 -- /etc/hosts</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">127.0.0.1</span>   localhost</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>::<span class="ex">1</span> localhost ip6-localhost ip6-loopback</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">fe00</span>::0 ip6-localnet</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ff00</span>::0 ip6-mcastprefix</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">ff02</span>::1 ip6-allnodes</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">ff02</span>::2 ip6-allrouters</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">172.17.0.2</span>  70ec4d1c681b</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/container_cat/config.vsh.yaml -p docker1 -- /etc/hosts</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">127.0.0.1</span>   localhost</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>::<span class="ex">1</span> localhost ip6-localhost ip6-loopback</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="ex">fe00</span>::0 ip6-localnet</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="ex">ff00</span>::0 ip6-mcastprefix</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="ex">ff02</span>::1 ip6-allnodes</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="ex">ff02</span>::2 ip6-allrouters</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="ex">172.17.0.2</span>  b9ccb854b59a</span></code></pre></div>
 <p><strong>Remark</strong>: Please note that we did not specify the argument as <code>type: file</code> because that would automount the <em>host</em>’s filesystem in the container (or at least attempt to). In this case, we effectively want to look inside the container.</p>
 <h2 id="a-namespace-container_tools">A namespace: <code>container_tools</code></h2>
 <p>Our <code>container_cat</code> example fits nicely in a collection of components to deal with containers and so we want to attach the namespace <code>container_tools</code> to it. Let’s see how this can be done.</p>
 <h2 id="the-example-in-a-namespace">The example in a namespace</h2>
 <p>We take the example from above, but now store it in a directory hierarchy like this:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">tree</span> src/container_tools</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">src/container_tools</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>└── <span class="ex">container_cat</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    └── <span class="ex">config.vsh.yaml</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">1</span> directory, 1 file</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">tree</span> src/container_tools</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="ex">src/container_tools</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>└── <span class="ex">container_cat</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    └── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="ex">1</span> directory, 1 file</span></code></pre></div>
 <p>The directory <code>container_tools</code> corresponds to the name of the namespace. Apart from this, there is no difference in how <code>container_cat</code> is defined.</p>
 <p>We can now use the <code>viash ns</code> subcommand like this:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns build -n container_tools</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/container_tools/container_cat/ (container_tools) =<span class="va">docker1=</span><span class="op">&gt;</span> <span class="ex">target/docker1/container_tools/container_cat</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/container_tools/container_cat/ (container_tools) =<span class="va">docker2=</span><span class="op">&gt;</span> <span class="ex">target/docker2/container_tools/container_cat</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns build -n container_tools</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="ex">Exporting</span> src/container_tools/container_cat/ (container_tools) =<span class="va">docker1=</span><span class="op">&gt;</span> <span class="ex">target/docker1/container_tools/container_cat</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="ex">Exporting</span> src/container_tools/container_cat/ (container_tools) =<span class="va">docker2=</span><span class="op">&gt;</span> <span class="ex">target/docker2/container_tools/container_cat</span></span></code></pre></div>
 <p>We specify the name of the namespace using the <code>-n</code> parameter. In this case, there is only one component in this namespace, but it contains two platforms. The <code>viash ns</code> command <em>builds</em> a <em>target</em> for every platform it detects unless an optional <code>-p</code> is specified in the command above.</p>
 <p>As a matter of fact, even the <code>-n</code> option can be omitted in which case <em>all</em> namespaces under <code>src</code> will be parsed.</p>
 <p>This is a very effective way of keeping a collection of components under <code>src</code> grouped in namespaces. Different namespaces could be split across different directories or even source repositories and then combined on the level of <code>viash</code> by specifying the <em>target</em> directory (<code>target/</code> by default).</p>
 <h1 id="civ6_save_renderer-namespace"><code>civ6_save_renderer</code> namespace</h1>
 <p>Looking at the contents of <code>src/civ6_save_renderer</code>, we notice that <code>civ6_save_renderer</code> is a namespace that contains a number of components:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">tree</span> src/civ6_save_renderer</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">src/civ6_save_renderer</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>├── <span class="ex">combine_plots</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>│   ├── <span class="ex">config.vsh.yaml</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>│   └── <span class="ex">script.sh</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>├── <span class="ex">convert_plot</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>│   ├── <span class="ex">config.vsh.yaml</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>│   └── <span class="ex">script.sh</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>├── <span class="ex">parse_header</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>│   ├── <span class="ex">config.vsh.yaml</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>│   └── <span class="ex">script.sh</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>├── <span class="ex">parse_map</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>│   ├── <span class="ex">config.vsh.yaml</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>│   ├── <span class="ex">helper.js</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>│   └── <span class="ex">script.js</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>└── <span class="ex">plot_map</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    ├── <span class="ex">config.vsh.yaml</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    ├── <span class="ex">helper.R</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    └── <span class="ex">script.R</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="ex">5</span> directories, 12 files</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">tree</span> src/civ6_save_renderer</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">src/civ6_save_renderer</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>├── <span class="ex">combine_plots</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>│   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>│   └── <span class="ex">script.sh</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>├── <span class="ex">convert_plot</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>│   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>│   └── <span class="ex">script.sh</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>├── <span class="ex">parse_header</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>│   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>│   └── <span class="ex">script.sh</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>├── <span class="ex">parse_map</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a>│   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>│   ├── <span class="ex">helper.js</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>│   └── <span class="ex">script.js</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a>└── <span class="ex">plot_map</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a>    ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a>    ├── <span class="ex">helper.R</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a>    └── <span class="ex">script.R</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a><span class="ex">5</span> directories, 12 files</span></code></pre></div>
 <p>We cover the components one by one in what follows and discuss any specificities that we encounter underway.</p>
 <h2 id="parse_header"><code>parse_header</code></h2>
 <p>Let us start with <code>parse_header</code>, it parses the headers of the save files.</p>
 <p><code>src/civ6_save_renderer/parse_header/config.vsh.yaml</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> parse_header</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Extract game settings from a Civ6 save file as a yaml.&quot;</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;save.Civ6Save&quot;</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A Civ6 save file.&quot;</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.yaml&quot;</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Path to store the output YAML at.&quot;</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> node</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">docker</span><span class="kw">:</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> cd /home/node &amp;&amp; npm install civ6-save-parser</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> parse_header</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Extract game settings from a Civ6 save file as a yaml.&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;save.Civ6Save&quot;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A Civ6 save file.&quot;</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.yaml&quot;</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Path to store the output YAML at.&quot;</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true"></a><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> node</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true"></a><span class="at">    </span><span class="fu">docker</span><span class="kw">:</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> cd /home/node &amp;&amp; npm install civ6-save-parser</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
 <p><code>src/civ6_save_renderer/parse_header/script.sh</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> /home/node/node_modules/civ6-save-parser/index.js <span class="st">&quot;</span><span class="va">$par_input</span><span class="st">&quot;</span> --simple <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">$par_output</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="ex">node</span> /home/node/node_modules/civ6-save-parser/index.js <span class="st">&quot;</span><span class="va">$par_input</span><span class="st">&quot;</span> --simple <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">$par_output</span><span class="st">&quot;</span></span></code></pre></div>
 <h2 id="parse_map"><code>parse_map</code></h2>
 <p>The next component is <code>parse_map</code>. It is similar in nature that <code>parse_header</code> but this time we need a Javascript library to get the file parsed properly:</p>
 <p><code>src/civ6_save_renderer/parse_map/config.vsh.yaml</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> parse_map</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Extract map information from a Civ6 save file as a tsv.&quot;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;save.Civ6Save&quot;</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A Civ6 save file.&quot;</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.tsv&quot;</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Path to store the output TSV file at.&quot;</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> javascript_script</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.js</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> helper.js</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> node</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> parse_map</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Extract map information from a Civ6 save file as a tsv.&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;save.Civ6Save&quot;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A Civ6 save file.&quot;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.tsv&quot;</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Path to store the output TSV file at.&quot;</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> javascript_script</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.js</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> helper.js</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true"></a><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> node</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
 <p><code>src/civ6_save_renderer/parse_map/script.js</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// read helper libraries &amp; functions</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&quot;fs&quot;</span>)<span class="op">;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> helper <span class="op">=</span> <span class="pp">require</span>(resources_dir <span class="op">+</span> <span class="st">&quot;/helper.js&quot;</span>)<span class="op">;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">// read data from file</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> json <span class="op">=</span> helper<span class="op">.</span><span class="fu">savetomap</span>(fs<span class="op">.</span><span class="fu">readFileSync</span>(par[<span class="st">&quot;input&quot;</span>]))<span class="op">;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">// convert to tsv</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> headers <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(json<span class="op">.</span><span class="at">tiles</span>[<span class="dv">0</span>])<span class="op">;</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> header <span class="op">=</span> headers<span class="op">.</span><span class="fu">join</span>(<span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lines <span class="op">=</span> json<span class="op">.</span><span class="at">tiles</span><span class="op">.</span><span class="fu">map</span>(o <span class="kw">=&gt;</span> {</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(o)<span class="op">.</span><span class="fu">map</span>(b <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(b))<span class="op">.</span><span class="fu">join</span>(<span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tsvLines <span class="op">=</span> header <span class="op">+</span> lines<span class="op">.</span><span class="fu">join</span>(<span class="st">&#39;&#39;</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">// save to file</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>fs<span class="op">.</span><span class="fu">writeFileSync</span>(par[<span class="st">&quot;output&quot;</span>]<span class="op">,</span> tsvLines)<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co">// read helper libraries &amp; functions</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&quot;fs&quot;</span>)<span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="kw">const</span> helper <span class="op">=</span> <span class="pp">require</span>(resources_dir <span class="op">+</span> <span class="st">&quot;/helper.js&quot;</span>)<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="co">// read data from file</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="kw">const</span> json <span class="op">=</span> helper<span class="op">.</span><span class="fu">savetomap</span>(fs<span class="op">.</span><span class="fu">readFileSync</span>(par[<span class="st">&quot;input&quot;</span>]))<span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a><span class="co">// convert to tsv</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a><span class="kw">const</span> headers <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(json<span class="op">.</span><span class="at">tiles</span>[<span class="dv">0</span>])<span class="op">;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a><span class="kw">const</span> header <span class="op">=</span> headers<span class="op">.</span><span class="fu">join</span>(<span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a><span class="kw">const</span> lines <span class="op">=</span> json<span class="op">.</span><span class="at">tiles</span><span class="op">.</span><span class="fu">map</span>(o <span class="kw">=&gt;</span> {</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a>  <span class="cf">return</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(o)<span class="op">.</span><span class="fu">map</span>(b <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(b))<span class="op">.</span><span class="fu">join</span>(<span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a>})<span class="op">;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a><span class="kw">const</span> tsvLines <span class="op">=</span> header <span class="op">+</span> lines<span class="op">.</span><span class="fu">join</span>(<span class="st">&#39;&#39;</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true"></a><span class="co">// save to file</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true"></a>fs<span class="op">.</span><span class="fu">writeFileSync</span>(par[<span class="st">&quot;output&quot;</span>]<span class="op">,</span> tsvLines)<span class="op">;</span></span></code></pre></div>
 <p>This last script uses the following helper script: <code>src/civ6_save_renderer/parse_map/helper.js</code> but it is a bit too long to represent here in this document.</p>
 <p>The container to run in is an off-the-shelve <code>node</code> container that will be pulled automatically at first use (or when calling <code>---setup</code> on the executable).</p>
 <p>This component is not very special in itself, but we would like to point out that the power of <a href="https://github.com/data-intuitive/viash">viash</a> lies in making sure that not only <code>script.js</code> are passed to the container at runtime, but also the <code>helper.js</code> file that is used by <code>script.js</code>. This is all done seamlessly without a need for the user to understand what is happening under the hood.</p>
@@ -439,78 +304,78 @@
 <h2 id="plot_map"><code>plot_map</code></h2>
 <p>Based on the output from <code>parse_header</code> and <code>parse_map</code>, we can now generate a plot using <code>plot_map</code>. We have some R code to do this but the code in itself uses some R libraries that are not standard. This is again a perfect use-case for a containerized solution that is leveraged using <a href="https://github.com/data-intuitive/viash">viash</a>!</p>
 <p><code>src/civ6_save_renderer/plot_map/config.vsh.yaml</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> plot_map</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Use the settings yaml and the map tsv to generate a plot (as PDF).&quot;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--yaml&quot;</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-</span><span class="ch">y</span><span class="kw">]</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;header.yaml&quot;</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A YAML file containing civ6 game settings information.&quot;</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--tsv&quot;</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-t</span><span class="kw">]</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;map.tsv&quot;</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A TSV file containing civ6 map information.&quot;</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.pdf&quot;</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Path to store the output PDF file at.&quot;</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> r_script</span></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.R</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> helper.R</span></span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> rocker/tidyverse</span></span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">r</span><span class="kw">:</span></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">cran</span><span class="kw">:</span></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ggforce</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> yaml</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> bit64</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ggnewscale</span></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> cowplot</span></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">github</span><span class="kw">:</span></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> rcannood/civ6saves</span></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> plot_map</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Use the settings yaml and the map tsv to generate a plot (as PDF).&quot;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--yaml&quot;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-</span><span class="ch">y</span><span class="kw">]</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;header.yaml&quot;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A YAML file containing civ6 game settings information.&quot;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--tsv&quot;</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-t</span><span class="kw">]</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;map.tsv&quot;</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A TSV file containing civ6 map information.&quot;</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.pdf&quot;</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Path to store the output PDF file at.&quot;</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> r_script</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.R</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> helper.R</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true"></a><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> rocker/tidyverse</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true"></a><span class="at">    </span><span class="fu">r</span><span class="kw">:</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true"></a><span class="at">      </span><span class="fu">cran</span><span class="kw">:</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ggforce</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> yaml</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> bit64</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ggnewscale</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> cowplot</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true"></a><span class="at">      </span><span class="fu">github</span><span class="kw">:</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> rcannood/civ6saves</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
 <p><code>src/civ6_save_renderer/plot_map/script.R</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">paste0</span>(resources_dir, <span class="st">&quot;/helper.R&quot;</span>))</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># par &lt;- list(</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   yaml = &quot;&lt;...&gt;/workspace/di/viash_workshop_1/data.yaml&quot;,</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   tsv = &quot;&lt;...&gt;/workspace/di/viash_workshop_1/data.tsv&quot;</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>game_data <span class="ot">&lt;-</span> <span class="fu">read_header</span>(par<span class="sc">$</span>yaml)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>map_data <span class="ot">&lt;-</span> <span class="fu">read_map</span>(par<span class="sc">$</span>tsv)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># make visualisation</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">make_map_plot</span>(game_data, map_data)</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># save map to file</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>gleg <span class="ot">&lt;-</span> cowplot<span class="sc">::</span><span class="fu">get_legend</span>(g)</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>gnoleg <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>gout <span class="ot">&lt;-</span> cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(gnoleg, gleg, <span class="at">rel_widths =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">1</span>))</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(par<span class="sc">$</span>output, gout, <span class="at">width =</span> <span class="dv">24</span>, <span class="at">height =</span> <span class="dv">13</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="kw">library</span>(cowplot)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="kw">source</span>(<span class="kw">paste0</span>(resources_dir, <span class="st">&quot;/helper.R&quot;</span>))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="co"># par &lt;- list(</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a><span class="co">#   yaml = &quot;&lt;...&gt;/workspace/di/viash_workshop_1/data.yaml&quot;,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a><span class="co">#   tsv = &quot;&lt;...&gt;/workspace/di/viash_workshop_1/data.tsv&quot;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a><span class="co"># )</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a><span class="co"># read data</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a>game_data &lt;-<span class="st"> </span><span class="kw">read_header</span>(par<span class="op">$</span>yaml)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a>map_data &lt;-<span class="st"> </span><span class="kw">read_map</span>(par<span class="op">$</span>tsv)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a><span class="co"># make visualisation</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a>g &lt;-<span class="st"> </span><span class="kw">make_map_plot</span>(game_data, map_data)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a><span class="co"># save map to file</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a>gleg &lt;-<span class="st"> </span>cowplot<span class="op">::</span><span class="kw">get_legend</span>(g)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a>gnoleg &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a>gout &lt;-<span class="st"> </span>cowplot<span class="op">::</span><span class="kw">plot_grid</span>(gnoleg, gleg, <span class="dt">rel_widths =</span> <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">1</span>))</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a><span class="kw">ggsave</span>(par<span class="op">$</span>output, gout, <span class="dt">width =</span> <span class="dv">24</span>, <span class="dt">height =</span> <span class="dv">13</span>)</span></code></pre></div>
 <p>Again there is a helper script <code>helper.R</code> that we do not completely render in this document but can easily be retrieved by looking at the sources.</p>
 <p>This component takes 2 input files, a <code>yaml</code> file and a <code>tsv</code> file</p>
 <p>The container for this component is based on <code>rocker/tidyverse</code> but there are some modifications that are applied. Additional R libraries are installed, 5 from the CRAN database, 1 from Github. This functionality covers a major reason to create a custom <code>Dockerfile</code> an thus container image: customizing a base container to suite ones needs. Adding the customizations using the <a href="https://github.com/data-intuitive/viash">viash</a> configuration entails similar benefits to <a href="https://github.com/data-intuitive/viash">viash</a> generating the command-line parsing code, namely standardization.</p>
@@ -518,134 +383,129 @@
 <h2 id="convert_plot"><code>convert_plot</code></h2>
 <p>We covered the <code>convert_plot</code> component in the previous section and so will only quickly render the relevant source files here:</p>
 <p><code>src/civ6_save_renderer/convert_plot/config.vsh.yaml</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> convert_plot</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Convert a plot from pdf to png.</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;input.pdf&quot;</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A PDF input file.&quot;</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.png&quot;</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Output path.&quot;</span></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> dpokidov/imagemagick</span></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> convert_plot</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Convert a plot from pdf to png.</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;input.pdf&quot;</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A PDF input file.&quot;</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.png&quot;</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Output path.&quot;</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true"></a><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> dpokidov/imagemagick</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
 <p><code>src/civ6_save_renderer/convert_plot/script.sh</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> <span class="st">&quot;</span><span class="va">$par_input</span><span class="st">&quot;</span> -flatten <span class="st">&quot;</span><span class="va">$par_output</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a><span class="ex">convert</span> <span class="st">&quot;</span><span class="va">$par_input</span><span class="st">&quot;</span> -flatten <span class="st">&quot;</span><span class="va">$par_output</span><span class="st">&quot;</span></span></code></pre></div>
 <h2 id="combine_plots"><code>combine_plots</code></h2>
 <p>We covered the <code>combine_plots</code> component in the previous section and so will only quickly render the relevant source files here:</p>
 <p><code>src/civ6_save_renderer/combine_plots/config.vsh.yaml</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionality</span><span class="kw">:</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> combine_plots</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Combine multiple images into a movie using ffmpeg.</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;plot1.png:plot2.png&quot;</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">multiple</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> A list of images.</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.webm&quot;</span></span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> A path to output the movie to.</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--framerate&quot;</span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-f</span><span class="kw">]</span></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> integer</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="dv">4</span></span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Number of frames per second.</span></span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="fu">platforms</span><span class="kw">:</span></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> jrottenberg/ffmpeg</span></span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> combine_plots</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Combine multiple images into a movie using ffmpeg.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;plot1.png:plot2.png&quot;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true"></a><span class="at">      </span><span class="fu">multiple</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> A list of images.</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.webm&quot;</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> A path to output the movie to.</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--framerate&quot;</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-f</span><span class="kw">]</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> integer</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="dv">4</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Number of frames per second.</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true"></a><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> jrottenberg/ffmpeg</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
 <p><code>src/civ6_save_renderer/combine_plots/script.sh</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="va">inputs=$(</span><span class="bu">echo</span> <span class="va">$par_input</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;:&#39;</span> <span class="st">&#39;|&#39;</span><span class="va">)</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> -framerate <span class="va">$par_framerate</span> -i <span class="st">&quot;concat:</span><span class="va">$inputs</span><span class="st">&quot;</span> -c:v libvpx-vp9 -pix_fmt yuva420p -y <span class="st">&quot;</span><span class="va">$par_output</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="va">inputs=$(</span><span class="bu">echo</span> <span class="va">$par_input</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;:&#39;</span> <span class="st">&#39;|&#39;</span><span class="va">)</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a><span class="ex">ffmpeg</span> -framerate <span class="va">$par_framerate</span> -i <span class="st">&quot;concat:</span><span class="va">$inputs</span><span class="st">&quot;</span> -c:v libvpx-vp9 -pix_fmt yuva420p -y <span class="st">&quot;</span><span class="va">$par_output</span><span class="st">&quot;</span></span></code></pre></div>
 <h1 id="building-the-namespace">Building the namespace</h1>
 <p>We can easily convert the full contents this namespace into executables using:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns build -n civ6_save_renderer</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/combine_plots</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/combine_plots</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/convert_plot</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/convert_plot</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/plot_map</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/plot_map</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_map</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/parse_map</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/parse_header</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns build -n civ6_save_renderer</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/combine_plots</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/combine_plots</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/convert_plot</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/convert_plot</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/parse_header</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_map</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/parse_map</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/plot_map</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/plot_map</span></span></code></pre></div>
 <p><strong>Remark</strong>: Please note that both the <code>docker</code> platform as well as the <code>native</code> platform are taken into account. Because most people will not have the necessary tools for running the different steps, we will not build the executables for the <code>native</code> platform:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">rm</span> -r target</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">rm</span> -r target</span></code></pre></div>
 <p>And then:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns build -n civ6_save_renderer -p docker</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/combine_plots</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/convert_plot</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/plot_map</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_map</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns build -n civ6_save_renderer -p docker</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/combine_plots</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/convert_plot</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_map</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/plot_map</span></span></code></pre></div>
 <p>This is what the <code>target</code> directory looks like now:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">tree</span> target/</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">target/</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>└── <span class="ex">docker</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    └── <span class="ex">civ6_save_renderer</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        ├── <span class="ex">combine_plots</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        │   ├── <span class="ex">combine_plots</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        │   └── <span class="ex">viash.yaml</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        ├── <span class="ex">convert_plot</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        │   ├── <span class="ex">convert_plot</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        │   └── <span class="ex">viash.yaml</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>        ├── <span class="ex">parse_header</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        │   ├── <span class="ex">parse_header</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        │   └── <span class="ex">viash.yaml</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        ├── <span class="ex">parse_map</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        │   ├── <span class="ex">helper.js</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        │   ├── <span class="ex">parse_map</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        │   └── <span class="ex">viash.yaml</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>        └── <span class="ex">plot_map</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>            ├── <span class="ex">helper.R</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>            ├── <span class="ex">plot_map</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>            └── <span class="ex">viash.yaml</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="ex">7</span> directories, 12 files</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">tree</span> target/</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a><span class="ex">target/</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a>└── <span class="ex">docker</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a>    └── <span class="ex">civ6_save_renderer</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a>        ├── <span class="ex">combine_plots</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a>        │   └── <span class="ex">combine_plots</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a>        ├── <span class="ex">convert_plot</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true"></a>        │   └── <span class="ex">convert_plot</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true"></a>        ├── <span class="ex">parse_header</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true"></a>        │   └── <span class="ex">parse_header</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true"></a>        ├── <span class="ex">parse_map</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true"></a>        │   ├── <span class="ex">helper.js</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true"></a>        │   └── <span class="ex">parse_map</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true"></a>        └── <span class="ex">plot_map</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true"></a>            ├── <span class="ex">helper.R</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true"></a>            └── <span class="ex">plot_map</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true"></a></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true"></a><span class="ex">7</span> directories, 7 files</span></code></pre></div>
 <p>Please notice a few things:</p>
 <ul>
 <li>Every components has its own directory under <code>target/&lt;platform&gt;/&lt;namespace&gt;/</code></li>
@@ -653,18 +513,18 @@
 <li>Every <em>target</em> component directory contains a <code>viash.yaml</code> file which contains necessary (meta) information for reproducing the component</li>
 </ul>
 <p>Using the respective (containerized) tools is now as easy as, for instance,</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header/parse_header</span> -i ../data/AutoSave_0158.Civ6Save -o /tmp/output.yaml</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header/parse_header</span> -i ../data/AutoSave_0158.Civ6Save -o /tmp/output.yaml</span></code></pre></div>
 <p><code>/tmp/output.yaml</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ACTORS</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">{</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">START_ACTOR</span><span class="kw">:</span><span class="at"> </span><span class="dv">4159575459</span><span class="kw">,</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">ACTOR_NAME</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;CIVILIZATION_FREE_CITIES&#39;</span><span class="kw">,</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">ACTOR_TYPE</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;CIVILIZATION_LEVEL_FREE_CITIES&#39;</span><span class="kw">,</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">ACTOR_AI_HUMAN</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span><span class="kw">,</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">LEADER_NAME</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;LEADER_FREE_CITIES&#39;</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="at">    }</span><span class="kw">,</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">{</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="at">... (cut) ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="kw">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">ACTORS</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a><span class="at">    </span><span class="kw">{</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a><span class="at">      </span><span class="fu">START_ACTOR</span><span class="kw">:</span><span class="at"> </span><span class="dv">4159575459</span><span class="kw">,</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a><span class="at">      </span><span class="fu">ACTOR_NAME</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;CIVILIZATION_FREE_CITIES&#39;</span><span class="kw">,</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a><span class="at">      </span><span class="fu">ACTOR_TYPE</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;CIVILIZATION_LEVEL_FREE_CITIES&#39;</span><span class="kw">,</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a><span class="at">      </span><span class="fu">ACTOR_AI_HUMAN</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span><span class="kw">,</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">LEADER_NAME</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;LEADER_FREE_CITIES&#39;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true"></a><span class="at">    }</span><span class="kw">,</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true"></a><span class="at">    </span><span class="kw">{</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true"></a><span class="at">... (cut) ...</span></span></code></pre></div>
 </body>
 </html>

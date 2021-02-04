@@ -1,0 +1,35 @@
+from: markdown-auto_identifiers
+to: latex
+
+# verbosity: INFO
+# log-file: log.json
+
+# listings: true
+
+highlight-style: tango
+
+
+toc: true
+toc-depth: 3
+pdf-engine: xelatex
+standalone: true
+top-level-division: chapter
+
+variables:
+  documentlcass: book
+  pagestyle: empty
+  classoption:
+    - nohyper
+    - a4paper
+    - openany
+    - oneside
+    - nofonts
+    - noxcolor
+
+metadata:
+  documentclass: book
+  mainfont: LucidaBrightOT
+  monofont: Source Code Pro
+  monofontoptions: Scale=0.8
+  verbatim-in-note: false
+  title: false # we have our own title spec

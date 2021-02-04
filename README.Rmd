@@ -17,12 +17,15 @@ This is part 1, it deals with the explanation of the use-case, how this would be
 ```{r vignettes, results='asis', echo=FALSE}
 readmes <- list.files(".", pattern = "README.Rmd", recursive = TRUE)
 readmes <- readmes[grepl("^[^/]*/[^/]*$", readmes)] # filter out only direct readmes
-for (file in readmes) {
-  lines <- readr::read_lines(file)
-  title <- lines[grepl("^title:", lines)][[1]]
-  title2 <- gsub("^.*\"(.*)\"", "\\1", title)
-  folder <- gsub("/.*", "", file)
-  cat("* [", title2, "](", folder, ")\n", sep = "")
+for (readme in readmes) {
+  lines <- readr::read_lines(readme)
+  title1 <- lines[grepl("^title:", lines)][[1]]
+  title <- gsub("^.*\"(.*)\"", "\\1", title1)
+  html <- gsub("Rmd$", "html", readme)
+  pdf <- gsub("Rmd$", "pdf", readme)
+  
+  folder <- gsub("/.*", "", readme)
+  cat("* [", title, "](", folder, ") ([html](blob/main/", html, "), [pdf](blob/main/", pdf, "))\n", sep = "")
 }
 ```
 

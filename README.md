@@ -12,14 +12,32 @@ would be tackled the classical way and what \[viash\] can do to ease the
 process:
 
 -   [Introduction](100-Introduction)
+    ([html](blob/main/100-Introduction/README.html),
+    [pdf](blob/main/100-Introduction/README.pdf))
 -   [Use case: playing video games](110-PlayingVideoGames)
+    ([html](blob/main/110-PlayingVideoGames/README.html),
+    [pdf](blob/main/110-PlayingVideoGames/README.pdf))
 -   [Intro to viash](120-IntroToViash)
+    ([html](blob/main/120-IntroToViash/README.html),
+    [pdf](blob/main/120-IntroToViash/README.pdf))
 -   [Creating components](130-CreatingComponents)
+    ([html](blob/main/130-CreatingComponents/README.html),
+    [pdf](blob/main/130-CreatingComponents/README.pdf))
 -   [Building components](140-BuildingComponents)
+    ([html](blob/main/140-BuildingComponents/README.html),
+    [pdf](blob/main/140-BuildingComponents/README.pdf))
 -   [Running components](150-RunningComponents)
+    ([html](blob/main/150-RunningComponents/README.html),
+    [pdf](blob/main/150-RunningComponents/README.pdf))
 -   [Running a simple pipeline](160-RunningPipeline)
+    ([html](blob/main/160-RunningPipeline/README.html),
+    [pdf](blob/main/160-RunningPipeline/README.pdf))
 -   [Good practices](170-GoodPractices)
+    ([html](blob/main/170-GoodPractices/README.html),
+    [pdf](blob/main/170-GoodPractices/README.pdf))
 -   [Conclusion](180-Conclusion)
+    ([html](blob/main/180-Conclusion/README.html),
+    [pdf](blob/main/180-Conclusion/README.pdf))
 
 In part 2 we start from the above and run the pipeline in NextFlow, and
 on Kubernetes.

@@ -1,14 +1,5 @@
----
-author: Data Intuitive
-date: Tuesday - January 26, 2021
-mainfont: Roboto Condensed
-monobackgroundcolor: lightgrey
-monofont: Source Code Pro
-monofontoptions: Scale=0.7
-title: Viash Workshop 1 - Running the components
----
-
-# Introduction
+Running components
+==================
 
 In this section, we demonstrate how to run the components of the
 Civilization postgame generation pipeline in order to generate the
@@ -17,7 +8,8 @@ postgame video manually. The next section will be about automation.
 We refer to earlier sections for an in-depth overview of how the
 different components are configured.
 
-# Building the namespace
+Building the namespace
+======================
 
 Let's build the namespace from the `src` directory in the root of this
 project/repository:
@@ -29,9 +21,9 @@ project/repository:
 +   -p docker
 Exporting ../src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/combine_plots
 Exporting ../src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/convert_plot
-Exporting ../src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/plot_map
-Exporting ../src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_map
 Exporting ../src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_header
+Exporting ../src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/parse_map
+Exporting ../src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =docker=> target/docker/civ6_save_renderer/plot_map
 ```
 
 The result is stored under `target/docker` because we chose to only
@@ -51,7 +43,8 @@ following CLI:
 
 Or, we can run them one-by-one.
 
-# All steps
+All steps
+=========
 
 We took 2 save games from the example data (a very limited set) under
 `data/` in the root of this repository and stored it locally under
@@ -66,7 +59,8 @@ AutoSave_0159.Civ6Save
 Intermediate files will be stored under `temp/`, results will go under
 `output/`.
 
-## `parse_header`
+`parse_header`
+--------------
 
 We start by looking at the syntax of `parse_header` to refresh our
 memory:
@@ -106,14 +100,18 @@ The result is two YAML files:
 
 ``` {.sh}
 > ls temp/
+0158.pdf
+0158.png
 0158.tsv
 0158.yaml
+0159.pdf
+0159.png
 0159.tsv
 0159.yaml
-empty
 ```
 
-## `parse_map`
+`parse_map`
+-----------
 
 Likewise, we run the `parse_map` component. This component uses a
 node.js library under the hood, but we need not know that in order to
@@ -140,7 +138,7 @@ games:
 > target/docker/civ6_save_renderer/parse_map/parse_map \
 +   --input data/AutoSave_0158.Civ6Save \
 +   --output temp/0158.tsv
-(node:10) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(node:9) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
 ```
 
@@ -150,7 +148,7 @@ and
 > target/docker/civ6_save_renderer/parse_map/parse_map \
 +   --input data/AutoSave_0159.Civ6Save \
 +   --output temp/0159.tsv
-(node:10) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(node:9) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
 ```
 
@@ -158,14 +156,18 @@ The result is two CSV files next to the already created YAML files:
 
 ``` {.sh}
 > ls temp/
+0158.pdf
+0158.png
 0158.tsv
 0158.yaml
+0159.pdf
+0159.png
 0159.tsv
 0159.yaml
-empty
 ```
 
-## `plot_map`
+`plot_map`
+----------
 
 Using both the YAML and CSV files above, we can plot a map for each
 stage in the game process. We use the `plot_map` to achieve this, first
@@ -198,9 +200,9 @@ games:
 +   --output temp/0158.pdf
 ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
-✔ tibble  3.0.6     ✔ dplyr   1.0.3
-✔ tidyr   1.0.2     ✔ stringr 1.4.0
-✔ readr   1.3.1     ✔ forcats 0.5.0
+✔ tibble  3.0.6     ✔ dplyr   1.0.4
+✔ tidyr   1.1.2     ✔ stringr 1.4.0
+✔ readr   1.4.0     ✔ forcats 0.5.0
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -214,9 +216,9 @@ and
 +   --output temp/0159.pdf
 ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
-✔ tibble  3.0.6     ✔ dplyr   1.0.3
-✔ tidyr   1.0.2     ✔ stringr 1.4.0
-✔ readr   1.3.1     ✔ forcats 0.5.0
+✔ tibble  3.0.6     ✔ dplyr   1.0.4
+✔ tidyr   1.1.2     ✔ stringr 1.4.0
+✔ readr   1.4.0     ✔ forcats 0.5.0
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -227,15 +229,17 @@ The result is two PDF files:
 ``` {.sh}
 > ls temp/
 0158.pdf
+0158.png
 0158.tsv
 0158.yaml
 0159.pdf
+0159.png
 0159.tsv
 0159.yaml
-empty
 ```
 
-## `convert_plot`
+`convert_plot`
+--------------
 
 It's now time to convert our PDF version of the plot to PNG format. We
 do this using the `convert_plot` component:
@@ -282,10 +286,10 @@ It's as simple as that.
 0159.png
 0159.tsv
 0159.yaml
-empty
 ```
 
-## `combine_plots`
+`combine_plots`
+---------------
 
 The last step is to render the video based on the (only 2) PNG image
 files:
@@ -325,14 +329,14 @@ ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
   libswscale      5.  3.100 /  5.  3.100
   libswresample   3.  3.100 /  3.  3.100
   libpostproc    55.  3.100 / 55.  3.100
-Input #0, png_pipe, from 'concat:/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/temp/0158.png|/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/temp/0159.png':
+Input #0, png_pipe, from 'concat:/viash_automount<...>/workspace/di/viash_workshop_1/150-RunningComponents/temp/0158.png|/viash_automount<...>/workspace/di/viash_workshop_1/150-RunningComponents/temp/0159.png':
   Duration: N/A, bitrate: N/A
     Stream #0:0: Video: png, rgba64be(pc), 1728x936 [SAR 72:72 DAR 24:13], 1 tbr, 1 tbn, 1 tbc
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
 Press [q] to stop, [?] for help
-[libvpx-vp9 @ 0x2251100] v1.8.0
-Output #0, webm, to '/viash_automount/Users/toni/code/projects/viash/viash_workshop_1/060-Running/output/video.webm':
+[libvpx-vp9 @ 0xd91440] v1.8.0
+Output #0, webm, to '/viash_automount<...>/workspace/di/viash_workshop_1/150-RunningComponents/output/video.webm':
   Metadata:
     encoder         : Lavf58.20.100
     Stream #0:0: Video: vp9 (libvpx-vp9), yuva420p, 1728x936 [SAR 1:1 DAR 24:13], q=-1--1, 200 kb/s, 1 fps, 1k tbn, 1 tbc
@@ -340,8 +344,8 @@ Output #0, webm, to '/viash_automount/Users/toni/code/projects/viash/viash_works
       encoder         : Lavc58.35.100 libvpx-vp9
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1
-frame=    2 fps=1.7 q=0.0 Lsize=     137kB time=00:00:01.00 bitrate=1122.3kbits/s speed=0.839x    
-video:136kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.707094%
+frame=    2 fps=2.0 q=0.0 Lsize=     137kB time=00:00:01.00 bitrate=1121.0kbits/s speed=0.984x    
+video:136kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.707957%
 ```
 
 This concludes the manual approach to running the scripts. In the next

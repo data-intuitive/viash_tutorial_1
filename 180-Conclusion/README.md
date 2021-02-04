@@ -1,12 +1,5 @@
----
-author: Data Intuitive
-date: Tuesday - January 26, 2021
-mainfont: Roboto Condensed
-monobackgroundcolor: lightgrey
-monofont: Source Code Pro
-monofontoptions: Scale=0.7
-title: Viash Workshop 1 - Conclusion
----
+Conclusion
+==========
 
 This concludes part 1 of the
 [viash](https://github.com/data-intuitive/viash) workshop and tutorial.

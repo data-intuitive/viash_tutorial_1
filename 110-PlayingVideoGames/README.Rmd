@@ -22,7 +22,8 @@ Multiplayer games can take a few hours to finish -- anywhere between 2 to 10 hou
 That's why a perfect way of closing a session of Civilization V is by being able to watch a 'postgame map replay' of which owner owned which time at any given point in time.
 
 
-![](img/civ5_victory_.webm)
+<!--![](img/civ5_victory_.webm)-->
+[![](img/civ5_victory_.png)](img/civ5_victory_.webm)
 
 However, for whatever reason, this feature did not make it in Civilization VI. This made a lot of people very angry and been widely regarded as a bad move. <!-- quoting Douglas Adams here -->
 

@@ -1,14 +1,5 @@
----
-author: Data Intuitive
-date: Tuesday - January 26, 2021
-mainfont: Roboto Condensed
-monobackgroundcolor: lightgrey
-monofont: Source Code Pro
-monofontoptions: Scale=0.7
-title: viash tutorial 1 - Introduction
----
-
-# Introduction
+Introduction
+============
 
 This tutorial is all about viash! What is viash?
 
@@ -16,7 +7,8 @@ viash is software that helps you turn a script into a reusable
 component, which you can use as a standalone executable or as part of a
 pipeline.
 
-## Use cases for viash
+Use cases for viash
+-------------------
 
 Phew! What does that mean? Here are a few typical use cases have already
 caused indescribable frustrations among software developers, but can be
@@ -39,7 +31,8 @@ solved quite easily by using viash.
     ago. Unfortunately, the software you used back then is not supported
     anymore, or the newest version produces totally different results.
 
-## How viash works
+How viash works
+---------------
 
 By providing some meta-data regarding its functionality and the platform
 on which you want to run the software, viash can help you:
@@ -54,6 +47,7 @@ on which you want to run the software, viash can help you:
 
 -   unit-test your component to ensure that it works at all times.
 
-## Outline of this tutorial
+Outline of this tutorial
+------------------------
 
 ![](img/outline.svg)
