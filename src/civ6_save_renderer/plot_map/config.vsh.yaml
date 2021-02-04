@@ -36,15 +36,16 @@ functionality:
     - path: helper.R
 platforms:
   - type: docker
-    image: rocker/tidyverse
-    r:
-      cran:
-        - ggforce
-        - yaml
-        - bit64
-        - ggnewscale
-        - cowplot
-      github:
-        - rcannood/civ6saves
-  - type: nextflow
+    image: "rocker/tidyverse:4.0.3"
+    setup:
+      - type: r
+        cran:
+          - ggforce
+          - yaml
+          - bit64
+          - ggnewscale
+          - cowplot
+        github:
+          - rcannood/civ6saves
   - type: native
+  - type: nextflow

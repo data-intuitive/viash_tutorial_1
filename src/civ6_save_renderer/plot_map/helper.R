@@ -1,3 +1,4 @@
+options(tidyverse.quiet = TRUE)
 library(tidyverse)
 requireNamespace("ggforce", quietly = TRUE)
 requireNamespace("civ6saves", quietly = TRUE)

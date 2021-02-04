@@ -1,12 +1,17 @@
+# load helper functions 'read_header()', 'read_map()', and 'make_map_plot()'
+source(paste0(resources_dir, "/helper.R"))
+
+# load libraries
 library(tidyverse)
 library(cowplot)
 
-source(paste0(resources_dir, "/helper.R"))
-
-# par <- list(
-#   yaml = "/home/rcannood/workspace/di/viash_workshop_1/data.yaml",
-#   tsv = "/home/rcannood/workspace/di/viash_workshop_1/data.tsv"
-# )
+## VIASH START
+par <- list(
+  yaml = "data.yaml",
+  tsv = "data.tsv",
+  output = "output.pdf"
+)
+## VIASH END
 
 # read data
 game_data <- read_header(par$yaml)
