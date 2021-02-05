@@ -198,7 +198,8 @@ platforms:
     image: ubuntu
     setup: 
       - type: apt
-        packages: imagemagick
+        packages: 
+          - imagemagick
 ```
 
 Luckily, we didn’t need to resort to such drastic measures.
@@ -267,7 +268,7 @@ case, it means *pulling* the appropriate docker image from Docker Hub.
 
 ``` sh
 > bin/convert_plot ---setup
-> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-iRvw7x
+> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-RtxWOy
 Sending build context to Docker daemon  40.45kB
 Step 1/2 : FROM dpokidov/imagemagick
  ---> 0ce61e775be8

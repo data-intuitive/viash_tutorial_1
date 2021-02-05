@@ -146,7 +146,8 @@ platforms:
     image: ubuntu
     setup: 
       - type: apt
-        packages: imagemagick
+        packages: 
+          - imagemagick
 ```
 
 Luckily, we didn't need to resort to such drastic measures.
