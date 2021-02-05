@@ -202,18 +202,18 @@ By default, [viash] will use the first platform specified in the [viash config],
 viash build src/intro_example6.vsh.yaml -o bin -p docker
 ```
 
-The executable `bin/intro_example5` now automatically runs inside Docker.
+The executable `bin/intro_example6` now automatically runs inside Docker.
 
 ```{sh}
-bin/intro_example5 src/ --filter "^s.*"
+bin/intro_example6 src/ --filter '^s.*'
 ```
 
 If the `ubuntu` image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.
 
-Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction like
+Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction which looks something like this:
 
 ```{sh}
-docker run --rm -v `pwd`:/mount ubuntu:latest ls /mount/src | grep "^s.*"
+docker run --rm -v `pwd`:/mount ubuntu:latest ls /mount/src | grep '^s.*'
 ```
 
 While this is all still manageable, it could quickly become more complicated, but that is for a later section.

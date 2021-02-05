@@ -182,13 +182,13 @@
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="ex">src</span></span></code></pre></div>
 <p>There is no difference with the previous version of the component. Now, let us pass the argument <code>-l</code> to <code>intro_example2</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example2.vsh.yaml -- -l</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">total</span> 148</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="ex">drwxrwxr-x.</span> 1 rcannood rcannood    56 Feb  5 11:47 bin</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">total</span> 144</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="ex">drwxrwxr-x.</span> 1 rcannood rcannood    84 Feb  5 12:38 bin</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood   687 Feb  5 09:15 Makefile</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 60645 Feb  5 11:47 README.html</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 19979 Feb  5 11:47 README.md</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 52875 Feb  5 11:47 README.pdf</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 10013 Feb  5 12:33 README.Rmd</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 53980 Feb  5 12:33 README.html</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 17383 Feb  5 12:33 README.md</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 50769 Feb  5 12:33 README.pdf</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 10041 Feb  5 12:38 README.Rmd</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span> 1 rcannood rcannood   294 Feb  5 12:28 src</span></code></pre></div>
 <p>Please note that options <em>before</em> the <code>--</code> are considered for <a href="https://github.com/data-intuitive/viash">viash</a> while options after the <code>--</code> are for the tool that is wrapped (in this case <code>ls</code>).</p>
 <h2 id="example-3-setting-different-argument-types">Example 3: setting different argument types</h2>
@@ -208,13 +208,13 @@
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ls</span></span></code></pre></div>
 <p>Running this component will still list the contents of the current directory (like before).</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- -l</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="ex">total</span> 148</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="ex">drwxrwxr-x.</span> 1 rcannood rcannood    56 Feb  5 11:47 bin</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="ex">total</span> 144</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="ex">drwxrwxr-x.</span> 1 rcannood rcannood    84 Feb  5 12:38 bin</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood   687 Feb  5 09:15 Makefile</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 60645 Feb  5 11:47 README.html</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 19979 Feb  5 11:47 README.md</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 52875 Feb  5 11:47 README.pdf</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 10013 Feb  5 12:33 README.Rmd</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 53980 Feb  5 12:33 README.html</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 17383 Feb  5 12:33 README.md</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 50769 Feb  5 12:33 README.pdf</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 10041 Feb  5 12:38 README.Rmd</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span> 1 rcannood rcannood   294 Feb  5 12:28 src</span></code></pre></div>
 <p>However, we can now also list the contents of a different directory.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- src/ -l</span>
@@ -223,7 +223,7 @@
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 186 Jan 28 08:35 intro_example2.vsh.yaml</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 239 Jan 28 08:35 intro_example3.vsh.yaml</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 543 Jan 28 08:35 intro_example4.vsh.yaml</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 593 Jan 28 08:35 intro_example5.vsh.yaml</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 551 Feb  5 12:35 intro_example5.vsh.yaml</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 593 Jan 28 08:35 intro_example6.vsh.yaml</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood  49 Feb  5 12:27 script.sh</span></code></pre></div>
 <p>You can always retrieve information about the component by requesting the included help.</p>
@@ -306,7 +306,7 @@
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 186 Jan 28 08:35 intro_example2.vsh.yaml</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 239 Jan 28 08:35 intro_example3.vsh.yaml</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 543 Jan 28 08:35 intro_example4.vsh.yaml</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 593 Jan 28 08:35 intro_example5.vsh.yaml</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 551 Feb  5 12:35 intro_example5.vsh.yaml</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 593 Jan 28 08:35 intro_example6.vsh.yaml</span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood  49 Feb  5 12:27 script.sh</span></code></pre></div>
 <p>You can now share this <code>bin/intro_example4</code> file with others, or add it to your <code>~/bin</code> directory to turn it into a system-wide command.</p>
@@ -317,8 +317,8 @@
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="fu">ls</span> <span class="st">&quot;</span><span class="va">$par_path</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&quot;</span><span class="va">$par_filter</span><span class="st">&quot;</span></span></code></pre></div>
 <p>In combination with the following <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> intro_example6</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.6</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> intro_example5</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a><span class="fu">  description</span><span class="kw">: </span><span class="ch">|</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>    List information about the files (the current directory by default) </span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a>    in alphabetical order, filtered by a regular expression.</span>
@@ -335,9 +335,7 @@
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true"></a><span class="fu">platforms</span><span class="kw">:</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ubuntu:latest</span></span></code></pre></div>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
 <p>We get results like this:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example5.vsh.yaml -- src/ --filter <span class="st">&quot;^s.*&quot;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="ex">script.sh</span></span></code></pre></div>
@@ -370,18 +368,12 @@
 <span id="cb20-22"><a href="#cb20-22" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ubuntu:latest</span></span></code></pre></div>
 <p>By default, <a href="https://github.com/data-intuitive/viash">viash</a> will use the first platform specified in the <a href="https://www.data-intuitive.com/viash_docs/config">viash config</a>, which in this case the native platform. In order to build an executable which uses Docker in the backend, we need to pass this information as follows:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> build src/intro_example6.vsh.yaml -o bin -p docker</span></code></pre></div>
-<p>The executable <code>bin/intro_example5</code> now automatically runs inside Docker.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">bin/intro_example5</span> src/ --filter <span class="st">&quot;^s.*&quot;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="ex">intro_example1.vsh.yaml</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a><span class="ex">intro_example2.vsh.yaml</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a><span class="ex">intro_example3.vsh.yaml</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true"></a><span class="ex">intro_example4.vsh.yaml</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true"></a><span class="ex">intro_example5.vsh.yaml</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true"></a><span class="ex">intro_example6.vsh.yaml</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true"></a><span class="ex">script.sh</span></span></code></pre></div>
+<p>The executable <code>bin/intro_example6</code> now automatically runs inside Docker.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">bin/intro_example6</span> src/ --filter <span class="st">&#39;^s.*&#39;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="ex">script.sh</span></span></code></pre></div>
 <p>If the <code>ubuntu</code> image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.</p>
-<p>Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction like</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> run --rm -v <span class="kw">`</span><span class="bu">pwd</span><span class="kw">`</span>:/mount ubuntu:latest ls /mount/src <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&quot;^s.*&quot;</span></span>
+<p>Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction which looks something like this:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> run --rm -v <span class="kw">`</span><span class="bu">pwd</span><span class="kw">`</span>:/mount ubuntu:latest ls /mount/src <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;^s.*&#39;</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="ex">script.sh</span></span></code></pre></div>
 <p>While this is all still manageable, it could quickly become more complicated, but that is for a later section. In what follows, we will also come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.</p>
 </body>

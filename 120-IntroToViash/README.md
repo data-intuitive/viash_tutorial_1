@@ -182,13 +182,13 @@ let us pass the argument `-l` to `intro_example2`:
 
 ``` sh
 > viash run src/intro_example2.vsh.yaml -- -l
-total 148
-drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 11:47 bin
+total 144
+drwxrwxr-x. 1 rcannood rcannood    84 Feb  5 12:38 bin
 -rw-rw-r--. 1 rcannood rcannood   687 Feb  5 09:15 Makefile
--rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 11:47 README.html
--rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 11:47 README.md
--rw-rw-r--. 1 rcannood rcannood 52875 Feb  5 11:47 README.pdf
--rw-r--r--. 1 rcannood rcannood 10013 Feb  5 12:33 README.Rmd
+-rw-rw-r--. 1 rcannood rcannood 53980 Feb  5 12:33 README.html
+-rw-rw-r--. 1 rcannood rcannood 17383 Feb  5 12:33 README.md
+-rw-rw-r--. 1 rcannood rcannood 50769 Feb  5 12:33 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10041 Feb  5 12:38 README.Rmd
 drwxr-xr-x. 1 rcannood rcannood   294 Feb  5 12:28 src
 ```
 
@@ -224,13 +224,13 @@ directory (like before).
 
 ``` sh
 > viash run src/intro_example3.vsh.yaml -- -l
-total 148
-drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 11:47 bin
+total 144
+drwxrwxr-x. 1 rcannood rcannood    84 Feb  5 12:38 bin
 -rw-rw-r--. 1 rcannood rcannood   687 Feb  5 09:15 Makefile
--rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 11:47 README.html
--rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 11:47 README.md
--rw-rw-r--. 1 rcannood rcannood 52875 Feb  5 11:47 README.pdf
--rw-r--r--. 1 rcannood rcannood 10013 Feb  5 12:33 README.Rmd
+-rw-rw-r--. 1 rcannood rcannood 53980 Feb  5 12:33 README.html
+-rw-rw-r--. 1 rcannood rcannood 17383 Feb  5 12:33 README.md
+-rw-rw-r--. 1 rcannood rcannood 50769 Feb  5 12:33 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10041 Feb  5 12:38 README.Rmd
 drwxr-xr-x. 1 rcannood rcannood   294 Feb  5 12:28 src
 ```
 
@@ -243,7 +243,7 @@ total 28
 -rw-r--r--. 1 rcannood rcannood 186 Jan 28 08:35 intro_example2.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 239 Jan 28 08:35 intro_example3.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 543 Jan 28 08:35 intro_example4.vsh.yaml
--rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example5.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 551 Feb  5 12:35 intro_example5.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example6.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood  49 Feb  5 12:27 script.sh
 ```
@@ -374,7 +374,7 @@ total 28
 -rw-r--r--. 1 rcannood rcannood 186 Jan 28 08:35 intro_example2.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 239 Jan 28 08:35 intro_example3.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 543 Jan 28 08:35 intro_example4.vsh.yaml
--rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example5.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 551 Feb  5 12:35 intro_example5.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example6.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood  49 Feb  5 12:27 script.sh
 ```
@@ -403,8 +403,8 @@ config](https://www.data-intuitive.com/viash_docs/config):
 
 ``` yaml
 functionality:
-  name: intro_example6
-  version: 0.6
+  name: intro_example5
+  version: 0.5
   description: |
     List information about the files (the current directory by default) 
     in alphabetical order, filtered by a regular expression.
@@ -422,8 +422,6 @@ functionality:
       path: script.sh
 platforms:
   - type: native
-  - type: docker
-    image: ubuntu:latest
 ```
 
 We get results like this:
@@ -502,17 +500,11 @@ Docker in the backend, we need to pass this information as follows:
 > viash build src/intro_example6.vsh.yaml -o bin -p docker
 ```
 
-The executable `bin/intro_example5` now automatically runs inside
+The executable `bin/intro_example6` now automatically runs inside
 Docker.
 
 ``` sh
-> bin/intro_example5 src/ --filter "^s.*"
-intro_example1.vsh.yaml
-intro_example2.vsh.yaml
-intro_example3.vsh.yaml
-intro_example4.vsh.yaml
-intro_example5.vsh.yaml
-intro_example6.vsh.yaml
+> bin/intro_example6 src/ --filter '^s.*'
 script.sh
 ```
 
@@ -522,10 +514,11 @@ yourself that the result of this listing is not the same as what you
 would have if you ran on your local system.
 
 Please note that if you wanted to do this exact thing by using Docker
-itself, you would have to use a CLI instruction like
+itself, you would have to use a CLI instruction which looks something
+like this:
 
 ``` sh
-> docker run --rm -v `pwd`:/mount ubuntu:latest ls /mount/src | grep "^s.*"
+> docker run --rm -v `pwd`:/mount ubuntu:latest ls /mount/src | grep '^s.*'
 script.sh
 ```
 
