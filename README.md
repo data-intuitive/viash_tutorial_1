@@ -1,18 +1,11 @@
 
 # viash tutorial - part 1
 
-## Introduction
+Part 1 of this tutorial illustrate how
+[viash](https://github.com/data-intuitive/viash) works and how it fits
+into the workflow of a broad audience.
 
-Tutorial to illustrate [viash](https://github.com/data-intuitive/viash)
-and how [viash](https://github.com/data-intuitive/viash) fits into the
-workflow of a broad audience.
-
-## Contents
-
-This is part 1, it deals with the explanation of the use-case, how this
-would be tackled the classical way and what
-[viash](https://github.com/data-intuitive/viash) can do to ease the
-process:
+Contents:
 
 -   [Introduction](100-Introduction)
     ([html](100-Introduction/README.html),

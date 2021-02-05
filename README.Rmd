@@ -6,13 +6,9 @@ output:
 
 # viash tutorial - part 1
 
-## Introduction
+Part 1 of this tutorial illustrate how [viash] works and how it fits into the workflow of a broad audience. 
 
-Tutorial to illustrate [viash] and how [viash] fits into the workflow of a broad audience.
-
-## Contents
-
-This is part 1, it deals with the explanation of the use-case, how this would be tackled the classical way  and what [viash] can do to ease the process:
+Contents:
 
 ```{r vignettes, results='asis', echo=FALSE}
 readmes <- list.files(".", pattern = "README.Rmd", recursive = TRUE)
