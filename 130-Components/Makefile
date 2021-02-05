@@ -8,6 +8,7 @@ $(FILE).md: $(FILE).Rmd
 	knit $(FILE).Rmd --variant markdown --preserve_yaml false
 	# Strip local paths
 	$(SED) -i 's|/\([/a-zA-Z0-9]*\)/work|<...>/work|g' $(FILE).md
+	$(SED) -i -r "s/[[:cntrl:]]\[[0-9]{1,3}m//g" $(FILE).md
 	@echo "$(shell date) ========> md done"
 
 $(FILE).pdf: $(FILE).md

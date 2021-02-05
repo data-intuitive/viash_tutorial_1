@@ -5,10 +5,10 @@ mainfont: Roboto Condensed
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
 monobackgroundcolor: lightgrey
-title: "Creating components"
+title: "Creating components with viash"
 ---
 
-# Creating components
+# Creating components with viash
 
 ```{r setup, include = FALSE}
 # set default chunk options
@@ -17,8 +17,9 @@ knitr::opts_chunk$set(
   comment = "",
   collapse = TRUE,
   prompt = TRUE
-  # engine.opts = list(bash = "-l")
 )
+
+knitr::opts_knit$set(root.dir = '..')
 ```
 
 With the information from the previous section, we will wrap two components from the Civ6 use case in more detail (`convert_plot` and `plot_map`). Let's start with the easiest of the two.
@@ -115,7 +116,7 @@ The file `script.sh` is not so much different from the example we gave above.
 The only difference is that the `par_input` and `par_output` variables are surrounded by some comments. How can this script work properly if the values of `par_input` and `par_output` are always the same?
 
 ```{sh echo=F, results='asis'}
-../scripts/cat_format src/convert_plot/script.sh
+scripts/cat_format src/civ6_save_renderer/convert_plot/script.sh
 ```
 
 Well, the code block between `## VIASH START` and `## VIASH END` is entirely optional. In fact, viash will not even look at its content. When you run a viash component, the code block above will be replaced with some code to create a command-line interface through which to pass the parameters.
@@ -155,7 +156,7 @@ Luckily, we didn't need to resort to such drastic measures.
 This is the final viash config for this component in its entirety.
 
 ```{sh echo=F, results='asis'}
-../scripts/cat_format src/convert_plot/config.vsh.yaml
+scripts/cat_format src/civ6_save_renderer/convert_plot/config.vsh.yaml
 ```
 
 By notation, the file extension of a viash config file should be `.vsh.yaml`, otherwise it will not be detected by viash.
@@ -165,7 +166,7 @@ By notation, the file extension of a viash config file should be `.vsh.yaml`, ot
 Building an executable can be done just like before. We assume [ImageMagick] is not installed on the local system and thus build the Docker version:
 
 ```{sh}
-viash build src/convert_plot/config.vsh.yaml -o bin -p docker
+viash build src/civ6_save_renderer/convert_plot/config.vsh.yaml -o bin -p docker
 ```
 
 We specify the `docker` platform explicitly although that is not really necessary because of the order of the platforms in the viash config. The resulting script is stored under `bin` relative to the current working directory.
@@ -193,12 +194,12 @@ mkdir -p output/
 We can generate a png file from a pdf file as follows.
 
 ```{sh}
-bin/convert_plot -i ../data/AutoSave_0159.pdf -o output/AutoSave_0159.png
+bin/convert_plot -i data/AutoSave_0159.pdf -o data/AutoSave_0159.png
 ```
 
 `output/AutoSave_0159.png`: 
 
-![](output/AutoSave_0159.png)
+![](../output/AutoSave_0159.png)
 
 ### Note on file management when running Docker images
 
@@ -280,7 +281,7 @@ of the code into a second file, the main script becomes a bit more readable.
 This is the contents of the R script. The comments provide some sense of how this script works:
 
 ```{sh echo=F, results='asis'}
-../scripts/cat_format src/plot_map/script.R
+scripts/cat_format src/civ6_save_renderer/plot_map/script.R
 ```
 
 For the sake of brevity, we will not show the contents of the `helper.R` file,
@@ -292,8 +293,7 @@ of the yaml and the tsv file in order to render a [ggplot2] visualisation.
 In order to run this component natively, we need a working R installation, 
 combined with a specific set of R packages (listed a the top of the different R files, e.g. `library(cowplot)`).
 
-We can start from the [`rocker/tidyverse:4.0.3`](https://hub.docker.com/r/rocker/tidyverse/) container, which already contains all of the tidyverse packages. 
-The extra dependencies can be installed as follows.
+We can start from the [`rocker/tidyverse:4.0.3`](https://hub.docker.com/r/rocker/tidyverse/) container, which already contains all of the tidyverse packages, but some extra dependencies need to be installed.
 
 ```yaml
 platforms:
@@ -312,7 +312,7 @@ platforms:
   - type: native
 ```
 
-While most dependencies can be installed directly from CRAN, one package is only available on a GitHub repository.
+Additional R libraries are installed, 5 from the CRAN database, 1 from Github. This functionality covers a major reason to create a custom `Dockerfile` an thus container image: extending a base container to suit ones needs. Adding the extra software using the [viash] configuration entails similar benefits to [viash] generating the command-line parsing code, namely standardisation.
 
 ### Step 4: Building and running the component
 
@@ -321,12 +321,11 @@ Using the `--setup` flag, we can let viash run the `---setup` command after buil
 the executable without much effort.
 Unfortunately, installing R packages can take a lot of time, so this command might take a while to run.
 
-```sh
-viash build src/plot_map/config.vsh.yaml -o bin -p docker --setup > /dev/null
+```{sh}
+viash build src/civ6_save_renderer/plot_map/config.vsh.yaml -o bin -p docker --setup > /dev/null
 ```
 
-
-This is the generated help page.
+This is the corresponding generated help page.
 ```{sh}
 bin/plot_map -h
 ```
@@ -334,9 +333,9 @@ bin/plot_map -h
 Finally, we can run the component as follows.
 ```{sh}
 bin/plot_map \
-  --yaml ../data/AutoSave_0159.yaml \
-  --tsv ../data/AutoSave_0159.tsv \
-  --output output/AutoSave_0159.pdf
+  --yaml data/AutoSave_0159.yaml \
+  --tsv data/AutoSave_0159.tsv \
+  --output data/AutoSave_0159.pdf
 ```
 
 ## Conclusion

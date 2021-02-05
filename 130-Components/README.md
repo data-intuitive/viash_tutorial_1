@@ -1,10 +1,12 @@
-# Creating components
+Creating components with viash
+==============================
 
 With the information from the previous section, we will wrap two
 components from the Civ6 use case in more detail (`convert_plot` and
 `plot_map`). Let's start with the easiest of the two.
 
-## `convert_plot` - a simple bash script
+`convert_plot` - a simple bash script
+-------------------------------------
 
 If you recall, `convert_plot` is responsible to converting the game map
 pdf to a png using \[ImageMagick\]. We will wrap this component first it
@@ -118,7 +120,7 @@ variables are surrounded by some comments. How can this script work
 properly if the values of `par_input` and `par_output` are always the
 same?
 
-`src/convert_plot/script.sh`:
+`src/civ6_save_renderer/convert_plot/script.sh`:
 
 ``` {.sh}
 #!/bin/bash
@@ -181,7 +183,7 @@ Luckily, we didn't need to resort to such drastic measures.
 
 This is the final viash config for this component in its entirety.
 
-`src/convert_plot/config.vsh.yaml`:
+`src/civ6_save_renderer/convert_plot/config.vsh.yaml`:
 
 ``` {.yaml}
 functionality:
@@ -230,7 +232,7 @@ Building an executable can be done just like before. We assume
 Docker version:
 
 ``` {.sh}
-> viash build src/convert_plot/config.vsh.yaml -o bin -p docker
+> viash build src/civ6_save_renderer/convert_plot/config.vsh.yaml -o bin -p docker
 ```
 
 We specify the `docker` platform explicitly although that is not really
@@ -281,12 +283,12 @@ a directory to store the data:
 We can generate a png file from a pdf file as follows.
 
 ``` {.sh}
-> bin/convert_plot -i ../data/AutoSave_0159.pdf -o output/AutoSave_0159.png
+> bin/convert_plot -i data/AutoSave_0159.pdf -o data/AutoSave_0159.png
 ```
 
 `output/AutoSave_0159.png`:
 
-![](output/AutoSave_0159.png)
+![](../output/AutoSave_0159.png)
 
 ### Note on file management when running Docker images
 
@@ -325,7 +327,8 @@ In other words:
 > greatly simplified and wrapped in one executable, command-line parsing
 > comes for free.
 
-## `plot_map` - a more complicated R script
+`plot_map` - a more complicated R script
+----------------------------------------
 
 This component is a great example of a script which is a bit more
 complicated. Currently, viash supports wrapping the following scripting
@@ -395,7 +398,7 @@ more readable.
 This is the contents of the R script. The comments provide some sense of
 how this script works:
 
-`src/plot_map/script.R`:
+`src/civ6_save_renderer/plot_map/script.R`:
 
 ``` {.r}
 # load helper functions 'read_header()', 'read_map()', and 'make_map_plot()'
@@ -440,8 +443,8 @@ top of the different R files, e.g. `library(cowplot)`).
 
 We can start from the
 [`rocker/tidyverse:4.0.3`](https://hub.docker.com/r/rocker/tidyverse/)
-container, which already contains all of the tidyverse packages. The
-extra dependencies can be installed as follows.
+container, which already contains all of the tidyverse packages, but
+some extra dependencies need to be installed.
 
 ``` {.yaml}
 platforms:
@@ -460,8 +463,13 @@ platforms:
   - type: native
 ```
 
-While most dependencies can be installed directly from CRAN, one package
-is only available on a GitHub repository.
+Additional R libraries are installed, 5 from the CRAN database, 1 from
+Github. This functionality covers a major reason to create a custom
+`Dockerfile` an thus container image: extending a base container to suit
+ones needs. Adding the extra software using the
+[viash](https://github.com/data-intuitive/viash) configuration entails
+similar benefits to [viash](https://github.com/data-intuitive/viash)
+generating the command-line parsing code, namely standardisation.
 
 ### Step 4: Building and running the component
 
@@ -472,10 +480,10 @@ packages can take a lot of time, so this command might take a while to
 run.
 
 ``` {.sh}
-viash build src/plot_map/config.vsh.yaml -o bin -p docker --setup > /dev/null
+> viash build src/civ6_save_renderer/plot_map/config.vsh.yaml -o bin -p docker --setup > /dev/null
 ```
 
-This is the generated help page.
+This is the corresponding generated help page.
 
 ``` {.sh}
 > bin/plot_map -h
@@ -499,12 +507,13 @@ Finally, we can run the component as follows.
 
 ``` {.sh}
 > bin/plot_map \
-+   --yaml ../data/AutoSave_0159.yaml \
-+   --tsv ../data/AutoSave_0159.tsv \
-+   --output output/AutoSave_0159.pdf
++   --yaml data/AutoSave_0159.yaml \
++   --tsv data/AutoSave_0159.tsv \
++   --output data/AutoSave_0159.pdf
 ```
 
-## Conclusion
+Conclusion
+----------
 
 In this part of the tutorial, we learned how to wrap Bash and R scripts
 from scratch.
