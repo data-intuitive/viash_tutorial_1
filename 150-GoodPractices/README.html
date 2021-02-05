@@ -87,30 +87,28 @@
 <h1 id="good-practices">Good practices</h1>
 <p>Data Intuitive Tuesday - January 26, 2021</p>
 <ul>
-<li><a href="#convert_plot"><code>convert_plot</code></a>
-<ul>
-<li><a href="#the-viash-configuration">The viash configuration</a>
+<li><a href="#unit-testing-in-viash">Unit testing in viash</a>
 <ul>
 <li><a href="#tests">Tests</a></li>
-<li><a href="#platforms">Platforms</a></li>
 </ul></li>
-<li><a href="#running-the-tests">Running the tests</a></li>
-</ul></li>
-<li><a href="#combine_plots"><code>combine_plots</code></a></li>
-<li><a href="#testing-a-namespace">Testing a namespace</a></li>
-</ul>
-<blockquote>
-<p>blabla</p>
-</blockquote>
-<p>We will introduce testing using the same components we used earlier to introduce the <a href="https://github.com/data-intuitive/viash">viash</a> approach:</p>
+<li><a href="#run-our-component">Run our component</a></li>
+<li><a href="#run-ocr-on-the-png-file">Run OCR on the png file</a>
 <ul>
-<li><code>convert_plot</code></li>
-<li><code>combine_plots</code></li>
+<li><a href="#platforms">Platforms</a></li>
+<li><a href="#running-the-tests">Running the tests</a></li>
+<li><a href="#testing-a-namespace">Testing a namespace</a></li>
+</ul></li>
 </ul>
-<h1 id="convert_plot"><code>convert_plot</code></h1>
-<p><code>convert_plot</code> converts a PDF (map) into a <code>.png</code> version.</p>
-<h2 id="the-viash-configuration">The viash configuration</h2>
-<p>We covered the functionality of this component already in the previous sections. In this section, we show how to add (unit) tests to the component. Let see what the directory structure of the (updated) component looks like. We put the components in the <code>civ6_save_renderer</code> namespace now that we know how this works:</p>
+<p>In the previous sections, we wrote some software components and strung them together in Bash to form a simple pipeline. While these components work right now, they might soon break for any of the following reasons:</p>
+<ul>
+<li><p>While adding a feature to one of the components, a developer accidentally introduced a bug.</p></li>
+<li><p>A small change in the output of one component causes the other component to break.</p></li>
+<li><p>Breaking changes were introduced in the latest version of Python. The component’s script needs to be updated or should be set to using an older version of Python.</p></li>
+</ul>
+<p>If your component is actively developed, bugs will be introduced at some point. The question is, how long does it take for you to spot the errors? If it is located in infrequently used code, the bug might go unnoticed for months.</p>
+<p>For this reason, you should add tests to software components which are being used in a lot of downstream analyses and/or whose results are of critical importance.</p>
+<h2 id="unit-testing-in-viash">Unit testing in viash</h2>
+<p>We will introduce testing using the same <code>convert_plot</code> we used earlier to introduce the <a href="https://github.com/data-intuitive/viash">viash</a> approach. We already covered the functionality of this component already in the previous sections. In this section, we show how to add (unit) tests. Let see what the directory structure of the (updated) component looks like.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">tree</span> src/civ6_save_renderer/convert_plot</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ex">src/civ6_save_renderer/convert_plot</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>├── <span class="ex">config.vsh.yaml</span></span>
@@ -119,7 +117,7 @@
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    └── <span class="ex">run_test.sh</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="ex">1</span> directory, 3 files</span></code></pre></div>
-<p>Just like in the <a href="https://github.com/data-intuitive/viash">viash</a> primer (of the previous section) there is a <a href="https://github.com/data-intuitive/viash">viash</a> config (<code>config.vsh.yaml</code>) and a script (<code>script.sh</code>). Let us take a closer look at both of these:</p>
+<p>Just like in the <a href="https://github.com/data-intuitive/viash">viash</a> primer (of the previous section) there is a <a href="https://github.com/data-intuitive/viash">viash</a> config (<code>config.vsh.yaml</code>) and a script (<code>script.sh</code>). Nothing has changed to the script, but something was added to the viash config:</p>
 <p><code>src/civ6_save_renderer/convert_plot/config.vsh.yaml</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> convert_plot</span></span>
@@ -159,72 +157,63 @@
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true"></a><span class="at">    </span><span class="fu">setup</span><span class="kw">:</span></span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> apt</span></span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true"></a><span class="at">        </span><span class="fu">packages</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at"> </span><span class="st">&quot;tesseract-ocr&quot;</span><span class="at"> </span><span class="kw">]</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
-<p><code>src/civ6_save_renderer/convert_plot/test/run_test.sh</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="kw">set</span> <span class="ex">-ex</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="co"># Run our component</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="ex">convert_plot</span> <span class="kw">\</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>  <span class="ex">-i</span> dummy.pdf <span class="kw">\</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  <span class="ex">-o</span> dummy.png</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="kw">[[</span> <span class="ot">!</span> <span class="ot">-f</span> dummy.png<span class="kw"> ]]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;No output generated!&quot;</span> <span class="kw">&amp;&amp;</span> <span class="bu">exit</span> 1</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="co"># Run OCR on the png file</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="ex">tesseract</span> dummy.png dummy-ocr</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="kw">[[</span> <span class="ot">!</span> <span class="kw">`</span><span class="fu">grep</span> Dummy dummy-ocr.txt<span class="kw">` ]]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Not the correct content&quot;</span> <span class="kw">&amp;&amp;</span> <span class="bu">exit</span> 1</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt; Test finished successfully&quot;</span></span></code></pre></div>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> nextflow</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> dpokidov/imagemagick</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
 <p>The only differences with before are:</p>
 <ol type="1">
-<li>The addition of the <code>tests</code></li>
+<li>The addition of the <code>tests</code> under <code>functionality</code>.</li>
 <li>An extra <code>apt</code> package to be installed for running the tests (see later).</li>
 </ol>
 <h3 id="tests">Tests</h3>
 <p>Specifying the tests is not different from specifying the <code>resources</code> in the <a href="https://github.com/data-intuitive/viash">viash</a> configuration. In this case, we have two resources: one is the script that contains the test code and one is a dummy PDF file that is fetched from the web during testing. We could also add a PDF file to the repository and point to that instead.</p>
-<p>The test script itself defines two tests:</p>
-<ol type="1">
-<li>A test to see if an output file is effectively created by our component</li>
-<li>A test that extracts the text from the resulting <code>png</code> file in order to verify the content is still the same as the original.</li>
-</ol>
+<p>Let’s take a look at the test script. #!/usr/bin/env bash</p>
+<p>set -ex</p>
+<h1 id="run-our-component">Run our component</h1>
+<p>convert_plot<br />
+-i dummy.pdf<br />
+-o dummy.png</p>
+<p>[[ ! -f dummy.png ]] &amp;&amp; echo “No output generated!” &amp;&amp; exit 1</p>
+<h1 id="run-ocr-on-the-png-file">Run OCR on the png file</h1>
+<p>tesseract dummy.png dummy-ocr</p>
+<p>[[ ! <code>grep Dummy dummy-ocr.txt</code> ]] &amp;&amp; echo “Not the correct content” &amp;&amp; exit 1</p>
+<p>echo “&gt;&gt;&gt; Test finished successfully”</p>
+<p>The test script itself defines two tests, namely: 1. A test to see if an output file is effectively created by our component 2. A test that extracts the text from the resulting <code>png</code> file in order to verify the content is still the same as the original.</p>
 <p>In order to run the second step, we install a package <a href="https://opensource.google/projects/tesseract"><code>tesseract</code></a> that performs the OCR.</p>
 <h3 id="platforms">Platforms</h3>
 <p>The only difference with the <code>platforms</code> definition earlier is the installation of an additional package in the container.</p>
-<h2 id="running-the-tests">Running the tests</h2>
+<h3 id="running-the-tests">Running the tests</h3>
 <p>In order to run the tests using the default platform (<code>docker</code> in our current example), we can simply run:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> test src/civ6_save_renderer/convert_plot/config.vsh.yaml</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_convert_plot1448189442417671065&#39;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>====================================================================</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot1448189442417671065/build_executable/convert_plot ---setup</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> build -t civ6_save_renderer/convert_plot:1.0 <span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viashsetupdocker-convert_plot-3DE3Wy</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="ex">Sending</span> build context to Docker daemon  17.41kB</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="ex">Step</span> 1/2 : FROM dpokidov/imagemagick</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> 0ce61e775be8</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="ex">Step</span> 2/2 : RUN apt-get update <span class="kw">&amp;&amp;</span>   <span class="ex">apt-get</span> install -y tesseract-ocr <span class="kw">&amp;&amp;</span>   <span class="fu">rm</span> -rf /var/lib/apt/lists/*</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> Using cache</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> a92be5886a41</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="ex">Successfully</span> built a92be5886a41</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="ex">Successfully</span> tagged civ6_save_renderer/convert_plot:1.0</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>====================================================================</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot1448189442417671065/test_run_test.sh/run_test.sh</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a><span class="ex">+</span> convert_plot -i dummy.pdf -o dummy.png</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="ex">convert</span>: profile <span class="st">&#39;icc&#39;</span>: <span class="st">&#39;RGB &#39;</span>: RGB color space not permitted on grayscale PNG <span class="kw">`</span><span class="ex">dummy.png</span><span class="st">&#39; @ warning/png.c/MagickPNGWarningHandler/1748.</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="st">+ [[ ! -f dummy.png ]]</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a><span class="st">+ tesseract dummy.png dummy-ocr</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a><span class="st">Tesseract Open Source OCR Engine v4.0.0 with Leptonica</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a><span class="st">Warning: Invalid resolution 0 dpi. Using 70 instead.</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a><span class="st">Estimating resolution as 157</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a><span class="st">++ grep Dummy dummy-ocr.txt</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a><span class="st">+ [[ ! -n Dummy PDF file ]]</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a><span class="st">&gt;&gt;&gt; Test finished successfully</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a><span class="st">+ echo &#39;</span><span class="op">&gt;&gt;&gt;</span> Test finished successfully<span class="st">&#39;</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a><span class="st">====================================================================</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a><span class="st">SUCCESS! All 1 out of 1 test scripts succeeded!</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true"></a><span class="st">Cleaning up temporary directory</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> test src/civ6_save_renderer/convert_plot/config.vsh.yaml</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_convert_plot1100390243068873655&#39;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>====================================================================</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot1100390243068873655/build_executable/convert_plot ---setup</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> build -t civ6_save_renderer/convert_plot:1.0 <span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viashsetupdocker-convert_plot-2PPu8p</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="ex">Sending</span> build context to Docker daemon  17.41kB</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="ex">Step</span> 1/2 : FROM dpokidov/imagemagick</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> 0ce61e775be8</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="ex">Step</span> 2/2 : RUN apt-get update <span class="kw">&amp;&amp;</span>   <span class="ex">apt-get</span> install -y tesseract-ocr <span class="kw">&amp;&amp;</span>   <span class="fu">rm</span> -rf /var/lib/apt/lists/*</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> Using cache</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> a92be5886a41</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="ex">Successfully</span> built a92be5886a41</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="ex">Successfully</span> tagged civ6_save_renderer/convert_plot:1.0</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>====================================================================</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot1100390243068873655/test_run_test.sh/run_test.sh</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a><span class="ex">+</span> convert_plot -i dummy.pdf -o dummy.png</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="ex">convert</span>: profile <span class="st">&#39;icc&#39;</span>: <span class="st">&#39;RGB &#39;</span>: RGB color space not permitted on grayscale PNG <span class="kw">`</span><span class="ex">dummy.png</span><span class="st">&#39; @ warning/png.c/MagickPNGWarningHandler/1748.</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="st">+ [[ ! -f dummy.png ]]</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="st">+ tesseract dummy.png dummy-ocr</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="st">Tesseract Open Source OCR Engine v4.0.0 with Leptonica</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="st">Warning: Invalid resolution 0 dpi. Using 70 instead.</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="st">Estimating resolution as 157</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a><span class="st">++ grep Dummy dummy-ocr.txt</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true"></a><span class="st">+ [[ ! -n Dummy PDF file ]]</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true"></a><span class="st">+ echo &#39;</span><span class="op">&gt;&gt;&gt;</span> Test finished successfully<span class="st">&#39;</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true"></a><span class="st">&gt;&gt;&gt; Test finished successfully</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true"></a><span class="st">====================================================================</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true"></a><span class="st">SUCCESS! All 1 out of 1 test scripts succeeded!</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true"></a><span class="st">Cleaning up temporary directory</span></span></code></pre></div>
 <p>Let us break down what happens here:</p>
 <ol type="1">
 <li><a href="https://github.com/data-intuitive/viash">viash</a> creates a temporary directory (configurable via <code>$VIASH_TEMP</code>)</li>
@@ -234,135 +223,28 @@
 </ol>
 <p>If tests are successful, the temporary directory is removed (unless <code>--keep</code> is provided as an option to <code>viash test</code>).</p>
 <p>This is a quick way to run a test on a component.</p>
-<h1 id="combine_plots"><code>combine_plots</code></h1>
-<p>We do something similar for the component that combines different <code>png</code> (map) files into one <code>webm</code> video. Let us see how we can do something similar as before so that a test can run on its own.</p>
-<p>We refer to an <a href="http://hplgit.github.io/animate/doc/pub/video.html">article</a> that discussed the generation of an animation from <code>png</code> image sources and does this using … ImageMagic. We use a selection of the images stored on <a href="https://github.com/hplgit/animate/tree/master/doc/src/animate/src-animate/testfiles/frames">Github</a>.</p>
-<p><code>src/civ6_save_renderer/combine_plots/config.vsh.yaml</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> combine_plots</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Combine multiple images into a movie using ffmpeg.</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;1.0&quot;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="at">  </span><span class="fu">authors</span><span class="kw">:</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Robrecht Cannoodt</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">email</span><span class="kw">:</span><span class="at"> rcannood@gmail.com</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a><span class="at">      </span><span class="fu">roles</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">maintainer</span><span class="kw">,</span><span class="at"> author</span><span class="kw">]</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a><span class="at">      </span><span class="fu">props</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">github</span><span class="kw">:</span><span class="at"> rcannood</span><span class="kw">,</span><span class="at"> </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0003-3641-729X</span><span class="kw">}</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="at">  </span><span class="fu">arguments</span><span class="kw">:</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--input&quot;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-i</span><span class="kw">]</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;plot1.png:plot2.png&quot;</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a><span class="at">      </span><span class="fu">must_exist</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="at">      </span><span class="fu">multiple</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> A list of images.</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--output&quot;</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-o</span><span class="kw">]</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> file</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;output.webm&quot;</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a><span class="at">      </span><span class="fu">direction</span><span class="kw">:</span><span class="at"> output</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> A path to output the movie to.</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;--framerate&quot;</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true"></a><span class="at">      </span><span class="fu">alternatives</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">-f</span><span class="kw">]</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> integer</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true"></a><span class="at">      </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="dv">4</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true"></a><span class="at">      </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Number of frames per second.</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true"></a><span class="at">  </span><span class="fu">tests</span><span class="kw">:</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> bash_script</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> test/run_test.sh</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0000.png</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0001.png</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0002.png</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0003.png</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0004.png</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0005.png</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0006.png</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0007.png</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://github.com/hplgit/animate/raw/master/doc/src/animate/src-animate/testfiles/frames/frame_0008.png</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true"></a><span class="fu">platforms</span><span class="kw">:</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> docker</span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> jrottenberg/ffmpeg</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> native</span></span></code></pre></div>
-<p><code>src/civ6_save_renderer/combine_plots/test/run_test.sh</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="kw">set</span> <span class="ex">-e</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="co"># Run our component</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="va">png_files=</span><span class="kw">`</span><span class="fu">ls</span> *.png<span class="kw">`</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="va">png_args=</span><span class="st">&quot;&quot;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="st">&quot;</span><span class="va">$png_files</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>  <span class="va">png_args=</span><span class="st">&quot;</span><span class="va">$png_args</span><span class="st"> </span><span class="va">$i</span><span class="st">&quot;</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="kw">done</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="va">png_args_parsed=</span><span class="kw">`</span><span class="bu">echo</span> -n <span class="va">$png_args</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;s/ /:/g&#39;</span><span class="kw">`</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="ex">combine_plots</span> -i <span class="st">&quot;</span><span class="va">$png_args_parsed</span><span class="st">&quot;</span> -o output.webm --framerate 1</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="kw">[[</span> <span class="ot">!</span> <span class="ot">-f</span> output.webm<span class="kw"> ]]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;No output generated!&quot;</span> <span class="kw">&amp;&amp;</span> <span class="bu">exit</span> 1</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt; Test finished successfully&quot;</span></span></code></pre></div>
-<p>We added the <code>tests</code> and point to the frames explicitly. The test script basically generates a command line instructions (list of <code>png</code> files) based on the images that have been downloaded as resources.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> test src/civ6_save_renderer/combine_plots/config.vsh.yaml</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_combine_plots10376169752247870861&#39;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>====================================================================</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots10376169752247870861/build_executable/combine_plots ---setup</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> pull jrottenberg/ffmpeg</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="ex">Using</span> default tag: latest</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="ex">latest</span>: Pulling from jrottenberg/ffmpeg</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="ex">Digest</span>: sha256:21eb739725c43bd7187982e5fa4b5371b495d1d1f6f61ae1719ca794817f8641</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="ex">Status</span>: Image is up to date for jrottenberg/ffmpeg:latest</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="ex">docker.io/jrottenberg</span>/ffmpeg:<span class="ex">latest</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>====================================================================</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots10376169752247870861/test_run_test.sh/run_test.sh</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="ex">ffmpeg</span> version 4.1 Copyright (c) <span class="ex">2000-2018</span> the FFmpeg developers</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>  <span class="ex">built</span> with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) <span class="ex">20160609</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>  <span class="ex">configuration</span>: --disable-debug --disable-doc --disable-ffplay --enable-shared --enable-avresample --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-gpl --enable-libass --enable-libfreetype --enable-libvidstab --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx265 --enable-libxvid --enable-libx264 --enable-nonfree --enable-openssl --enable-libfdk_aac --enable-libkvazaar --enable-libaom --extra-libs=-lpthread --enable-postproc --enable-small --enable-version3 --extra-cflags=-I/opt/ffmpeg/include --extra-ldflags=-L/opt/ffmpeg/lib --extra-libs=-ldl --prefix=/opt/ffmpeg</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a>  <span class="ex">libavutil</span>      56. 22.100 / 56. 22.100</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a>  <span class="ex">libavcodec</span>     58. 35.100 / 58. 35.100</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a>  <span class="ex">libavformat</span>    58. 20.100 / 58. 20.100</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a>  <span class="ex">libavdevice</span>    58.  5.100 / 58.  5.100</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a>  <span class="ex">libavfilter</span>     7. 40.101 /  7. 40.101</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a>  <span class="ex">libavresample</span>   4.  0.  0 /  4.  0.  0</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true"></a>  <span class="ex">libswscale</span>      5.  3.100 /  5.  3.100</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true"></a>  <span class="ex">libswresample</span>   3.  3.100 /  3.  3.100</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true"></a>  <span class="ex">libpostproc</span>    55.  3.100 / 55.  3.100</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true"></a><span class="ex">Input</span> #0, png_pipe, from <span class="st">&#39;concat:frame_0000.png|frame_0001.png|frame_0002.png|frame_0003.png|frame_0004.png|frame_0005.png|frame_0006.png|frame_0007.png|frame_0008.png&#39;</span>:</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true"></a>  <span class="ex">Duration</span>: N/A, bitrate: N/A</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true"></a>    <span class="ex">Stream</span> #0:0: Video: png, rgba(pc), <span class="ex">812x612</span> [SAR 3937:3937 DAR 203:153], 1 fps, 1 tbr, 1 tbn, 1 tbc</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true"></a><span class="ex">Stream</span> mapping:</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true"></a>  <span class="ex">Stream</span> #0:0 -<span class="op">&gt;</span> #0:0 (png (native) <span class="ex">-</span><span class="op">&gt;</span> vp9 (libvpx-vp9))</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true"></a><span class="ex">Press</span> [q] to stop, [?] for help</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a>[<span class="ex">libvpx-vp9</span> @ 0x6c1580] v1.8.0</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true"></a><span class="ex">Output</span> #0, webm, to <span class="st">&#39;output.webm&#39;</span>:</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true"></a>  <span class="ex">Metadata</span>:</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true"></a>    <span class="ex">encoder</span>         : Lavf58.20.100</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true"></a>    <span class="ex">Stream</span> #0:0: Video: vp9 (libvpx-vp9), <span class="ex">yuva420p</span>, 812x612 [SAR 1:1 DAR 203:153], q=-1--1, 200 kb/s, 1 fps, 1k tbn, 1 tbc</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true"></a>    <span class="ex">Metadata</span>:</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true"></a>      <span class="ex">encoder</span>         : Lavc58.35.100 libvpx-vp9</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true"></a>    <span class="ex">Side</span> data:</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true"></a>      <span class="ex">cpb</span>: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true"></a><span class="va">frame=</span>    <span class="ex">9</span> fps=0.0 q=0.0 Lsize=      13kB time=00:00:08.00 bitrate=  13.2kbits/s speed=17.6x    </span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true"></a><span class="ex">video</span>:12kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 11.627710%</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ex">Test</span> finished successfully</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true"></a>====================================================================</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true"></a><span class="ex">SUCCESS</span>! All 1 out of 1 test scripts succeeded!</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true"></a><span class="ex">Cleaning</span> up temporary directory</span></code></pre></div>
-<p>In order to avoid <a href="https://github.com/data-intuitive/viash">viash</a> deleting the directory when a test succeeds, the <code>-k</code> option can be used.</p>
-<h1 id="testing-a-namespace">Testing a namespace</h1>
-<p>In the previous examples we tested individual components, but we can test a suite of components as well. Since we stored the 2 components above in the (namespace) <code>civ6_save_renderer</code> again, we can do the following:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns test -p docker --parallel --tsv /tmp/report.tsv</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>           <span class="ex">namespace</span>        functionality             platform            test_name exit_code duration               result</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker                start                                        </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker                start                                        </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker     build_executable         0        0              SUCCESS</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker          run_test.sh         0        3              SUCCESS</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker     build_executable         0        1              SUCCESS</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker          run_test.sh         0        3              SUCCESS</span></code></pre></div>
+<h2 id="testing-a-namespace">Testing a namespace</h2>
+<p>Similar to building a whole namespace, it is possible to test a whole namespace as well using the <code>viash ns test</code> command.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns test -p docker --parallel --tsv /tmp/report.tsv</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>           <span class="ex">namespace</span>        functionality             platform            test_name exit_code duration               result</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         parse_header               docker                start                                        </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>      <span class="ex">markdown_tools</span>         render_table               docker                start                                        </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker                start                                        </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>            parse_map               docker                start                                        </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker                start                                        </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>             plot_map               docker                start                                        </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         parse_header               docker     build_executable         0        0              SUCCESS</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         parse_header               docker                tests        -1        0              MISSING</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>             plot_map               docker     build_executable         0        0              SUCCESS</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>             plot_map               docker                tests        -1        0              MISSING</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker     build_executable         0        0              SUCCESS</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker          run_test.sh         0        3              SUCCESS</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>      <span class="ex">markdown_tools</span>         render_table               docker     build_executable         0        6              SUCCESS</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>      <span class="ex">markdown_tools</span>         render_table               docker                tests        -1        0              MISSING</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>            parse_map               docker     build_executable         0        6              SUCCESS</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>            parse_map               docker                tests        -1        0              MISSING</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker     build_executable         0        6              SUCCESS</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker          run_test.sh         0        7              SUCCESS</span></code></pre></div>
 <p>With the <code>--parallel</code> option multiple tests are run in parallel (depending on your setup and the way Docker is configured).</p>
 <p>The contents of (the optional) <code>report.tsv</code> contains a report of the test run:</p>
 <table>
@@ -380,6 +262,42 @@
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">civ6_save_renderer</td>
+<td style="text-align: left;">parse_header</td>
+<td style="text-align: left;">docker</td>
+<td style="text-align: left;">build_executable</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">SUCCESS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">civ6_save_renderer</td>
+<td style="text-align: left;">parse_header</td>
+<td style="text-align: left;">docker</td>
+<td style="text-align: left;">tests</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">MISSING</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">civ6_save_renderer</td>
+<td style="text-align: left;">plot_map</td>
+<td style="text-align: left;">docker</td>
+<td style="text-align: left;">build_executable</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">SUCCESS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">civ6_save_renderer</td>
+<td style="text-align: left;">plot_map</td>
+<td style="text-align: left;">docker</td>
+<td style="text-align: left;">tests</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">MISSING</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">civ6_save_renderer</td>
 <td style="text-align: left;">convert_plot</td>
 <td style="text-align: left;">docker</td>
 <td style="text-align: left;">build_executable</td>
@@ -397,12 +315,48 @@
 <td style="text-align: left;">SUCCESS</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">markdown_tools</td>
+<td style="text-align: left;">render_table</td>
+<td style="text-align: left;">docker</td>
+<td style="text-align: left;">build_executable</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">SUCCESS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">markdown_tools</td>
+<td style="text-align: left;">render_table</td>
+<td style="text-align: left;">docker</td>
+<td style="text-align: left;">tests</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">MISSING</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">civ6_save_renderer</td>
+<td style="text-align: left;">parse_map</td>
+<td style="text-align: left;">docker</td>
+<td style="text-align: left;">build_executable</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">SUCCESS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">civ6_save_renderer</td>
+<td style="text-align: left;">parse_map</td>
+<td style="text-align: left;">docker</td>
+<td style="text-align: left;">tests</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">MISSING</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">civ6_save_renderer</td>
 <td style="text-align: left;">combine_plots</td>
 <td style="text-align: left;">docker</td>
 <td style="text-align: left;">build_executable</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
 <td style="text-align: left;">SUCCESS</td>
 </tr>
 <tr class="even">
@@ -411,7 +365,7 @@
 <td style="text-align: left;">docker</td>
 <td style="text-align: left;">run_test.sh</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
 <td style="text-align: left;">SUCCESS</td>
 </tr>
 </tbody>

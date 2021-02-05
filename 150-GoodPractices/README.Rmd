@@ -13,59 +13,62 @@ knitr::opts_chunk$set(
   prompt = TRUE
 )
 
-# knitr::opts_knit$set(root.dir = '..')
+knitr::opts_knit$set(root.dir = '..')
 ```
 
-> blabla
+In the previous sections, we wrote some software components and strung them together in Bash to form a simple pipeline. While these components work right now, they might soon break for any of the following reasons:
 
-We will introduce testing using the same components we used earlier to introduce the [viash] approach:
+* While adding a feature to one of the components, a developer accidentally introduced a bug.
 
-- `convert_plot`
-- `combine_plots`
+* A small change in the output of one component causes the other component to break.
 
-# `convert_plot`
+* Breaking changes were introduced in the latest version of Python. The component's script needs to be updated or should be set to using an older version of Python.
 
-`convert_plot` converts a PDF (map) into a `.png` version.
+If your component is actively developed, bugs will be introduced at some point. The question is, how long does it take for you to spot the errors? If it is located in infrequently used code, the bug might go unnoticed for months.
 
-## The viash configuration
+For this reason, you should add tests to software components which are being used in a lot of downstream analyses and/or whose results are of critical importance.
 
-We covered the functionality of this component already in the previous sections. In this section, we show how to add (unit) tests to the component. Let see what the directory structure of the (updated) component looks like. We put the components in the `civ6_save_renderer` namespace now that we know how this works:
+## Testing a component
+
+We will introduce testing using the same `convert_plot` we used earlier to introduce the [viash] approach. We already covered the functionality of this component already in the previous sections. In this section, we show how to add (unit) tests. Let see what the directory structure of the (updated) component looks like. 
 
 ```{sh}
 tree src/civ6_save_renderer/convert_plot
 ```
 
-Just like in the [viash] primer (of the previous section) there is a [viash] config (`config.vsh.yaml`) and a script (`script.sh`). Let us take a closer look at both of these:
+Just like in the [viash] primer (of the previous section) there is a [viash] config (`config.vsh.yaml`) and a script (`script.sh`). Nothing has changed to the script, but something was added to the viash config:
 
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/civ6_save_renderer/convert_plot/config.vsh.yaml
-```
-
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/civ6_save_renderer/convert_plot/test/run_test.sh
+`src/civ6_save_renderer/convert_plot/config.vsh.yaml`: 
+```{bash echo=FALSE, class.output="yaml"}
+cat src/civ6_save_renderer/convert_plot/config.vsh.yaml
 ```
 
 The only differences with before are:
 
-1. The addition of the `tests`
+1. The addition of the `tests` under `functionality`.
 2. An extra `apt` package to be installed for running the tests (see later).
 
 ### Tests
 
 Specifying the tests is not different from specifying the `resources` in the [viash] configuration. In this case, we have two resources: one is the script that contains the test code and one is a dummy PDF file that is fetched from the web during testing. We could also add a PDF file to the repository and point to that instead.
 
-The test script itself defines two tests:
+Let's take a look at the test script.
+```{sh echo = F, results = "asis"}
+cat src/civ6_save_renderer/convert_plot/test/run_test.sh
+```
 
+The test script itself defines two tests, namely:
 1. A test to see if an output file is effectively created by our component
 2. A test that extracts the text from the resulting `png` file in order to verify the content is still the same as the original.
 
 In order to run the second step, we install a package [`tesseract`] that performs the OCR.
 
+
 ### Platforms
 
 The only difference with the `platforms` definition earlier is the installation of an additional package in the container.
 
-## Running the tests
+### Running the tests
 
 In order to run the tests using the default platform (`docker` in our current example), we can simply run:
 
@@ -84,37 +87,15 @@ If tests are successful, the temporary directory is removed (unless `--keep` is 
 
 This is a quick way to run a test on a component.
 
-# `combine_plots`
+## Testing a namespace
 
-We do something similar for the component that combines different `png` (map) files into one `webm` video. Let us see how we can do something similar as before so that a test can run on its own.
-
-We refer to an [article](http://hplgit.github.io/animate/doc/pub/video.html) that discussed the generation of an animation from `png` image sources and does this using ... ImageMagic. We use a selection of the images stored on [Github](https://github.com/hplgit/animate/tree/master/doc/src/animate/src-animate/testfiles/frames).
-
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/civ6_save_renderer/combine_plots/config.vsh.yaml
-```
-
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/civ6_save_renderer/combine_plots/test/run_test.sh
-```
-
-We added the `tests` and point to the frames explicitly. The test script basically generates a command line instructions (list of `png` files) based on the images that have been downloaded as resources.
-
-```{sh}
-viash test src/civ6_save_renderer/combine_plots/config.vsh.yaml
-```
-
-In order to avoid [viash] deleting the directory when a test succeeds, the `-k` option can be used.
-
-# Testing a namespace
-
-In the previous examples we tested individual components, but we can test a suite of components as well. Since we stored the 2 components above in the (namespace) `civ6_save_renderer` again, we can do the following:
+Similar to building a whole namespace, it is possible to test a whole namespace as well using the `viash ns test` command.
 
 ```{sh color}
 viash ns test -p docker --parallel --tsv /tmp/report.tsv
 ```
 
-With the `--parallel` option multiple tests are run in parallel (depending on your setup and the way Docker is configured).
+With the `--parallel` option multiple tests are run in parallel (depending on your setup and the way Docker is configured). By specifying the `-p docker` flag, the tests will be run inside their respective containers -- meaning that the test scripts and resources are automatically being copied in the container seamlessly.
 
 The contents of (the optional) `report.tsv` contains a report of the test run:
 
@@ -122,9 +103,8 @@ The contents of (the optional) `report.tsv` contains a report of the test run:
 suppressMessages(knitr::kable(readr::read_tsv("/tmp/report.tsv")))
 ```
 
-For each component, you see the 2 steps from above: 1) build the executable and 2) run the actual test.
+For each component, you see the 2 steps from above: 1) build the executable and 2) run the actual test. You can also see that the developers of this codebase were lazy, as three out of five components are missing tests! 
 
-It should be noted that the tests are still running in their respective containers.
 
 
 [viash]: https://github.com/data-intuitive/viash
