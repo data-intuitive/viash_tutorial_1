@@ -122,8 +122,8 @@ With the `--parallel` option multiple tests are run in parallel (depending on yo
 
 The contents of (the optional) `report.tsv` contains a report of the test run:
 
-```{sh results = "asis", echo = F}
-../scripts/render_table /tmp/report.tsv
+```{r echo=FALSE}
+suppressMessages(knitr::kable(readr::read_tsv("/tmp/report.tsv")))
 ```
 
 For each component, you see the 2 steps from above: 1) build the executable and 2) run the actual test.
