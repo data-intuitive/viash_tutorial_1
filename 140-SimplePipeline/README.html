@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        background-color: #2a211c;
+        color: #bdae9d;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #bdae9d;  padding-left: 4px; }
+    div.sourceCode
+      { color: #bdae9d; background-color: #2a211c; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffff00; } /* Alert */
+    code span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #44aa43; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #049b0a; } /* Char */
+    code span.cn { } /* Constant */
+    code span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
+    code span.do { color: #0066ff; font-style: italic; } /* Documentation */
+    code span.dt { text-decoration: underline; } /* DataType */
+    code span.dv { color: #44aa43; } /* DecVal */
+    code span.er { color: #ffff00; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #44aa43; } /* Float */
+    code span.fu { color: #ff9358; font-weight: bold; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
+    code span.op { } /* Operator */
+    code span.pp { font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #049b0a; } /* SpecialChar */
+    code span.ss { color: #049b0a; } /* SpecialString */
+    code span.st { color: #049b0a; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #049b0a; } /* VerbatimString */
+    code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+    <style>
+    body {
+      max-width: 60em
+    }
+    </style>
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Table of Contents</h2>
+<ul>
+<li><a href="#creating-a-simple-pipeline-in-bash">Creating a simple pipeline in Bash</a>
+<ul>
+<li><a href="#namespaces">Namespaces</a></li>
+<li><a href="#building-a-namespace">Building a namespace</a></li>
+<li><a href="#manually-running-executables">Manually running executables</a></li>
+<li><a href="#a-first-pipeline-in-bash">A first pipeline in Bash</a></li>
+<li><a href="#conclusions">Conclusions</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="creating-a-simple-pipeline-in-bash">Creating a simple pipeline in Bash</h1>
+<p>In this section, we will cover how to build all the Civ6 postgame components and chain them together in a first rudimentary pipeline written in Bash. Before doing so, we first introduce the concept of a <em>namespace</em>.</p>
+<h2 id="namespaces">Namespaces</h2>
+<p>Once you start to develop a number of <a href="https://github.com/data-intuitive/viash">viash</a> components, grouping them (hierarchically) allows to improve maintenance of the components as it allows for separation of concern. In addition, multiple developers could group on different sets of components in parallel and later bring them together in a larger project. We call a group of components a <em>namespace</em>.</p>
+<p>You can assign a namespace to a component by setting the <code>namespace</code> attribute in a viash config:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> some_component</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> my_namespace</span></span></code></pre></div>
+<h2 id="building-a-namespace">Building a namespace</h2>
+<p>Alternatively, the namespace can be automatically inferred by structuring the components hierarchically and using the <code>viash ns</code> (read: viash namespace) command. You may have noticed that the components in the <code>src</code> directory of this repository already are structured in this manner:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">tree</span> src</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="ex">src</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>├── <span class="ex">civ6_save_renderer</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>│   ├── <span class="ex">combine_plots</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>│   │   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>│   │   └── <span class="ex">script.sh</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>│   ├── <span class="ex">convert_plot</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>│   │   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>│   │   └── <span class="ex">script.sh</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>│   ├── <span class="ex">parse_header</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>│   │   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>│   │   └── <span class="ex">script.sh</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>│   ├── <span class="ex">parse_map</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>│   │   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>│   │   ├── <span class="ex">helper.js</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>│   │   └── <span class="ex">script.js</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>│   └── <span class="ex">plot_map</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>│       ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>│       ├── <span class="ex">helper.R</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a>│       └── <span class="ex">script.R</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>├── <span class="ex">markdown_tools</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>│   ├── <span class="ex">cat_format</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a>│   │   ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a>│   │   └── <span class="ex">script.sh</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a>│   └── <span class="ex">render_table</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a>│       ├── <span class="ex">config.vsh.yaml</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a>│       └── <span class="ex">script.R</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a>└── <span class="ex">simple_pipeline.sh</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a><span class="ex">9</span> directories, 17 files</span></code></pre></div>
+<p>With <code>viash ns build</code> you can build all the components in a namespace. If we only wish to build the Civ6 postgame components, we can specify the name of the namespace using the <code>-n</code> parameter.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> ns build -n civ6_save_renderer</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/combine_plots</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">nextflow=</span><span class="op">&gt;</span> <span class="ex">target/nextflow/civ6_save_renderer/combine_plots</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/combine_plots/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/combine_plots</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/convert_plot</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">nextflow=</span><span class="op">&gt;</span> <span class="ex">target/nextflow/civ6_save_renderer/convert_plot</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/convert_plot/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/convert_plot</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">nextflow=</span><span class="op">&gt;</span> <span class="ex">target/nextflow/civ6_save_renderer/parse_header</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_header/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/parse_header</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_map</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">nextflow=</span><span class="op">&gt;</span> <span class="ex">target/nextflow/civ6_save_renderer/parse_map</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/parse_map/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/parse_map</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">docker=</span><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/plot_map</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">native=</span><span class="op">&gt;</span> <span class="ex">target/native/civ6_save_renderer/plot_map</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="ex">Exporting</span> src/civ6_save_renderer/plot_map/ (civ6_save_renderer) =<span class="va">nextflow=</span><span class="op">&gt;</span> <span class="ex">target/nextflow/civ6_save_renderer/plot_map</span></span></code></pre></div>
+<p>In this case, there are five components in this namespace, but multiple platforms (native, docker, nextflow) for each of them. The <code>viash ns</code> command <em>builds</em> a <em>target</em> for every platform it detects unless an optional <code>-p</code> is specified in the command above. By omitting the <code>-n</code>, viash will build <em>all</em> namespaces in the <code>src</code> folder. The <code>viash ns build</code> command is a very effective way of keeping a collection of components under <code>src</code> grouped in namespaces. Different namespaces could be split across different directories or even source repositories and then combined on the level of <code>viash</code> by specifying the <em>target</em> directory.</p>
+<p>Because most people will not have the necessary tools for running the different steps, we will not build the executables for the <code>native</code> platform.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">rm</span> -r target</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">+</span> viash ns build -n civ6_save_renderer -p docker --setup <span class="op">&gt;</span> /dev/null</span></code></pre></div>
+<p>Since we have to run the <em>setup</em> for the containers that are not just available on Docker Hub, we provide an additional <code>--setup</code> flag to let viash take care of this for us.</p>
+<h2 id="manually-running-executables">Manually running executables</h2>
+<p>This is what the <code>target</code> directory looks like now:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">tree</span> target/</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="ex">target/</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>└── <span class="ex">docker</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    └── <span class="ex">civ6_save_renderer</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>        ├── <span class="ex">combine_plots</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>        │   └── <span class="ex">combine_plots</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>        ├── <span class="ex">convert_plot</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>        │   └── <span class="ex">convert_plot</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>        ├── <span class="ex">parse_header</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>        │   └── <span class="ex">parse_header</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a>        ├── <span class="ex">parse_map</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a>        │   ├── <span class="ex">helper.js</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a>        │   └── <span class="ex">parse_map</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a>        └── <span class="ex">plot_map</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a>            ├── <span class="ex">helper.R</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a>            └── <span class="ex">plot_map</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="ex">7</span> directories, 7 files</span></code></pre></div>
+<p>Please notice a few things:</p>
+<ul>
+<li>Every components has its own directory under <code>target/&lt;platform&gt;/&lt;namespace&gt;/</code></li>
+<li>The <code>script.R</code>, <code>script.sh</code>, … files are contained in the respective executables, helper files are passed at runtime.</li>
+</ul>
+<p>Using the respective (containerized) tools is now as easy as, for instance,</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">target/docker/civ6_save_renderer/parse_header/parse_header</span> -i data/AutoSave_0159.Civ6Save -o data/AutoSave_0159.yaml</span></code></pre></div>
+<p><code>data/AutoSave_0159.yaml</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">ACTORS</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="at">    </span><span class="kw">{</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="at">      </span><span class="fu">START_ACTOR</span><span class="kw">:</span><span class="at"> </span><span class="dv">4159575459</span><span class="kw">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="at">      </span><span class="fu">ACTOR_NAME</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;CIVILIZATION_FREE_CITIES&#39;</span><span class="kw">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="at">      </span><span class="fu">ACTOR_TYPE</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;CIVILIZATION_LEVEL_FREE_CITIES&#39;</span><span class="kw">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="at">      </span><span class="fu">ACTOR_AI_HUMAN</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span><span class="kw">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">LEADER_NAME</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;LEADER_FREE_CITIES&#39;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="at">    }</span><span class="kw">,</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="at">    </span><span class="kw">{</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="at">... (cut) ...</span></span></code></pre></div>
+<h2 id="a-first-pipeline-in-bash">A first pipeline in Bash</h2>
+<p>A small dataset with only a few steps from a game are stored under <code>data/</code>. We will use that as a source for the pipeline.</p>
+<p>With the following script:</p>
+<p><code>src/simple_pipeline.sh</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="va">input_dir=</span><span class="st">&quot;data&quot;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="va">output_dir=</span><span class="st">&quot;output&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="va">CIV6=</span><span class="st">&quot;target/docker/civ6_save_renderer&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="fu">mkdir</span> -p <span class="st">&quot;</span><span class="va">$output_dir</span><span class="st">&quot;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="co"># iterate over every Civ6Save file</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="kw">for</span> <span class="ex">save_file</span> in <span class="va">$input_dir</span>/*.Civ6Save<span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>  <span class="va">file_basename=$(</span><span class="fu">basename</span> <span class="va">$save_file)</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a>  <span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt; parse header &#39;</span><span class="va">$save_file</span><span class="st">&#39;&quot;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>  <span class="va">yaml_file=</span><span class="st">&quot;</span><span class="va">$output_dir</span><span class="st">/</span><span class="va">${file_basename/</span>Civ6Save<span class="va">/</span>yaml<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>  <span class="va">$CIV6</span><span class="ex">/parse_header/parse_header</span> -i <span class="st">&quot;</span><span class="va">$save_file</span><span class="st">&quot;</span> -o <span class="st">&quot;</span><span class="va">$yaml_file</span><span class="st">&quot;</span> 2<span class="op">&amp;&gt;</span>1 <span class="op">&gt;</span> /dev/null</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true"></a>  <span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt; parse map &#39;</span><span class="va">$save_file</span><span class="st">&#39;&quot;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true"></a>  <span class="va">tsv_file=</span><span class="st">&quot;</span><span class="va">$output_dir</span><span class="st">/</span><span class="va">${file_basename/</span>Civ6Save<span class="va">/</span>tsv<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true"></a>  <span class="va">$CIV6</span><span class="ex">/parse_map/parse_map</span> -i <span class="st">&quot;</span><span class="va">$save_file</span><span class="st">&quot;</span> -o <span class="st">&quot;</span><span class="va">$tsv_file</span><span class="st">&quot;</span> 2<span class="op">&amp;&gt;</span>1 <span class="op">&gt;</span> /dev/null</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true"></a>  <span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt; plot map &#39;</span><span class="va">$save_file</span><span class="st">&#39;&quot;</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true"></a>  <span class="va">pdf_file=</span><span class="st">&quot;</span><span class="va">$output_dir</span><span class="st">/</span><span class="va">${file_basename/</span>Civ6Save<span class="va">/</span>pdf<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true"></a>  <span class="va">$CIV6</span><span class="ex">/plot_map/plot_map</span> -y <span class="st">&quot;</span><span class="va">$yaml_file</span><span class="st">&quot;</span> -t <span class="st">&quot;</span><span class="va">$tsv_file</span><span class="st">&quot;</span> -o <span class="st">&quot;</span><span class="va">$pdf_file</span><span class="st">&quot;</span> 2<span class="op">&amp;&gt;</span>1 <span class="op">&gt;</span> /dev/null</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true"></a>  <span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt; convert plot &#39;</span><span class="va">$save_file</span><span class="st">&#39;&quot;</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true"></a>  <span class="va">png_file=</span><span class="st">&quot;</span><span class="va">$output_dir</span><span class="st">/</span><span class="va">${file_basename/</span>Civ6Save<span class="va">/</span>png<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true"></a>  <span class="va">$CIV6</span><span class="ex">/convert_plot/convert_plot</span> -i <span class="st">&quot;</span><span class="va">$pdf_file</span><span class="st">&quot;</span> -o <span class="st">&quot;</span><span class="va">$png_file</span><span class="st">&quot;</span> 2<span class="op">&amp;&gt;</span>1 <span class="op">&gt;</span> /dev/null</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true"></a><span class="kw">done</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;combine plots&quot;</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true"></a><span class="va">png_inputs=</span><span class="kw">`</span><span class="fu">find</span> <span class="st">&quot;</span><span class="va">$output_dir</span><span class="st">&quot;</span> -name <span class="st">&quot;*.png&quot;</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;\n&#39;</span> <span class="st">&#39;:&#39;</span><span class="kw">`</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true"></a><span class="va">$CIV6</span><span class="ex">/combine_plots/combine_plots</span> -i <span class="st">&quot;</span><span class="va">$png_inputs</span><span class="st">&quot;</span> -o <span class="st">&quot;</span><span class="va">$output_dir</span><span class="st">/movie.webm&quot;</span> --framerate 1 2<span class="op">&amp;&gt;</span>1 <span class="op">&gt;</span> /dev/null</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;DONE&quot;</span></span></code></pre></div>
+<p>Running it yields the following results.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">src/simple_pipeline.sh</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> header <span class="st">&#39;data/AutoSave_0158.Civ6Save&#39;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> map <span class="st">&#39;data/AutoSave_0158.Civ6Save&#39;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">plot</span> map <span class="st">&#39;data/AutoSave_0158.Civ6Save&#39;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">convert</span> plot <span class="st">&#39;data/AutoSave_0158.Civ6Save&#39;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> header <span class="st">&#39;data/AutoSave_0159.Civ6Save&#39;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> map <span class="st">&#39;data/AutoSave_0159.Civ6Save&#39;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">plot</span> map <span class="st">&#39;data/AutoSave_0159.Civ6Save&#39;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">convert</span> plot <span class="st">&#39;data/AutoSave_0159.Civ6Save&#39;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> header <span class="st">&#39;data/AutoSave_0160.Civ6Save&#39;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> map <span class="st">&#39;data/AutoSave_0160.Civ6Save&#39;</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">plot</span> map <span class="st">&#39;data/AutoSave_0160.Civ6Save&#39;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">convert</span> plot <span class="st">&#39;data/AutoSave_0160.Civ6Save&#39;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> header <span class="st">&#39;data/AutoSave_0161.Civ6Save&#39;</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> map <span class="st">&#39;data/AutoSave_0161.Civ6Save&#39;</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">plot</span> map <span class="st">&#39;data/AutoSave_0161.Civ6Save&#39;</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">convert</span> plot <span class="st">&#39;data/AutoSave_0161.Civ6Save&#39;</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> header <span class="st">&#39;data/AutoSave_0162.Civ6Save&#39;</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">parse</span> map <span class="st">&#39;data/AutoSave_0162.Civ6Save&#39;</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">plot</span> map <span class="st">&#39;data/AutoSave_0162.Civ6Save&#39;</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="ex">convert</span> plot <span class="st">&#39;data/AutoSave_0162.Civ6Save&#39;</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><span class="ex">combine</span> plots</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><span class="ex">DONE</span></span></code></pre></div>
+<h2 id="conclusions">Conclusions</h2>
+<p>While this bit of Bash scripting made this pipeline easy to write, there are some clear issues with it.</p>
+<ul>
+<li>All the results are produced sequentially. This strongly limits scalability as the number of samples in the datasets increases.</li>
+<li>A lack of parameterisation. As <code>input_dir</code> and <code>output_dir</code> are fixed, you need to modify this script every time you want to run it on a new dataset.</li>
+<li>No caching of results. Running the script twice will result in computing the results twice, even if they are already available.</li>
+</ul>
+<p>These issues can all be fixed with some more Bash scripting (and some even by viash!), we’d be reinventing the wheel as this is all covered by Nextflow.</p>
+<p>In the next section, we will review some best practices when writing new components with viash, before moving on to part 2 (hint: Nextflow!).</p>
+</body>
+</html>
