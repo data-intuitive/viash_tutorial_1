@@ -1,4 +1,4 @@
-name: viasn ns test
+name: viash ns test
 
 on:
   push:
@@ -22,15 +22,15 @@ jobs:
         
     - name: Set up Scala
       run: |
-        echo $PATH
         sudo apt-get update
         sudo apt-get install -y scala
         
     - name: Install viash
       run: |
-        mkdir -p ~/bin/
-        wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO ~/bin/viash
-        chmod +x ~/bin/viash
+        mkdir -p "$HOME/.local/bin"
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+        wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO "$HOME/.local/bin/viash"
+        chmod +x "$HOME/.local/bin/viash"
         
     - name: Verify that viash is on path
       run: | 
