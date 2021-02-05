@@ -1,0 +1,50 @@
+name: viasn ns test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  scala-ci:
+    runs-on: ${{ matrix.config.os }}
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        config: 
+        - {name: 'main', os: ubuntu-latest, r: '3.6.1', python: '3.8' }
+
+    steps:
+    - uses: actions/checkout@v2
+        
+    - name: Set up sbt
+      uses: olafurpg/setup-scala@v10
+    
+    - name: Set up Scala
+      run: |
+        brew update
+        brew install scala
+        
+    - name: Install viash
+      run: |
+        mkdir -p ~/bin/
+        wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO ~/bin/viash
+        chmod +x ~/bin/viash
+        
+    - name: Verify that viash is on path
+      run: | 
+        viash -h
+
+    - name: Run tests
+      run: |
+        viash ns test -p docker
+        
+#    - name: Upload check results on fail
+#      if: failure()
+#      uses: actions/upload-artifact@master
+#      with:
+#        name: ${{ matrix.config.name }}_results
+#        path: check
