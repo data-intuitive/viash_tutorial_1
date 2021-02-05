@@ -7,3 +7,5 @@ node_modules
 package-lock.json
 viash.yaml
 .DS_Store
+target
+output
