@@ -35,9 +35,9 @@ jobs:
       run: |
         viash ns test -p docker
         
-   - name: Upload check results on fail
-     if: failure()
-     uses: actions/upload-artifact@master
-     with:
-       name: ${{ matrix.config.name }}_results
-       path: check
+    - name: Upload check results on fail
+      if: failure()
+      uses: actions/upload-artifact@master
+      with:
+        name: ${{ matrix.config.name }}_results
+        path: check
