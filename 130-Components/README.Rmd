@@ -2,6 +2,10 @@
 author: Data Intuitive
 date: Tuesday - January 26, 2021
 title: "Creating components with viash"
+output:
+  github_document:
+    html_preview: false
+    toc: true
 ---
 
 ```{r setup, include = FALSE}
@@ -15,6 +19,7 @@ knitr::opts_chunk$set(
 
 knitr::opts_knit$set(root.dir = '..')
 ```
+
 
 With the information from the previous section, we will wrap two components from the Civ6 use case in more detail (`convert_plot` and `plot_map`). Let's start with the easiest of the two.
 
@@ -109,8 +114,9 @@ There is only a single Bash script called `script.sh`. We can specify its existe
 The file `script.sh` is not so much different from the example we gave above. 
 The only difference is that the `par_input` and `par_output` variables are surrounded by some comments. How can this script work properly if the values of `par_input` and `par_output` are always the same?
 
-```{sh echo=F, results='asis'}
-scripts/cat_format src/civ6_save_renderer/convert_plot/script.sh
+`src/civ6_save_renderer/convert_plot/script.sh`:
+```{sh echo=F, class.output="bash"}
+cat src/civ6_save_renderer/convert_plot/script.sh
 ```
 
 Well, the code block between `## VIASH START` and `## VIASH END` is entirely optional. In fact, viash will not even look at its content. When you run a viash component, the code block above will be replaced with some code to create a command-line interface through which to pass the parameters.
@@ -149,8 +155,8 @@ Luckily, we didn't need to resort to such drastic measures.
 
 This is the final viash config for this component in its entirety.
 
-```{sh echo=F, results='asis'}
-scripts/cat_format src/civ6_save_renderer/convert_plot/config.vsh.yaml
+```{bash echo=FALSE, class.output="yaml"}
+yq e 'del(.functionality.tests)' src/civ6_save_renderer/convert_plot/config.vsh.yaml | yq e 'del(.platforms[].setup)' -
 ```
 
 By notation, the file extension of a viash config file should be `.vsh.yaml`, otherwise it will not be detected by viash.
@@ -227,44 +233,10 @@ Let's start by defining the functionality-part of the viash config.
 
 The functionality metadata is largely the same when compared to that of the previous component.
 
-```yaml
-functionality:
-  name: plot_map
-  namespace: civ6_save_renderer
-  description: "Use the settings yaml and the map tsv to generate a plot (as PDF)."
-  version: "1.0"
-  authors:
-    - name: Robrecht Cannoodt
-      email: rcannood@gmail.com
-      roles: [maintainer, author]
-      props: {github: rcannood, orcid: 0000-0003-3641-729X}
-  arguments:
-    - name: "--yaml"
-      alternatives: [-y]
-      type: file
-      required: true
-      default: "header.yaml"
-      must_exist: true
-      description: "A YAML file containing civ6 game settings information."
-    - name: "--tsv"
-      alternatives: [-t]
-      type: file
-      required: true
-      default: "map.tsv"
-      must_exist: true
-      description: "A TSV file containing civ6 map information."
-    - name: "--output"
-      alternatives: [-o]
-      type: file
-      required: true
-      default: "output.pdf"
-      direction: output
-      description: "Path to store the output PDF file at."
-  resources:
-    - type: r_script
-      path: script.R
-    - path: helper.R
+```{bash echo=FALSE, class.output="yaml"}
+yq e 'del(.platforms)' src/civ6_save_renderer/plot_map/config.vsh.yaml
 ```
+
 
 One notable difference is that the code is split up into two files: 
 the main script `script.R` and a helper file `helper.R`. By splitting of a portion 

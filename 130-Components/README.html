@@ -171,7 +171,7 @@
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="at">      </span><span class="fu">path</span><span class="kw">:</span><span class="at"> script.sh</span></span></code></pre></div>
 <p>The file <code>script.sh</code> is not so much different from the example we gave above. The only difference is that the <code>par_input</code> and <code>par_output</code> variables are surrounded by some comments. How can this script work properly if the values of <code>par_input</code> and <code>par_output</code> are always the same?</p>
 <p><code>src/civ6_save_renderer/convert_plot/script.sh</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co">#!/bin/bash</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="co">## VIASH START</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="va">par_input=</span>input.pdf</span>
@@ -199,7 +199,6 @@
 <p>Luckily, we didn’t need to resort to such drastic measures.</p>
 <h3 id="step-5-final-config">Step 5: Final config</h3>
 <p>This is the final viash config for this component in its entirety.</p>
-<p><code>src/civ6_save_renderer/convert_plot/config.vsh.yaml</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="fu">functionality</span><span class="kw">:</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> convert_plot</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> civ6_save_renderer</span></span>
@@ -241,12 +240,15 @@
 <p>We specify the <code>docker</code> platform explicitly although that is not really necessary because of the order of the platforms in the viash config. The resulting script is stored under <code>bin</code> relative to the current working directory.</p>
 <p>We ask the generated executable to run the necessary setup. In this case, it means <em>pulling</em> the appropriate docker image from Docker Hub.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">bin/convert_plot</span> ---setup</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> pull dpokidov/imagemagick</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="ex">Using</span> default tag: latest</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="ex">latest</span>: Pulling from dpokidov/imagemagick</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="ex">Digest</span>: sha256:6749db04ffa5eac1cbe77566af02463f040028fef525b767dc98e06023e6cdf8</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="ex">Status</span>: Image is up to date for dpokidov/imagemagick:latest</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a><span class="ex">docker.io/dpokidov</span>/imagemagick:<span class="ex">latest</span></span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> build -t civ6_save_renderer/convert_plot:1.0 <span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viashsetupdocker-convert_plot-iRvw7x</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="ex">Sending</span> build context to Docker daemon  40.45kB</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="ex">Step</span> 1/2 : FROM dpokidov/imagemagick</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> 0ce61e775be8</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="ex">Step</span> 2/2 : RUN apt-get update <span class="kw">&amp;&amp;</span>   <span class="ex">apt-get</span> install -y tesseract-ocr <span class="kw">&amp;&amp;</span>   <span class="fu">rm</span> -rf /var/lib/apt/lists/*</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> Using cache</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a> <span class="ex">---</span><span class="op">&gt;</span> a92be5886a41</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a><span class="ex">Successfully</span> built a92be5886a41</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a><span class="ex">Successfully</span> tagged civ6_save_renderer/convert_plot:1.0</span></code></pre></div>
 <p>We can display the help page of the component as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">bin/convert_plot</span> -h</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="ex">Convert</span> a plot from pdf to png.</span>

@@ -96,8 +96,8 @@ If you check the `data` folder, you will see five autosave files.
 total 6592
 -rw-rw-r--. 1 rcannood rcannood  612404 Jan 26 10:42 AutoSave_0158.Civ6Save
 -rw-rw-r--. 1 rcannood rcannood 1061697 Jan 26 10:42 AutoSave_0159.Civ6Save
--rw-r--r--. 1 rcannood rcannood  107948 Feb  5 09:17 AutoSave_0159.pdf
--rw-r--r--. 1 rcannood rcannood  673420 Feb  5 09:16 AutoSave_0159.png
+-rw-r--r--. 1 rcannood rcannood  107948 Feb  5 11:11 AutoSave_0159.pdf
+-rw-r--r--. 1 rcannood rcannood  673420 Feb  5 11:11 AutoSave_0159.png
 -rw-r--r--. 1 rcannood rcannood  779029 Feb  4 17:14 AutoSave_0159.tsv
 -rw-r--r--. 1 rcannood rcannood    8236 Feb  5 09:17 AutoSave_0159.yaml
 -rw-rw-r--. 1 rcannood rcannood 1140352 Jan 26 10:42 AutoSave_0160.Civ6Save
@@ -127,7 +127,7 @@ npm WARN viash_workshop_1 No README data
 npm WARN viash_workshop_1 No license field.
 
 + civ6-save-parser@1.1.14
-updated 1 package and audited 12 packages in 0.667s
+updated 1 package and audited 12 packages in 1.666s
 found 0 vulnerabilities
 ```
 

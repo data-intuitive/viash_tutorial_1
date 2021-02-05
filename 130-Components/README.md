@@ -146,7 +146,7 @@ same?
 
 `src/civ6_save_renderer/convert_plot/script.sh`:
 
-``` sh
+``` bash
 #!/bin/bash
 
 ## VIASH START
@@ -206,8 +206,6 @@ Luckily, we didn’t need to resort to such drastic measures.
 ### Step 5: Final config
 
 This is the final viash config for this component in its entirety.
-
-`src/civ6_save_renderer/convert_plot/config.vsh.yaml`:
 
 ``` yaml
 functionality:
@@ -269,12 +267,15 @@ case, it means *pulling* the appropriate docker image from Docker Hub.
 
 ``` sh
 > bin/convert_plot ---setup
-> docker pull dpokidov/imagemagick
-Using default tag: latest
-latest: Pulling from dpokidov/imagemagick
-Digest: sha256:6749db04ffa5eac1cbe77566af02463f040028fef525b767dc98e06023e6cdf8
-Status: Image is up to date for dpokidov/imagemagick:latest
-docker.io/dpokidov/imagemagick:latest
+> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-iRvw7x
+Sending build context to Docker daemon  40.45kB
+Step 1/2 : FROM dpokidov/imagemagick
+ ---> 0ce61e775be8
+Step 2/2 : RUN apt-get update &&   apt-get install -y tesseract-ocr &&   rm -rf /var/lib/apt/lists/*
+ ---> Using cache
+ ---> a92be5886a41
+Successfully built a92be5886a41
+Successfully tagged civ6_save_renderer/convert_plot:1.0
 ```
 
 We can display the help page of the component as follows:
