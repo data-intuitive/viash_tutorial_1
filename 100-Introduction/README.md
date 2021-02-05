@@ -41,8 +41,8 @@ can be solved quite easily by using viash.
 By providing some meta-data regarding its functionality and the platform
 on which you want to run the software, viash can help you:
 
-  - wrap your script in an executable with a CLI and `--help`
-    functionality,
+  - wrap your script (Bash/R/Python/JavaScript/Scala) as an executable
+    with a CLI and `--help` functionality,
 
   - seamlessly execute your component natively on the host platform or
     in a Docker container,

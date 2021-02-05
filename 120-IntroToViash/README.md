@@ -57,7 +57,7 @@ directory in your home folder.
 
 ``` sh
 mkdir -p ~/bin/
-wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO ~/bin/viash
+wget https://github.com/data-intuitive/viash/releases/download/v0.3.2/viash -qO ~/bin/viash
 chmod +x ~/bin/viash
 ```
 
@@ -187,12 +187,12 @@ let us pass the argument `-l` to `intro_example2`:
 ``` sh
 > viash run src/intro_example2.vsh.yaml -- -l
 total 148
-drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 09:16 bin
+drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 11:30 bin
 -rw-rw-r--. 1 rcannood rcannood   687 Feb  5 09:15 Makefile
--rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 09:24 README.html
--rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 09:24 README.md
--rw-rw-r--. 1 rcannood rcannood 52859 Feb  5 09:24 README.pdf
--rw-r--r--. 1 rcannood rcannood 10473 Feb  5 09:26 README.Rmd
+-rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 11:30 README.html
+-rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 11:30 README.md
+-rw-rw-r--. 1 rcannood rcannood 52873 Feb  5 11:30 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10473 Feb  5 11:46 README.Rmd
 drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
 ```
 
@@ -231,12 +231,12 @@ directory (like before).
 ``` sh
 > viash run src/intro_example3.vsh.yaml -- -l
 total 148
-drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 09:16 bin
+drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 11:30 bin
 -rw-rw-r--. 1 rcannood rcannood   687 Feb  5 09:15 Makefile
--rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 09:24 README.html
--rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 09:24 README.md
--rw-rw-r--. 1 rcannood rcannood 52859 Feb  5 09:24 README.pdf
--rw-r--r--. 1 rcannood rcannood 10473 Feb  5 09:26 README.Rmd
+-rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 11:30 README.html
+-rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 11:30 README.md
+-rw-rw-r--. 1 rcannood rcannood 52873 Feb  5 11:30 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10473 Feb  5 11:46 README.Rmd
 drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
 ```
 
@@ -461,13 +461,13 @@ drwx------.   1 root root    0 Oct 19 23:33 lost+found
 drwxr-xr-x.   1 root root    0 Jul 27  2020 media
 drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
 drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
-dr-xr-xr-x. 731 root root    0 Feb  3 14:15 proc
+dr-xr-xr-x. 695 root root    0 Feb  3 14:15 proc
 dr-xr-x---.   1 root root  270 Feb  3 13:24 root
 drwxr-xr-x.  55 root root 1500 Feb  5 05:17 run
 lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
 drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
 dr-xr-xr-x.  13 root root    0 Feb  3 13:15 sys
-drwxrwxrwt.  62 root root 1800 Feb  5 10:30 tmp
+drwxrwxrwt.  62 root root 1800 Feb  5 10:47 tmp
 drwxr-xr-x.   1 root root  106 Jan 31 05:50 usr
 drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
 ```
@@ -494,13 +494,13 @@ drwx------.   1 root root    0 Oct 19 23:33 lost+found
 drwxr-xr-x.   1 root root    0 Jul 27  2020 media
 drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
 drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
-dr-xr-xr-x. 730 root root    0 Feb  3 14:15 proc
+dr-xr-xr-x. 707 root root    0 Feb  3 14:15 proc
 dr-xr-x---.   1 root root  270 Feb  3 13:24 root
 drwxr-xr-x.  55 root root 1500 Feb  5 05:17 run
 lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
 drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
 dr-xr-xr-x.  13 root root    0 Feb  3 13:15 sys
-drwxrwxrwt.  62 root root 1800 Feb  5 10:30 tmp
+drwxrwxrwt.  62 root root 1800 Feb  5 10:47 tmp
 drwxr-xr-x.   1 root root  106 Jan 31 05:50 usr
 drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
 ```

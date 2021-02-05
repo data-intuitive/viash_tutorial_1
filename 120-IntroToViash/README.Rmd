@@ -34,7 +34,7 @@ You can install [viash] for your current user by downloading it and placing it i
 
 ```sh
 mkdir -p ~/bin/
-wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO ~/bin/viash
+wget https://github.com/data-intuitive/viash/releases/download/v0.3.2/viash -qO ~/bin/viash
 chmod +x ~/bin/viash
 ```
 

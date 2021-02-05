@@ -47,10 +47,14 @@ src
 ├── civ6_save_renderer
 │   ├── combine_plots
 │   │   ├── config.vsh.yaml
-│   │   └── script.sh
+│   │   ├── script.sh
+│   │   └── test
+│   │       └── run_test.sh
 │   ├── convert_plot
 │   │   ├── config.vsh.yaml
-│   │   └── script.sh
+│   │   ├── script.sh
+│   │   └── test
+│   │       └── run_test.sh
 │   ├── parse_header
 │   │   ├── config.vsh.yaml
 │   │   └── script.sh
@@ -71,7 +75,7 @@ src
 │       └── script.R
 └── simple_pipeline.sh
 
-9 directories, 17 files
+11 directories, 19 files
 ```
 
 With `viash ns build` you can build all the components in a namespace.
@@ -275,7 +279,7 @@ Input #0, png_pipe, from 'concat:/viash_automount<...>/workspace/di/viash_worksh
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
 Press [q] to stop, [?] for help
-[libvpx-vp9 @ 0xa3ab40] v1.8.0
+[libvpx-vp9 @ 0xcaeb40] v1.8.0
 Output #0, webm, to '/viash_automount<...>/workspace/di/viash_workshop_1/output/movie.webm':
   Metadata:
     encoder         : Lavf58.20.100
@@ -284,7 +288,7 @@ Output #0, webm, to '/viash_automount<...>/workspace/di/viash_workshop_1/output/
       encoder         : Lavc58.35.100 libvpx-vp9
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1
-frame=    5 fps=3.1 q=0.0 Lsize=     144kB time=00:00:04.00 bitrate= 295.5kbits/s speed=2.52x    
+frame=    5 fps=3.0 q=0.0 Lsize=     144kB time=00:00:04.00 bitrate= 295.5kbits/s speed=2.41x    
 video:143kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.840692%
 >>>>>>>DONE
 ```

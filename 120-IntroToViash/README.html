@@ -109,7 +109,7 @@
 </ul>
 <p>You can install <a href="https://github.com/data-intuitive/viash">viash</a> for your current user by downloading it and placing it in the ‘bin’ directory in your home folder.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">mkdir</span> -p ~/bin/</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="fu">wget</span> https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO ~/bin/viash</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="fu">wget</span> https://github.com/data-intuitive/viash/releases/download/v0.3.2/viash -qO ~/bin/viash</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="fu">chmod</span> +x ~/bin/viash</span></code></pre></div>
 <p>If <a href="https://github.com/data-intuitive/viash">viash</a> is installed correctly, you should be able to invoke the help message by executing the following:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> -h</span>
@@ -185,12 +185,12 @@
 <p>There is no difference with the previous version of the component. Now, let us pass the argument <code>-l</code> to <code>intro_example2</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example2.vsh.yaml -- -l</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">total</span> 148</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="ex">drwxrwxr-x.</span> 1 rcannood rcannood    56 Feb  5 09:16 bin</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="ex">drwxrwxr-x.</span> 1 rcannood rcannood    56 Feb  5 11:30 bin</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood   687 Feb  5 09:15 Makefile</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 60645 Feb  5 09:24 README.html</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 19979 Feb  5 09:24 README.md</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 52859 Feb  5 09:24 README.pdf</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 10473 Feb  5 09:26 README.Rmd</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 60645 Feb  5 11:30 README.html</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 19979 Feb  5 11:30 README.md</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 52873 Feb  5 11:30 README.pdf</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 10473 Feb  5 11:46 README.Rmd</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span> 1 rcannood rcannood   294 Jan 28 08:35 src</span></code></pre></div>
 <p>Please note that options <em>before</em> the <code>--</code> are considered for <a href="https://github.com/data-intuitive/viash">viash</a> while options after the <code>--</code> are for the tool that is wrapped (in this case <code>ls</code>).</p>
 <h2 id="example-3-setting-different-argument-types">Example 3: setting different argument types</h2>
@@ -212,12 +212,12 @@
 <p>Running this component will still list the contents of the current directory (like before).</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- -l</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="ex">total</span> 148</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="ex">drwxrwxr-x.</span> 1 rcannood rcannood    56 Feb  5 09:16 bin</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="ex">drwxrwxr-x.</span> 1 rcannood rcannood    56 Feb  5 11:30 bin</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood   687 Feb  5 09:15 Makefile</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 60645 Feb  5 09:24 README.html</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 19979 Feb  5 09:24 README.md</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 52859 Feb  5 09:24 README.pdf</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 10473 Feb  5 09:26 README.Rmd</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 60645 Feb  5 11:30 README.html</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 19979 Feb  5 11:30 README.md</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="ex">-rw-rw-r--.</span> 1 rcannood rcannood 52873 Feb  5 11:30 README.pdf</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="ex">-rw-r--r--.</span> 1 rcannood rcannood 10473 Feb  5 11:46 README.Rmd</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span> 1 rcannood rcannood   294 Jan 28 08:35 src</span></code></pre></div>
 <p>However, we can now also list the contents of a different directory.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> run src/intro_example3.vsh.yaml -- src/ -l</span>
@@ -358,13 +358,13 @@
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root    0 Jul 27  2020 media</span>
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root   16 Jan  4 12:13 mnt</span>
 <span id="cb19-13"><a href="#cb19-13" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root  188 Jan 20 09:58 opt</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true"></a><span class="ex">dr-xr-xr-x.</span> 731 root root    0 Feb  3 14:15 proc</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true"></a><span class="ex">dr-xr-xr-x.</span> 695 root root    0 Feb  3 14:15 proc</span>
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true"></a><span class="ex">dr-xr-x---.</span>   1 root root  270 Feb  3 13:24 root</span>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>  55 root root 1500 Feb  5 05:17 run</span>
 <span id="cb19-17"><a href="#cb19-17" aria-hidden="true"></a><span class="ex">lrwxrwxrwx.</span>   1 root root    8 Jul 27  2020 sbin -<span class="op">&gt;</span> usr/sbin</span>
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root    0 Jul 27  2020 srv</span>
 <span id="cb19-19"><a href="#cb19-19" aria-hidden="true"></a><span class="ex">dr-xr-xr-x.</span>  13 root root    0 Feb  3 13:15 sys</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true"></a><span class="ex">drwxrwxrwt.</span>  62 root root 1800 Feb  5 10:30 tmp</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true"></a><span class="ex">drwxrwxrwt.</span>  62 root root 1800 Feb  5 10:47 tmp</span>
 <span id="cb19-21"><a href="#cb19-21" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root  106 Jan 31 05:50 usr</span>
 <span id="cb19-22"><a href="#cb19-22" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root  208 Jan  7 14:11 var</span></code></pre></div>
 <p>If the <code>ubuntu</code> image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.</p>
@@ -382,13 +382,13 @@
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root    0 Jul 27  2020 media</span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root   16 Jan  4 12:13 mnt</span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root  188 Jan 20 09:58 opt</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true"></a><span class="ex">dr-xr-xr-x.</span> 730 root root    0 Feb  3 14:15 proc</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true"></a><span class="ex">dr-xr-xr-x.</span> 707 root root    0 Feb  3 14:15 proc</span>
 <span id="cb20-15"><a href="#cb20-15" aria-hidden="true"></a><span class="ex">dr-xr-x---.</span>   1 root root  270 Feb  3 13:24 root</span>
 <span id="cb20-16"><a href="#cb20-16" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>  55 root root 1500 Feb  5 05:17 run</span>
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true"></a><span class="ex">lrwxrwxrwx.</span>   1 root root    8 Jul 27  2020 sbin -<span class="op">&gt;</span> usr/sbin</span>
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root    0 Jul 27  2020 srv</span>
 <span id="cb20-19"><a href="#cb20-19" aria-hidden="true"></a><span class="ex">dr-xr-xr-x.</span>  13 root root    0 Feb  3 13:15 sys</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true"></a><span class="ex">drwxrwxrwt.</span>  62 root root 1800 Feb  5 10:30 tmp</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true"></a><span class="ex">drwxrwxrwt.</span>  62 root root 1800 Feb  5 10:47 tmp</span>
 <span id="cb20-21"><a href="#cb20-21" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root  106 Jan 31 05:50 usr</span>
 <span id="cb20-22"><a href="#cb20-22" aria-hidden="true"></a><span class="ex">drwxr-xr-x.</span>   1 root root  208 Jan  7 14:11 var</span></code></pre></div>
 <p>While this is all still manageable, it could quickly become more complicated, but that is for a later section. In what follows, we will also come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.</p>

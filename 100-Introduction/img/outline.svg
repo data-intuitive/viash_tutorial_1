@@ -222,9 +222,9 @@
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="2056"
+     inkscape:window-width="2271"
      inkscape:window-height="1443"
-     inkscape:window-x="1124"
+     inkscape:window-x="909"
      inkscape:window-y="306"
      inkscape:window-maximized="0"
      fit-margin-top="0"
@@ -263,7 +263,7 @@
        style="font-weight:300;font-size:7.05556px;line-height:1.1;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:center;letter-spacing:0px;white-space:pre;shape-inside:url(#rect1090);" />
     <g
        id="g1118"
-       transform="translate(-2.0870813,23.033929)">
+       transform="translate(-2.0870813,27.267206)">
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
@@ -379,12 +379,7 @@
            x="-345.47424"
            y="173.67648"
            style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
-           id="tspan1328">    Adding documentation, unit testing, and</tspan><tspan
-           sodipodi:role="line"
-           x="-345.47424"
-           y="182.49593"
-           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';text-align:start;text-anchor:start;stroke-width:0.264583"
-           id="tspan1334">    code versioning</tspan></text>
+           id="tspan1334">    Adding testing and continuous integration</tspan></text>
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:9.87778px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Medium';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
@@ -534,11 +529,11 @@
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:9.87778px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Medium';text-align:start;letter-spacing:0px;text-anchor:start;stroke-width:0.264583"
          x="-345.45331"
-         y="199.08595"
+         y="190.6194"
          id="text1002"><tspan
            sodipodi:role="line"
            x="-345.45331"
-           y="199.08595"
+           y="190.6194"
            style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:9.87778px;font-family:Roboto;-inkscape-font-specification:'Roboto Medium';text-align:start;text-anchor:start;stroke-width:0.264583"
            id="tspan1000">&lt;10 min break&gt;</tspan></text>
     </g>
