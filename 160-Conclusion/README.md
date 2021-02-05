@@ -12,8 +12,6 @@ been covered:
   - the integrated [viash](https://github.com/data-intuitive/viash)
     config format where config and script are stored in one file
   - advanced troubleshooting and testing scenarios
-  - using [viash](https://github.com/data-intuitive/viash) for CI/CD
-    purposes
 
 There is also one big topic that *will* be covered in part 2 of this
 workshop/tutorial: Converting components/namespaces to \[NextFlow\]

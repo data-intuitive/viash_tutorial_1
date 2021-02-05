@@ -53,9 +53,10 @@ The only differences with before are:
 Specifying the tests is not different from specifying the `resources` in the [viash] configuration. In this case, we have two resources: one is the script that contains the test code and one is a dummy PDF file that is fetched from the web during testing. We could also add a PDF file to the repository and point to that instead.
 
 Let's take a look at the test script.
-```{sh echo = F, results = "asis"}
+```{bash echo=FALSE, class.output="bash"}
 cat src/civ6_save_renderer/convert_plot/test/run_test.sh
 ```
+
 
 The test script itself defines two tests, namely:
 1. A test to see if an output file is effectively created by our component
@@ -106,6 +107,21 @@ suppressMessages(knitr::kable(readr::read_tsv("/tmp/report.tsv")))
 For each component, you see the 2 steps from above: 1) build the executable and 2) run the actual test. You can also see that the developers of this codebase were lazy, as three out of five components are missing tests! 
 
 
+## Continuous integration
+
+Continuous integration is a crucial DevOps practice for ensuring that any components work at all times. 
+This is performed by adding all code to a code versioning repository (e.g. git) and configuring a CI service (e.g. GitHub Actions)
+to run all the tests on your code every time a change is made to the repository.
+
+This repository is set up with GitHub Actions to run in this manner, and all it takes is yet another yaml file!
+
+`.github/workflows/viash_ns_test.yml`: 
+```{bash echo=FALSE, class.output="yaml"}
+cat .github/workflows/viash_ns_test.yml
+```
+
+Now, every time we commit something to the repository, the tests will be run:
+![](img/ci.png)
 
 [viash]: https://github.com/data-intuitive/viash
 [`tesseract`]: https://opensource.google/projects/tesseract

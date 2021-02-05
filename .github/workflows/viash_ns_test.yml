@@ -20,16 +20,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
         
-    - name: Set up Scala
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y scala
-        
     - name: Install viash
       run: |
         mkdir -p "$HOME/.local/bin"
         echo "$HOME/.local/bin" >> $GITHUB_PATH
-        wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO "$HOME/.local/bin/viash"
+        wget https://github.com/data-intuitive/viash/releases/download/v0.3.2/viash -qO "$HOME/.local/bin/viash"
         chmod +x "$HOME/.local/bin/viash"
         
     - name: Verify that viash is on path
@@ -40,9 +35,9 @@ jobs:
       run: |
         viash ns test -p docker
         
-#    - name: Upload check results on fail
-#      if: failure()
-#      uses: actions/upload-artifact@master
-#      with:
-#        name: ${{ matrix.config.name }}_results
-#        path: check
+   - name: Upload check results on fail
+     if: failure()
+     uses: actions/upload-artifact@master
+     with:
+       name: ${{ matrix.config.name }}_results
+       path: check
