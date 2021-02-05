@@ -31,7 +31,7 @@ By providing some meta-data regarding its functionality and the platform on whic
 
 * combine multiple components in a Nextflow pipeline, and
 
-* unit-test your component to ensure that it works at all times.
+* testing your component with ease to ensure that it works at all times.
 
 ## Outline of this tutorial
 

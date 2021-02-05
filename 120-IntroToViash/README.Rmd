@@ -51,8 +51,8 @@ information on software component, such as its parameters, its requirements, and
 
 Let us start with the smallest possible [viash config], which is an almost trivial wrapper around `ls`. `ls` is a Unix command used to list all files in a directory.
 
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/intro_example1.vsh.yaml
+```{bash echo=FALSE, class.output="yaml"}
+cat src/intro_example1.vsh.yaml
 ```
 
 [`viash run`] is a command for running a component as defined by the [viash config].
@@ -71,8 +71,8 @@ Let's go one step further.
 
 Software components are (usually) not useful unless they have some arguments which you can specify and change.
 
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/intro_example2.vsh.yaml
+```{bash echo=FALSE, class.output="yaml"}
+cat src/intro_example2.vsh.yaml
 ```
 
 We added two arguments to the `arguments` list. The arguments are flags and if we specify for `-l` it means _long listing_ is one which corresponds to `boolean_true`.
@@ -98,8 +98,8 @@ Not all arguments are boolean flags such as specified in the previous example.
 In this [viash config], we added an extra argument that corresponds to the path which we want to _list_. 
 
 
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/intro_example3.vsh.yaml
+```{bash echo=FALSE, class.output="yaml"}
+cat src/intro_example3.vsh.yaml
 ```
 
 Running this component will still list the contents of the current directory (like before).
@@ -127,8 +127,8 @@ For more information, see the documentation regarding the [functionality] specif
 
 The help from the last `intro_example3` does not show a lot of useful information. Let's add some documentation regarding the component and its parameters.
 
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/intro_example4.vsh.yaml
+```{bash echo=FALSE, class.output="yaml"}
+cat src/intro_example4.vsh.yaml
 ```
 
 In doing so, the help message becomes a lot more useful in reminding yourself and other users how to use the components.
@@ -158,26 +158,54 @@ bin/intro_example4 src/ -l
 
 You can now share this `bin/intro_example4` file with others, or add it to your `~/bin` directory to turn it into a system-wide command.
 
-## Example 5: running the component inside a Docker container
+
+## Example 5: Wrapping a script
+
+While running a command wrapped as a [viash] component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. 
+Say you want to run the `intro_example4` component from above but this time filtering out certain files/directories based on their name.
+We could do just that by means of a simple CLI instruction that we put in a script:
+
+```{bash echo=FALSE, class.output="bash"}
+cat src/script.sh
+```
+
+In combination with the following [viash config]:
+
+```{bash echo=FALSE, class.output="yaml"}
+cat src/intro_example5.vsh.yaml
+```
+
+We get results like this:
+
+```{sh}
+viash run src/intro_example5.vsh.yaml -- src/ --filter "^s.*"
+```
+
+A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run [`viash run`] on on the [viash config]. This config contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the [viash config] and are automatically resolved and parsed when running the wrapped [viash] version of the script.The `--filter` argument takes a regular expression, it is simply passed to `grep` in `script.sh`.
+
+If you would want to achieve something similar with just Docker without [viash], you are in for some serious Bash development. But it does not stop here, because in addition to support for wrapping Bash scripts, [viash] also supports wrapping Python, R, JavaScript, and Scala scripts. 
+
+
+## Example 6: running the component inside a Docker container
 
 In the above examples, we ran the components on our local system. This is simple as long as the wrapped tool at hand (`ls` in this case) is always available on the local system. However, this assumption generally does not hold true. [viash] not only supports running components on the native system, but can also run components inside a Docker container.
 
 To make use of this functionality, we need to get into the the 'platforms' section of the [viash config], which can contain one or more execution platforms. In this case, we defined platforms: a _native_ one (local machine) and a _docker_ one.
 
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/intro_example5.vsh.yaml
+```{bash echo=FALSE, class.output="yaml"}
+cat src/intro_example6.vsh.yaml
 ```
 
 By default, [viash] will use the first platform specified in the [viash config], which in this case the native platform. In order to build an executable which uses Docker in the backend, we need to pass this information as follows:
 
 ```{sh}
-viash build src/intro_example5.vsh.yaml -o bin -p docker
+viash build src/intro_example6.vsh.yaml -o bin -p docker
 ```
 
 The executable `bin/intro_example5` now automatically runs inside Docker.
 
 ```{sh}
-bin/intro_example5 / -l
+bin/intro_example5 src/ --filter "^s.*"
 ```
 
 If the `ubuntu` image is not yet available on your system, this command will automatically fetch it before running the tool. You can verify for yourself that the result of this listing is not the same as what you would have if you ran on your local system.
@@ -185,40 +213,12 @@ If the `ubuntu` image is not yet available on your system, this command will aut
 Please note that if you wanted to do this exact thing by using Docker itself, you would have to use a CLI instruction like
 
 ```{sh}
-docker run --rm -v /:/mount ubuntu:latest ls /mount/ -l
+docker run --rm -v `pwd`:/mount ubuntu:latest ls /mount/src | grep "^s.*"
 ```
 
 While this is all still manageable, it could quickly become more complicated, but that is for a later section.
 In what follows, we will also come back not only to running inside a container but also generating a container (based on a base image), tagging and versioning.
 
-
-## Example 6: Wrapping a script
-
-While running a command wrapped as a [viash] component could be useful in _some_ form or another, we will usually want to run something a bit more custom or elaborate. 
-Say you want to run the `intro_example5` component from above but this time filtering out certain files/directories based on their name.
-We could do just that by means of a simple CLI instruction that we put in a script:
-
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/script.sh
-```
-
-In combination with the following [viash config]:
-
-```{sh echo = F, results = "asis"}
-../scripts/cat_format src/intro_example6.vsh.yaml
-```
-
-We get results like this:
-
-```{sh}
-viash run src/intro_example6.vsh.yaml -p docker -- /etc --filter "^h.*"
-```
-
-A lot is happening here at once, so let's unwrap this. We did not _build_ the executable in this example, but just run [`viash run`] on on the [viash config]. This config contains a pointer (relative path) to the `script.sh` file that contains parameters. Those parameters are defined in the [viash config] and are automatically resolved and parsed when running the wrapped [viash] version of the script. The `docker` platform is defined in the [viash config] as well, so we can just run it inside the respective container. The `--filter` argument takes a regular expression, it is simply passed to `grep` in `script.sh`.
-
-Please note that when we decide to _build_ a `intro_example6` executable (for a specific platform), again this executable is self-contained. It includes the necessary Docker information, command line parsing logic and the script itself. So there is not need for additional customization.
-
-If you would want to achieve something similar with just Docker without [viash], you are in for some serious Bash development. But it does not stop here, because in addition to support for wrapping Bash scripts, [viash] also supports wrapping Python, R, JavaScript, and Scala scripts. 
 
 [viash]: https://github.com/data-intuitive/viash
 [`viash run`]: https://www.data-intuitive.com/viash_docs/commands/run

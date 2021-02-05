@@ -49,7 +49,8 @@ on which you want to run the software, viash can help you:
 
   - combine multiple components in a Nextflow pipeline, and
 
-  - unit-test your component to ensure that it works at all times.
+  - testing your component with ease to ensure that it works at all
+    times.
 
 ## Outline of this tutorial
 

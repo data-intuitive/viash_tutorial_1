@@ -121,6 +121,7 @@ cat .github/workflows/viash_ns_test.yml
 ```
 
 Now, every time we commit something to the repository, the tests will be run:
+
 ![](img/ci.png)
 
 [viash]: https://github.com/data-intuitive/viash

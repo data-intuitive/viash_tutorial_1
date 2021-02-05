@@ -12,9 +12,9 @@ Tuesday - January 26, 2021
   - [Example 4: adding documentation](#example-4-adding-documentation)
   - [Example 4 part 2: building an
     *executable*](#example-4-part-2-building-an-executable)
-  - [Example 5: running the component inside a Docker
-    container](#example-5-running-the-component-inside-a-docker-container)
-  - [Example 6: Wrapping a script](#example-6-wrapping-a-script)
+  - [Example 5: Wrapping a script](#example-5-wrapping-a-script)
+  - [Example 6: running the component inside a Docker
+    container](#example-6-running-the-component-inside-a-docker-container)
 
 A step in the rendering of the video contains of one aspect that can be
 considered on its own. Understanding the logic of a step, however, is
@@ -107,8 +107,6 @@ config](https://www.data-intuitive.com/viash_docs/config), which is an
 almost trivial wrapper around `ls`. `ls` is a Unix command used to list
 all files in a directory.
 
-`src/intro_example1.vsh.yaml`:
-
 ``` yaml
 functionality:
   name: intro_example1
@@ -146,8 +144,6 @@ Let’s go one step further.
 
 Software components are (usually) not useful unless they have some
 arguments which you can specify and change.
-
-`src/intro_example2.vsh.yaml`:
 
 ``` yaml
 functionality:
@@ -187,13 +183,13 @@ let us pass the argument `-l` to `intro_example2`:
 ``` sh
 > viash run src/intro_example2.vsh.yaml -- -l
 total 148
-drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 11:30 bin
+drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 11:47 bin
 -rw-rw-r--. 1 rcannood rcannood   687 Feb  5 09:15 Makefile
--rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 11:30 README.html
--rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 11:30 README.md
--rw-rw-r--. 1 rcannood rcannood 52873 Feb  5 11:30 README.pdf
--rw-r--r--. 1 rcannood rcannood 10473 Feb  5 11:46 README.Rmd
-drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
+-rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 11:47 README.html
+-rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 11:47 README.md
+-rw-rw-r--. 1 rcannood rcannood 52875 Feb  5 11:47 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10013 Feb  5 12:33 README.Rmd
+drwxr-xr-x. 1 rcannood rcannood   294 Feb  5 12:28 src
 ```
 
 Please note that options *before* the `--` are considered for
@@ -206,8 +202,6 @@ Not all arguments are boolean flags such as specified in the previous
 example. In this [viash
 config](https://www.data-intuitive.com/viash_docs/config), we added an
 extra argument that corresponds to the path which we want to *list*.
-
-`src/intro_example3.vsh.yaml`:
 
 ``` yaml
 functionality:
@@ -231,13 +225,13 @@ directory (like before).
 ``` sh
 > viash run src/intro_example3.vsh.yaml -- -l
 total 148
-drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 11:30 bin
+drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 11:47 bin
 -rw-rw-r--. 1 rcannood rcannood   687 Feb  5 09:15 Makefile
--rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 11:30 README.html
--rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 11:30 README.md
--rw-rw-r--. 1 rcannood rcannood 52873 Feb  5 11:30 README.pdf
--rw-r--r--. 1 rcannood rcannood 10473 Feb  5 11:46 README.Rmd
-drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
+-rw-rw-r--. 1 rcannood rcannood 60645 Feb  5 11:47 README.html
+-rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 11:47 README.md
+-rw-rw-r--. 1 rcannood rcannood 52875 Feb  5 11:47 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10013 Feb  5 12:33 README.Rmd
+drwxr-xr-x. 1 rcannood rcannood   294 Feb  5 12:28 src
 ```
 
 However, we can now also list the contents of a different directory.
@@ -249,9 +243,9 @@ total 28
 -rw-r--r--. 1 rcannood rcannood 186 Jan 28 08:35 intro_example2.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 239 Jan 28 08:35 intro_example3.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 543 Jan 28 08:35 intro_example4.vsh.yaml
--rw-r--r--. 1 rcannood rcannood 613 Jan 28 08:35 intro_example5.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example5.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example6.vsh.yaml
--rw-r--r--. 1 rcannood rcannood  58 Jan 28 08:35 script.sh
+-rw-r--r--. 1 rcannood rcannood  49 Feb  5 12:27 script.sh
 ```
 
 You can always retrieve information about the component by requesting
@@ -284,8 +278,6 @@ specifications.
 The help from the last `intro_example3` does not show a lot of useful
 information. Let’s add some documentation regarding the component and
 its parameters.
-
-`src/intro_example4.vsh.yaml`:
 
 ``` yaml
 functionality:
@@ -382,156 +374,32 @@ total 28
 -rw-r--r--. 1 rcannood rcannood 186 Jan 28 08:35 intro_example2.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 239 Jan 28 08:35 intro_example3.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 543 Jan 28 08:35 intro_example4.vsh.yaml
--rw-r--r--. 1 rcannood rcannood 613 Jan 28 08:35 intro_example5.vsh.yaml
+-rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example5.vsh.yaml
 -rw-r--r--. 1 rcannood rcannood 593 Jan 28 08:35 intro_example6.vsh.yaml
--rw-r--r--. 1 rcannood rcannood  58 Jan 28 08:35 script.sh
+-rw-r--r--. 1 rcannood rcannood  49 Feb  5 12:27 script.sh
 ```
 
 You can now share this `bin/intro_example4` file with others, or add it
 to your `~/bin` directory to turn it into a system-wide command.
 
-## Example 5: running the component inside a Docker container
-
-In the above examples, we ran the components on our local system. This
-is simple as long as the wrapped tool at hand (`ls` in this case) is
-always available on the local system. However, this assumption generally
-does not hold true. [viash](https://github.com/data-intuitive/viash) not
-only supports running components on the native system, but can also run
-components inside a Docker container.
-
-To make use of this functionality, we need to get into the the
-‘platforms’ section of the [viash
-config](https://www.data-intuitive.com/viash_docs/config), which can
-contain one or more execution platforms. In this case, we defined
-platforms: a *native* one (local machine) and a *docker* one.
-
-`src/intro_example5.vsh.yaml`:
-
-``` yaml
-functionality:
-  name: intro_example5
-  version: 0.5
-  description: |
-    List information about the files (the current directory by default) 
-    in alphabetical order.
-  arguments:
-    - name: "-l"
-      type: boolean_true
-      description: "Use a long listing format."
-    - name: "-a"
-      type: boolean_true
-      description: "Do not ignore entries starting with '.'."
-    - name: "path"
-      type: file
-      description: "Which directory to list the contents of."
-      default: .
-  resources:
-    - type: executable
-      path: ls
-platforms:
-  - type: native
-  - type: docker
-    image: ubuntu:latest
-```
-
-By default, [viash](https://github.com/data-intuitive/viash) will use
-the first platform specified in the [viash
-config](https://www.data-intuitive.com/viash_docs/config), which in this
-case the native platform. In order to build an executable which uses
-Docker in the backend, we need to pass this information as follows:
-
-``` sh
-> viash build src/intro_example5.vsh.yaml -o bin -p docker
-```
-
-The executable `bin/intro_example5` now automatically runs inside
-Docker.
-
-``` sh
-> bin/intro_example5 / -l
-total 20
-lrwxrwxrwx.   1 root root    7 Jul 27  2020 bin -> usr/bin
-dr-xr-xr-x.   7 root root 4096 Feb  3 13:26 boot
-drwxr-xr-x.  24 root root 5200 Feb  4 23:37 dev
-drwxr-xr-x.   1 root root 5336 Feb  4 15:58 etc
-drwxr-xr-x.   1 root root   16 Dec 13 05:08 home
-lrwxrwxrwx.   1 root root    7 Jul 27  2020 lib -> usr/lib
-lrwxrwxrwx.   1 root root    9 Jul 27  2020 lib64 -> usr/lib64
-drwx------.   1 root root    0 Oct 19 23:33 lost+found
-drwxr-xr-x.   1 root root    0 Jul 27  2020 media
-drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
-drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
-dr-xr-xr-x. 695 root root    0 Feb  3 14:15 proc
-dr-xr-x---.   1 root root  270 Feb  3 13:24 root
-drwxr-xr-x.  55 root root 1500 Feb  5 05:17 run
-lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
-drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
-dr-xr-xr-x.  13 root root    0 Feb  3 13:15 sys
-drwxrwxrwt.  62 root root 1800 Feb  5 10:47 tmp
-drwxr-xr-x.   1 root root  106 Jan 31 05:50 usr
-drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
-```
-
-If the `ubuntu` image is not yet available on your system, this command
-will automatically fetch it before running the tool. You can verify for
-yourself that the result of this listing is not the same as what you
-would have if you ran on your local system.
-
-Please note that if you wanted to do this exact thing by using Docker
-itself, you would have to use a CLI instruction like
-
-``` sh
-> docker run --rm -v /:/mount ubuntu:latest ls /mount/ -l
-total 20
-lrwxrwxrwx.   1 root root    7 Jul 27  2020 bin -> usr/bin
-dr-xr-xr-x.   7 root root 4096 Feb  3 13:26 boot
-drwxr-xr-x.  24 root root 5200 Feb  4 23:37 dev
-drwxr-xr-x.   1 root root 5336 Feb  4 15:58 etc
-drwxr-xr-x.   1 root root   16 Dec 13 05:08 home
-lrwxrwxrwx.   1 root root    7 Jul 27  2020 lib -> usr/lib
-lrwxrwxrwx.   1 root root    9 Jul 27  2020 lib64 -> usr/lib64
-drwx------.   1 root root    0 Oct 19 23:33 lost+found
-drwxr-xr-x.   1 root root    0 Jul 27  2020 media
-drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
-drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
-dr-xr-xr-x. 707 root root    0 Feb  3 14:15 proc
-dr-xr-x---.   1 root root  270 Feb  3 13:24 root
-drwxr-xr-x.  55 root root 1500 Feb  5 05:17 run
-lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
-drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
-dr-xr-xr-x.  13 root root    0 Feb  3 13:15 sys
-drwxrwxrwt.  62 root root 1800 Feb  5 10:47 tmp
-drwxr-xr-x.   1 root root  106 Jan 31 05:50 usr
-drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
-```
-
-While this is all still manageable, it could quickly become more
-complicated, but that is for a later section. In what follows, we will
-also come back not only to running inside a container but also
-generating a container (based on a base image), tagging and versioning.
-
-## Example 6: Wrapping a script
+## Example 5: Wrapping a script
 
 While running a command wrapped as a
 [viash](https://github.com/data-intuitive/viash) component could be
 useful in *some* form or another, we will usually want to run something
-a bit more custom or elaborate. Say you want to run the `intro_example5`
+a bit more custom or elaborate. Say you want to run the `intro_example4`
 component from above but this time filtering out certain
 files/directories based on their name. We could do just that by means of
 a simple CLI instruction that we put in a script:
 
-`src/script.sh`:
-
-``` sh
+``` bash
 #!/bin/bash
 
-eval "ls \"$par_path\" | grep '$par_filter'"
+ls "$par_path" | grep "$par_filter"
 ```
 
 In combination with the following [viash
 config](https://www.data-intuitive.com/viash_docs/config):
-
-`src/intro_example6.vsh.yaml`:
 
 ``` yaml
 functionality:
@@ -561,12 +429,8 @@ platforms:
 We get results like this:
 
 ``` sh
-> viash run src/intro_example6.vsh.yaml -p docker -- /etc --filter "^h.*"
-host.conf
-hostname
-hosts
-hp
-httpd
+> viash run src/intro_example5.vsh.yaml -- src/ --filter "^s.*"
+script.sh
 ```
 
 A lot is happening here at once, so let’s unwrap this. We did not
@@ -577,18 +441,9 @@ config contains a pointer (relative path) to the `script.sh` file that
 contains parameters. Those parameters are defined in the [viash
 config](https://www.data-intuitive.com/viash_docs/config) and are
 automatically resolved and parsed when running the wrapped
-[viash](https://github.com/data-intuitive/viash) version of the script.
-The `docker` platform is defined in the [viash
-config](https://www.data-intuitive.com/viash_docs/config) as well, so we
-can just run it inside the respective container. The `--filter` argument
-takes a regular expression, it is simply passed to `grep` in
-`script.sh`.
-
-Please note that when we decide to *build* a `intro_example6` executable
-(for a specific platform), again this executable is self-contained. It
-includes the necessary Docker information, command line parsing logic
-and the script itself. So there is not need for additional
-customization.
+[viash](https://github.com/data-intuitive/viash) version of the
+script.The `--filter` argument takes a regular expression, it is simply
+passed to `grep` in `script.sh`.
 
 If you would want to achieve something similar with just Docker without
 [viash](https://github.com/data-intuitive/viash), you are in for some
@@ -596,3 +451,85 @@ serious Bash development. But it does not stop here, because in addition
 to support for wrapping Bash scripts,
 [viash](https://github.com/data-intuitive/viash) also supports wrapping
 Python, R, JavaScript, and Scala scripts.
+
+## Example 6: running the component inside a Docker container
+
+In the above examples, we ran the components on our local system. This
+is simple as long as the wrapped tool at hand (`ls` in this case) is
+always available on the local system. However, this assumption generally
+does not hold true. [viash](https://github.com/data-intuitive/viash) not
+only supports running components on the native system, but can also run
+components inside a Docker container.
+
+To make use of this functionality, we need to get into the the
+‘platforms’ section of the [viash
+config](https://www.data-intuitive.com/viash_docs/config), which can
+contain one or more execution platforms. In this case, we defined
+platforms: a *native* one (local machine) and a *docker* one.
+
+``` yaml
+functionality:
+  name: intro_example6
+  version: 0.6
+  description: |
+    List information about the files (the current directory by default) 
+    in alphabetical order, filtered by a regular expression.
+  arguments:
+    - name: "path"
+      type: file
+      description: "Which directory to list the contents of."
+      default: .
+    - name: "--filter"
+      type: string
+      description: "A regular expression to filter the listed files."
+      default: '.*'
+  resources:
+    - type: bash_script
+      path: script.sh
+platforms:
+  - type: native
+  - type: docker
+    image: ubuntu:latest
+```
+
+By default, [viash](https://github.com/data-intuitive/viash) will use
+the first platform specified in the [viash
+config](https://www.data-intuitive.com/viash_docs/config), which in this
+case the native platform. In order to build an executable which uses
+Docker in the backend, we need to pass this information as follows:
+
+``` sh
+> viash build src/intro_example6.vsh.yaml -o bin -p docker
+```
+
+The executable `bin/intro_example5` now automatically runs inside
+Docker.
+
+``` sh
+> bin/intro_example5 src/ --filter "^s.*"
+intro_example1.vsh.yaml
+intro_example2.vsh.yaml
+intro_example3.vsh.yaml
+intro_example4.vsh.yaml
+intro_example5.vsh.yaml
+intro_example6.vsh.yaml
+script.sh
+```
+
+If the `ubuntu` image is not yet available on your system, this command
+will automatically fetch it before running the tool. You can verify for
+yourself that the result of this listing is not the same as what you
+would have if you ran on your local system.
+
+Please note that if you wanted to do this exact thing by using Docker
+itself, you would have to use a CLI instruction like
+
+``` sh
+> docker run --rm -v `pwd`:/mount ubuntu:latest ls /mount/src | grep "^s.*"
+script.sh
+```
+
+While this is all still manageable, it could quickly become more
+complicated, but that is for a later section. In what follows, we will
+also come back not only to running inside a container but also
+generating a container (based on a base image), tagging and versioning.

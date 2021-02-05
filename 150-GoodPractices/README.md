@@ -163,10 +163,10 @@ current example), we can simply run:
 
 ``` sh
 > viash test src/civ6_save_renderer/convert_plot/config.vsh.yaml
-Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_convert_plot14245696533428822186'
+Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_convert_plot10916305143432470291'
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_convert_plot14245696533428822186/build_executable/convert_plot ---setup
-> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-JxEdej
++<...>/workspace/viash_temp/viash_test_convert_plot10916305143432470291/build_executable/convert_plot ---setup
+> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-zBtX31
 Sending build context to Docker daemon  17.41kB
 
 Step 1/2 : FROM dpokidov/imagemagick
@@ -177,7 +177,7 @@ Step 2/2 : RUN apt-get update &&   apt-get install -y tesseract-ocr &&   rm -rf 
 Successfully built a92be5886a41
 Successfully tagged civ6_save_renderer/convert_plot:1.0
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_convert_plot14245696533428822186/test_run_test.sh/run_test.sh
++<...>/workspace/viash_temp/viash_test_convert_plot10916305143432470291/test_run_test.sh/run_test.sh
 + convert_plot -i dummy.pdf -o dummy.png
 convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `dummy.png' @ warning/png.c/MagickPNGWarningHandler/1748.
 + [[ ! -f dummy.png ]]
@@ -215,24 +215,24 @@ namespace as well using the `viash ns test` command.
 ``` sh
 > viash ns test -p docker --parallel --tsv /tmp/report.tsv
            namespace        functionality             platform            test_name exit_code duration               result
-      markdown_tools         render_table               docker                start                                        
   civ6_save_renderer         parse_header               docker                start                                        
-  civ6_save_renderer            parse_map               docker                start                                        
-  civ6_save_renderer         convert_plot               docker                start                                        
   civ6_save_renderer        combine_plots               docker                start                                        
+      markdown_tools         render_table               docker                start                                        
   civ6_save_renderer             plot_map               docker                start                                        
+  civ6_save_renderer         convert_plot               docker                start                                        
+  civ6_save_renderer            parse_map               docker                start                                        
   civ6_save_renderer         parse_header               docker     build_executable         0        0              SUCCESS
-  civ6_save_renderer         parse_header               docker                tests        -1        0              MISSING
   civ6_save_renderer             plot_map               docker     build_executable         0        0              SUCCESS
   civ6_save_renderer             plot_map               docker                tests        -1        0              MISSING
-      markdown_tools         render_table               docker     build_executable         0        1              SUCCESS
-      markdown_tools         render_table               docker                tests        -1        0              MISSING
+  civ6_save_renderer         parse_header               docker                tests        -1        0              MISSING
   civ6_save_renderer            parse_map               docker     build_executable         0        1              SUCCESS
   civ6_save_renderer            parse_map               docker                tests        -1        0              MISSING
+      markdown_tools         render_table               docker     build_executable         0        2              SUCCESS
+      markdown_tools         render_table               docker                tests        -1        0              MISSING
   civ6_save_renderer         convert_plot               docker     build_executable         0        0              SUCCESS
-  civ6_save_renderer         convert_plot               docker          run_test.sh         0        4              SUCCESS
-  civ6_save_renderer        combine_plots               docker     build_executable         0        1              SUCCESS
-  civ6_save_renderer        combine_plots               docker          run_test.sh         0        6              SUCCESS
+  civ6_save_renderer         convert_plot               docker          run_test.sh         0        5              SUCCESS
+  civ6_save_renderer        combine_plots               docker     build_executable         0        2              SUCCESS
+  civ6_save_renderer        combine_plots               docker          run_test.sh         0        7              SUCCESS
 ```
 
 With the `--parallel` option multiple tests are run in parallel
@@ -246,18 +246,18 @@ test run:
 
 | namespace            | functionality  | platform | test\_name        | exit\_code | duration | result  |
 | :------------------- | :------------- | :------- | :---------------- | ---------: | -------: | :------ |
-| civ6\_save\_renderer | parse\_header  | docker   | build\_executable |          0 |        0 | SUCCESS |
-| civ6\_save\_renderer | parse\_header  | docker   | tests             |        \-1 |        0 | MISSING |
 | civ6\_save\_renderer | plot\_map      | docker   | build\_executable |          0 |        0 | SUCCESS |
 | civ6\_save\_renderer | plot\_map      | docker   | tests             |        \-1 |        0 | MISSING |
-| markdown\_tools      | render\_table  | docker   | build\_executable |          0 |        1 | SUCCESS |
-| markdown\_tools      | render\_table  | docker   | tests             |        \-1 |        0 | MISSING |
+| civ6\_save\_renderer | parse\_header  | docker   | build\_executable |          0 |        0 | SUCCESS |
+| civ6\_save\_renderer | parse\_header  | docker   | tests             |        \-1 |        0 | MISSING |
 | civ6\_save\_renderer | parse\_map     | docker   | build\_executable |          0 |        1 | SUCCESS |
 | civ6\_save\_renderer | parse\_map     | docker   | tests             |        \-1 |        0 | MISSING |
+| markdown\_tools      | render\_table  | docker   | build\_executable |          0 |        2 | SUCCESS |
+| markdown\_tools      | render\_table  | docker   | tests             |        \-1 |        0 | MISSING |
 | civ6\_save\_renderer | convert\_plot  | docker   | build\_executable |          0 |        0 | SUCCESS |
-| civ6\_save\_renderer | convert\_plot  | docker   | run\_test.sh      |          0 |        4 | SUCCESS |
-| civ6\_save\_renderer | combine\_plots | docker   | build\_executable |          0 |        1 | SUCCESS |
-| civ6\_save\_renderer | combine\_plots | docker   | run\_test.sh      |          0 |        6 | SUCCESS |
+| civ6\_save\_renderer | convert\_plot  | docker   | run\_test.sh      |          0 |        5 | SUCCESS |
+| civ6\_save\_renderer | combine\_plots | docker   | build\_executable |          0 |        2 | SUCCESS |
+| civ6\_save\_renderer | combine\_plots | docker   | run\_test.sh      |          0 |        7 | SUCCESS |
 
 For each component, you see the 2 steps from above: 1) build the
 executable and 2) run the actual test. You can also see that the
@@ -324,4 +324,6 @@ jobs:
 ```
 
 Now, every time we commit something to the repository, the tests will be
-run: ![](img/ci.png)
+run:
+
+![](img/ci.png)
