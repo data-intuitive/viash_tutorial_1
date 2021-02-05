@@ -3,6 +3,12 @@ Creating a simple pipeline in Bash
 Data Intuitive
 Tuesday - January 26, 2021
 
+  - [Namespaces](#namespaces)
+  - [Building a namespace](#building-a-namespace)
+  - [Manually running executables](#manually-running-executables)
+  - [A first pipeline in Bash](#a-first-pipeline-in-bash)
+  - [Conclusions](#conclusions)
+
 In this section, we will cover how to build all the Civ6 postgame
 components and chain them together in a first rudimentary pipeline
 written in Bash. Before doing so, we first introduce the concept of a
@@ -269,7 +275,7 @@ Input #0, png_pipe, from 'concat:/viash_automount<...>/workspace/di/viash_worksh
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
 Press [q] to stop, [?] for help
-[libvpx-vp9 @ 0x1e9eb40] v1.8.0
+[libvpx-vp9 @ 0xa3ab40] v1.8.0
 Output #0, webm, to '/viash_automount<...>/workspace/di/viash_workshop_1/output/movie.webm':
   Metadata:
     encoder         : Lavf58.20.100
@@ -278,7 +284,7 @@ Output #0, webm, to '/viash_automount<...>/workspace/di/viash_workshop_1/output/
       encoder         : Lavc58.35.100 libvpx-vp9
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1
-frame=    5 fps=3.1 q=0.0 Lsize=     144kB time=00:00:04.00 bitrate= 295.5kbits/s speed=2.45x    
+frame=    5 fps=3.1 q=0.0 Lsize=     144kB time=00:00:04.00 bitrate= 295.5kbits/s speed=2.52x    
 video:143kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.840692%
 >>>>>>>DONE
 ```

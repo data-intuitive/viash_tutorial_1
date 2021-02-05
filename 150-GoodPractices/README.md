@@ -3,6 +3,14 @@ Good practices
 Data Intuitive
 Tuesday - January 26, 2021
 
+  - [`convert_plot`](#convert_plot)
+      - [The viash configuration](#the-viash-configuration)
+          - [Tests](#tests)
+          - [Platforms](#platforms)
+      - [Running the tests](#running-the-tests)
+  - [`combine_plots`](#combine_plots)
+  - [Testing a namespace](#testing-a-namespace)
+
 > blabla
 
 We will introduce testing using the same components we used earlier to
@@ -144,10 +152,10 @@ current example), we can simply run:
 
 ``` sh
 > viash test src/civ6_save_renderer/convert_plot/config.vsh.yaml
-Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_convert_plot6459199613849082966'
+Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_convert_plot1448189442417671065'
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_convert_plot6459199613849082966/build_executable/convert_plot ---setup
-> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-oKdcIe
++<...>/workspace/viash_temp/viash_test_convert_plot1448189442417671065/build_executable/convert_plot ---setup
+> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-3DE3Wy
 Sending build context to Docker daemon  17.41kB
 
 Step 1/2 : FROM dpokidov/imagemagick
@@ -158,7 +166,7 @@ Step 2/2 : RUN apt-get update &&   apt-get install -y tesseract-ocr &&   rm -rf 
 Successfully built a92be5886a41
 Successfully tagged civ6_save_renderer/convert_plot:1.0
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_convert_plot6459199613849082966/test_run_test.sh/run_test.sh
++<...>/workspace/viash_temp/viash_test_convert_plot1448189442417671065/test_run_test.sh/run_test.sh
 + convert_plot -i dummy.pdf -o dummy.png
 convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `dummy.png' @ warning/png.c/MagickPNGWarningHandler/1748.
 + [[ ! -f dummy.png ]]
@@ -283,9 +291,9 @@ based on the images that have been downloaded as resources.
 
 ``` sh
 > viash test src/civ6_save_renderer/combine_plots/config.vsh.yaml
-Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_combine_plots1465477995030035786'
+Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_combine_plots10376169752247870861'
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_combine_plots1465477995030035786/build_executable/combine_plots ---setup
++<...>/workspace/viash_temp/viash_test_combine_plots10376169752247870861/build_executable/combine_plots ---setup
 > docker pull jrottenberg/ffmpeg
 Using default tag: latest
 latest: Pulling from jrottenberg/ffmpeg
@@ -293,7 +301,7 @@ Digest: sha256:21eb739725c43bd7187982e5fa4b5371b495d1d1f6f61ae1719ca794817f8641
 Status: Image is up to date for jrottenberg/ffmpeg:latest
 docker.io/jrottenberg/ffmpeg:latest
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_combine_plots1465477995030035786/test_run_test.sh/run_test.sh
++<...>/workspace/viash_temp/viash_test_combine_plots10376169752247870861/test_run_test.sh/run_test.sh
 ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
   built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 20160609
   configuration: --disable-debug --disable-doc --disable-ffplay --enable-shared --enable-avresample --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-gpl --enable-libass --enable-libfreetype --enable-libvidstab --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx265 --enable-libxvid --enable-libx264 --enable-nonfree --enable-openssl --enable-libfdk_aac --enable-libkvazaar --enable-libaom --extra-libs=-lpthread --enable-postproc --enable-small --enable-version3 --extra-cflags=-I/opt/ffmpeg/include --extra-ldflags=-L/opt/ffmpeg/lib --extra-libs=-ldl --prefix=/opt/ffmpeg
@@ -312,7 +320,7 @@ Input #0, png_pipe, from 'concat:frame_0000.png|frame_0001.png|frame_0002.png|fr
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
 Press [q] to stop, [?] for help
-[libvpx-vp9 @ 0x1eba580] v1.8.0
+[libvpx-vp9 @ 0x6c1580] v1.8.0
 Output #0, webm, to 'output.webm':
   Metadata:
     encoder         : Lavf58.20.100
@@ -321,7 +329,7 @@ Output #0, webm, to 'output.webm':
       encoder         : Lavc58.35.100 libvpx-vp9
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1
-frame=    9 fps=0.0 q=0.0 Lsize=      13kB time=00:00:08.00 bitrate=  13.2kbits/s speed=17.5x    
+frame=    9 fps=0.0 q=0.0 Lsize=      13kB time=00:00:08.00 bitrate=  13.2kbits/s speed=17.6x    
 video:12kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 11.627710%
 >>> Test finished successfully
 ====================================================================
@@ -346,9 +354,9 @@ following:
   civ6_save_renderer         convert_plot               docker                start                                        
   civ6_save_renderer        combine_plots               docker                start                                        
   civ6_save_renderer         convert_plot               docker     build_executable         0        0              SUCCESS
-  civ6_save_renderer         convert_plot               docker          run_test.sh         0        4              SUCCESS
+  civ6_save_renderer         convert_plot               docker          run_test.sh         0        3              SUCCESS
   civ6_save_renderer        combine_plots               docker     build_executable         0        1              SUCCESS
-  civ6_save_renderer        combine_plots               docker          run_test.sh         0        4              SUCCESS
+  civ6_save_renderer        combine_plots               docker          run_test.sh         0        3              SUCCESS
 ```
 
 With the `--parallel` option multiple tests are run in parallel
@@ -360,9 +368,9 @@ test run:
 | namespace            | functionality  | platform | test\_name        | exit\_code | duration | result  |
 | :------------------- | :------------- | :------- | :---------------- | ---------: | -------: | :------ |
 | civ6\_save\_renderer | convert\_plot  | docker   | build\_executable |          0 |        0 | SUCCESS |
-| civ6\_save\_renderer | convert\_plot  | docker   | run\_test.sh      |          0 |        4 | SUCCESS |
+| civ6\_save\_renderer | convert\_plot  | docker   | run\_test.sh      |          0 |        3 | SUCCESS |
 | civ6\_save\_renderer | combine\_plots | docker   | build\_executable |          0 |        1 | SUCCESS |
-| civ6\_save\_renderer | combine\_plots | docker   | run\_test.sh      |          0 |        4 | SUCCESS |
+| civ6\_save\_renderer | combine\_plots | docker   | run\_test.sh      |          0 |        3 | SUCCESS |
 
 For each component, you see the 2 steps from above: 1) build the
 executable and 2) run the actual test.

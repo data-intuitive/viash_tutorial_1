@@ -3,6 +3,10 @@ Introduction
 Data Intuitive
 Tuesday - January 26, 2021
 
+  - [Use cases for viash](#use-cases-for-viash)
+  - [How viash works](#how-viash-works)
+  - [Outline of this tutorial](#outline-of-this-tutorial)
+
 This tutorial is all about viash\! What is viash?
 
 viash is software that helps you turn a script into a reusable

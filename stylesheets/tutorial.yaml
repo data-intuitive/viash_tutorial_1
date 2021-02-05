@@ -9,7 +9,7 @@ to: latex
 highlight-style: tango
 
 
-toc: true
+toc: false
 toc-depth: 3
 pdf-engine: xelatex
 standalone: true

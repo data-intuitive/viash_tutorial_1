@@ -84,10 +84,9 @@
     </style>
 </head>
 <body>
-<nav id="TOC" role="doc-toc">
-<h2 id="toc-title">Table of Contents</h2>
+<h1 id="good-practices">Good practices</h1>
+<p>Data Intuitive Tuesday - January 26, 2021</p>
 <ul>
-<li><a href="#good-practices">Good practices</a></li>
 <li><a href="#convert_plot"><code>convert_plot</code></a>
 <ul>
 <li><a href="#the-viash-configuration">The viash configuration</a>
@@ -100,9 +99,6 @@
 <li><a href="#combine_plots"><code>combine_plots</code></a></li>
 <li><a href="#testing-a-namespace">Testing a namespace</a></li>
 </ul>
-</nav>
-<h1 id="good-practices">Good practices</h1>
-<p>Data Intuitive Tuesday - January 26, 2021</p>
 <blockquote>
 <p>blabla</p>
 </blockquote>
@@ -200,10 +196,10 @@
 <h2 id="running-the-tests">Running the tests</h2>
 <p>In order to run the tests using the default platform (<code>docker</code> in our current example), we can simply run:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> test src/civ6_save_renderer/convert_plot/config.vsh.yaml</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_convert_plot6459199613849082966&#39;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_convert_plot1448189442417671065&#39;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>====================================================================</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot6459199613849082966/build_executable/convert_plot ---setup</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> build -t civ6_save_renderer/convert_plot:1.0 <span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viashsetupdocker-convert_plot-oKdcIe</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot1448189442417671065/build_executable/convert_plot ---setup</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> build -t civ6_save_renderer/convert_plot:1.0 <span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viashsetupdocker-convert_plot-3DE3Wy</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="ex">Sending</span> build context to Docker daemon  17.41kB</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="ex">Step</span> 1/2 : FROM dpokidov/imagemagick</span>
@@ -214,7 +210,7 @@
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="ex">Successfully</span> built a92be5886a41</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="ex">Successfully</span> tagged civ6_save_renderer/convert_plot:1.0</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>====================================================================</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot6459199613849082966/test_run_test.sh/run_test.sh</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot1448189442417671065/test_run_test.sh/run_test.sh</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a><span class="ex">+</span> convert_plot -i dummy.pdf -o dummy.png</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="ex">convert</span>: profile <span class="st">&#39;icc&#39;</span>: <span class="st">&#39;RGB &#39;</span>: RGB color space not permitted on grayscale PNG <span class="kw">`</span><span class="ex">dummy.png</span><span class="st">&#39; @ warning/png.c/MagickPNGWarningHandler/1748.</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="st">+ [[ ! -f dummy.png ]]</span></span>
@@ -312,9 +308,9 @@
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt; Test finished successfully&quot;</span></span></code></pre></div>
 <p>We added the <code>tests</code> and point to the frames explicitly. The test script basically generates a command line instructions (list of <code>png</code> files) based on the images that have been downloaded as resources.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> test src/civ6_save_renderer/combine_plots/config.vsh.yaml</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_combine_plots1465477995030035786&#39;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_combine_plots10376169752247870861&#39;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>====================================================================</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots1465477995030035786/build_executable/combine_plots ---setup</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots10376169752247870861/build_executable/combine_plots ---setup</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> pull jrottenberg/ffmpeg</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="ex">Using</span> default tag: latest</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="ex">latest</span>: Pulling from jrottenberg/ffmpeg</span>
@@ -322,7 +318,7 @@
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="ex">Status</span>: Image is up to date for jrottenberg/ffmpeg:latest</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="ex">docker.io/jrottenberg</span>/ffmpeg:<span class="ex">latest</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>====================================================================</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots1465477995030035786/test_run_test.sh/run_test.sh</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots10376169752247870861/test_run_test.sh/run_test.sh</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="ex">ffmpeg</span> version 4.1 Copyright (c) <span class="ex">2000-2018</span> the FFmpeg developers</span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>  <span class="ex">built</span> with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) <span class="ex">20160609</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>  <span class="ex">configuration</span>: --disable-debug --disable-doc --disable-ffplay --enable-shared --enable-avresample --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-gpl --enable-libass --enable-libfreetype --enable-libvidstab --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx265 --enable-libxvid --enable-libx264 --enable-nonfree --enable-openssl --enable-libfdk_aac --enable-libkvazaar --enable-libaom --extra-libs=-lpthread --enable-postproc --enable-small --enable-version3 --extra-cflags=-I/opt/ffmpeg/include --extra-ldflags=-L/opt/ffmpeg/lib --extra-libs=-ldl --prefix=/opt/ffmpeg</span>
@@ -341,7 +337,7 @@
 <span id="cb7-28"><a href="#cb7-28" aria-hidden="true"></a><span class="ex">Stream</span> mapping:</span>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true"></a>  <span class="ex">Stream</span> #0:0 -<span class="op">&gt;</span> #0:0 (png (native) <span class="ex">-</span><span class="op">&gt;</span> vp9 (libvpx-vp9))</span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true"></a><span class="ex">Press</span> [q] to stop, [?] for help</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a>[<span class="ex">libvpx-vp9</span> @ 0x1eba580] v1.8.0</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a>[<span class="ex">libvpx-vp9</span> @ 0x6c1580] v1.8.0</span>
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true"></a><span class="ex">Output</span> #0, webm, to <span class="st">&#39;output.webm&#39;</span>:</span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true"></a>  <span class="ex">Metadata</span>:</span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true"></a>    <span class="ex">encoder</span>         : Lavf58.20.100</span>
@@ -350,7 +346,7 @@
 <span id="cb7-37"><a href="#cb7-37" aria-hidden="true"></a>      <span class="ex">encoder</span>         : Lavc58.35.100 libvpx-vp9</span>
 <span id="cb7-38"><a href="#cb7-38" aria-hidden="true"></a>    <span class="ex">Side</span> data:</span>
 <span id="cb7-39"><a href="#cb7-39" aria-hidden="true"></a>      <span class="ex">cpb</span>: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true"></a><span class="va">frame=</span>    <span class="ex">9</span> fps=0.0 q=0.0 Lsize=      13kB time=00:00:08.00 bitrate=  13.2kbits/s speed=17.5x    </span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true"></a><span class="va">frame=</span>    <span class="ex">9</span> fps=0.0 q=0.0 Lsize=      13kB time=00:00:08.00 bitrate=  13.2kbits/s speed=17.6x    </span>
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true"></a><span class="ex">video</span>:12kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 11.627710%</span>
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ex">Test</span> finished successfully</span>
 <span id="cb7-43"><a href="#cb7-43" aria-hidden="true"></a>====================================================================</span>
@@ -364,9 +360,9 @@
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker                start                                        </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker                start                                        </span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker     build_executable         0        0              SUCCESS</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker          run_test.sh         0        4              SUCCESS</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>         convert_plot               docker          run_test.sh         0        3              SUCCESS</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker     build_executable         0        1              SUCCESS</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker          run_test.sh         0        4              SUCCESS</span></code></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>  <span class="ex">civ6_save_renderer</span>        combine_plots               docker          run_test.sh         0        3              SUCCESS</span></code></pre></div>
 <p>With the <code>--parallel</code> option multiple tests are run in parallel (depending on your setup and the way Docker is configured).</p>
 <p>The contents of (the optional) <code>report.tsv</code> contains a report of the test run:</p>
 <table>
@@ -397,7 +393,7 @@
 <td style="text-align: left;">docker</td>
 <td style="text-align: left;">run_test.sh</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
 <td style="text-align: left;">SUCCESS</td>
 </tr>
 <tr class="odd">
@@ -415,7 +411,7 @@
 <td style="text-align: left;">docker</td>
 <td style="text-align: left;">run_test.sh</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
 <td style="text-align: left;">SUCCESS</td>
 </tr>
 </tbody>

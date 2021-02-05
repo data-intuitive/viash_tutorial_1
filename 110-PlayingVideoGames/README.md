@@ -3,6 +3,22 @@ Use case: playing video games
 Data Intuitive
 Tuesday - January 26, 2021
 
+  - [Background on Civilization](#background-on-civilization)
+  - [Post-game replay map](#post-game-replay-map)
+  - [Rendering post-game replay maps](#rendering-post-game-replay-maps)
+  - [Step 1: Generate input files](#step-1-generate-input-files)
+  - [Step 2, `parse_header`: Extract game
+    info](#step-2-parse_header-extract-game-info)
+  - [Step 3, `parse_map`: Extract map
+    info](#step-3-parse_map-extract-map-info)
+  - [Step 4, `plot_map`: Generate map
+    visualisation](#step-4-plot_map-generate-map-visualisation)
+  - [Step 5, `convert_plot`: Convert PDF to
+    PNG](#step-5-convert_plot-convert-pdf-to-png)
+  - [Step 6, `combine_plots`: Create
+    movie](#step-6-combine_plots-create-movie)
+  - [Enter viash, stage left](#enter-viash-stage-left)
+
 The application domain of
 [viash](https://www.data-intuitive.com/viash_docs) is not limited to
 just biomedical research. In this tutorial, we will solve one of our pet
@@ -80,10 +96,10 @@ If you check the `data` folder, you will see five autosave files.
 total 6592
 -rw-rw-r--. 1 rcannood rcannood  612404 Jan 26 10:42 AutoSave_0158.Civ6Save
 -rw-rw-r--. 1 rcannood rcannood 1061697 Jan 26 10:42 AutoSave_0159.Civ6Save
--rw-r--r--. 1 rcannood rcannood  107948 Feb  5 01:27 AutoSave_0159.pdf
--rw-r--r--. 1 rcannood rcannood  673420 Feb  5 01:27 AutoSave_0159.png
+-rw-r--r--. 1 rcannood rcannood  107948 Feb  5 09:17 AutoSave_0159.pdf
+-rw-r--r--. 1 rcannood rcannood  673420 Feb  5 09:16 AutoSave_0159.png
 -rw-r--r--. 1 rcannood rcannood  779029 Feb  4 17:14 AutoSave_0159.tsv
--rw-r--r--. 1 rcannood rcannood    8236 Feb  5 01:27 AutoSave_0159.yaml
+-rw-r--r--. 1 rcannood rcannood    8236 Feb  5 09:17 AutoSave_0159.yaml
 -rw-rw-r--. 1 rcannood rcannood 1140352 Jan 26 10:42 AutoSave_0160.Civ6Save
 -rw-rw-r--. 1 rcannood rcannood 1164860 Jan 26 10:42 AutoSave_0161.Civ6Save
 -rw-rw-r--. 1 rcannood rcannood 1179409 Jan 26 10:42 AutoSave_0162.Civ6Save
@@ -111,7 +127,7 @@ npm WARN viash_workshop_1 No README data
 npm WARN viash_workshop_1 No license field.
 
 + civ6-save-parser@1.1.14
-updated 1 package and audited 12 packages in 0.957s
+updated 1 package and audited 12 packages in 0.667s
 found 0 vulnerabilities
 ```
 

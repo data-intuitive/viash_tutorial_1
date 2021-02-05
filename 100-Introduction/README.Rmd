@@ -1,10 +1,6 @@
 ---
 author: Data Intuitive
 date: Tuesday - January 26, 2021
-mainfont: Roboto Condensed
-monofont: Source Code Pro
-monofontoptions: Scale=0.7
-monobackgroundcolor: lightgrey
 title: "Introduction"
 ---
 

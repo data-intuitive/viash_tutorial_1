@@ -3,6 +3,19 @@ Intro to viash
 Data Intuitive
 Tuesday - January 26, 2021
 
+  - [Installing viash](#installing-viash)
+  - [Example 1: a minimal viash config
+    file](#example-1-a-minimal-viash-config-file)
+  - [Example 2: adding some arguments](#example-2-adding-some-arguments)
+  - [Example 3: setting different argument
+    types](#example-3-setting-different-argument-types)
+  - [Example 4: adding documentation](#example-4-adding-documentation)
+  - [Example 4 part 2: building an
+    *executable*](#example-4-part-2-building-an-executable)
+  - [Example 5: running the component inside a Docker
+    container](#example-5-running-the-component-inside-a-docker-container)
+  - [Example 6: Wrapping a script](#example-6-wrapping-a-script)
+
 A step in the rendering of the video contains of one aspect that can be
 considered on its own. Understanding the logic of a step, however, is
 not sufficient as we have seen before. We also need to define the
@@ -173,13 +186,13 @@ let us pass the argument `-l` to `intro_example2`:
 
 ``` sh
 > viash run src/intro_example2.vsh.yaml -- -l
-total 152
-drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 01:27 bin
--rw-rw-r--. 1 rcannood rcannood   728 Feb  5 01:24 Makefile
--rw-rw-r--. 1 rcannood rcannood 60891 Feb  5 01:27 README.html
--rw-rw-r--. 1 rcannood rcannood 19333 Feb  5 01:27 README.md
--rw-rw-r--. 1 rcannood rcannood 54178 Feb  5 01:27 README.pdf
--rw-r--r--. 1 rcannood rcannood 10584 Feb  5 01:31 README.Rmd
+total 156
+drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 09:11 bin
+-rw-rw-r--. 1 rcannood rcannood   687 Feb  5 09:15 Makefile
+-rw-rw-r--. 1 rcannood rcannood 61582 Feb  5 09:11 README.html
+-rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 09:11 README.md
+-rw-rw-r--. 1 rcannood rcannood 54068 Feb  5 09:11 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10584 Feb  5 09:15 README.Rmd
 drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
 ```
 
@@ -217,13 +230,13 @@ directory (like before).
 
 ``` sh
 > viash run src/intro_example3.vsh.yaml -- -l
-total 152
-drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 01:27 bin
--rw-rw-r--. 1 rcannood rcannood   728 Feb  5 01:24 Makefile
--rw-rw-r--. 1 rcannood rcannood 60891 Feb  5 01:27 README.html
--rw-rw-r--. 1 rcannood rcannood 19333 Feb  5 01:27 README.md
--rw-rw-r--. 1 rcannood rcannood 54178 Feb  5 01:27 README.pdf
--rw-r--r--. 1 rcannood rcannood 10584 Feb  5 01:31 README.Rmd
+total 156
+drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 09:11 bin
+-rw-rw-r--. 1 rcannood rcannood   687 Feb  5 09:15 Makefile
+-rw-rw-r--. 1 rcannood rcannood 61582 Feb  5 09:11 README.html
+-rw-rw-r--. 1 rcannood rcannood 19979 Feb  5 09:11 README.md
+-rw-rw-r--. 1 rcannood rcannood 54068 Feb  5 09:11 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10584 Feb  5 09:15 README.Rmd
 drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
 ```
 
@@ -448,13 +461,13 @@ drwx------.   1 root root    0 Oct 19 23:33 lost+found
 drwxr-xr-x.   1 root root    0 Jul 27  2020 media
 drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
 drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
-dr-xr-xr-x. 742 root root    0 Feb  3 14:15 proc
+dr-xr-xr-x. 693 root root    0 Feb  3 14:15 proc
 dr-xr-x---.   1 root root  270 Feb  3 13:24 root
-drwxr-xr-x.  55 root root 1500 Feb  4 15:58 run
+drwxr-xr-x.  55 root root 1500 Feb  5 05:17 run
 lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
 drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
 dr-xr-xr-x.  13 root root    0 Feb  3 13:15 sys
-drwxrwxrwt.  59 root root 1680 Feb  5 00:33 tmp
+drwxrwxrwt.  60 root root 1760 Feb  5 08:16 tmp
 drwxr-xr-x.   1 root root  106 Jan 31 05:50 usr
 drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
 ```
@@ -481,13 +494,13 @@ drwx------.   1 root root    0 Oct 19 23:33 lost+found
 drwxr-xr-x.   1 root root    0 Jul 27  2020 media
 drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
 drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
-dr-xr-xr-x. 745 root root    0 Feb  3 14:15 proc
+dr-xr-xr-x. 703 root root    0 Feb  3 14:15 proc
 dr-xr-x---.   1 root root  270 Feb  3 13:24 root
-drwxr-xr-x.  55 root root 1500 Feb  4 15:58 run
+drwxr-xr-x.  55 root root 1500 Feb  5 05:17 run
 lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
 drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
 dr-xr-xr-x.  13 root root    0 Feb  3 13:15 sys
-drwxrwxrwt.  59 root root 1680 Feb  5 00:33 tmp
+drwxrwxrwt.  60 root root 1760 Feb  5 08:16 tmp
 drwxr-xr-x.   1 root root  106 Jan 31 05:50 usr
 drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
 ```

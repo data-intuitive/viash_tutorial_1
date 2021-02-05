@@ -3,6 +3,29 @@ Creating components with viash
 Data Intuitive
 Tuesday - January 26, 2021
 
+  - [`convert_plot` - a simple bash
+    script](#convert_plot---a-simple-bash-script)
+      - [Converting pdfs manually](#converting-pdfs-manually)
+      - [Step 1: Functionality](#step-1-functionality)
+      - [Step 2: Functionality
+        arguments](#step-2-functionality-arguments)
+      - [Step 3: Bash script](#step-3-bash-script)
+      - [Step 4: Define platform(s)](#step-4-define-platforms)
+      - [Step 5: Final config](#step-5-final-config)
+      - [Step 6: Building the
+        executable](#step-6-building-the-executable)
+      - [Step 7: Running the executable](#step-7-running-the-executable)
+      - [Note on file management when running Docker
+        images](#note-on-file-management-when-running-docker-images)
+  - [`plot_map` - a more complicated R
+    script](#plot_map---a-more-complicated-r-script)
+      - [Step 1: Functionality](#step-1-functionality-1)
+      - [Step 2: R script](#step-2-r-script)
+      - [Step 3: Define platform(s)](#step-3-define-platforms)
+      - [Step 4: Building and running the
+        component](#step-4-building-and-running-the-component)
+  - [Conclusion](#conclusion)
+
 With the information from the previous section, we will wrap two
 components from the Civ6 use case in more detail (`convert_plot` and
 `plot_map`). Let’s start with the easiest of the two.

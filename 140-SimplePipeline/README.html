@@ -84,21 +84,15 @@
     </style>
 </head>
 <body>
-<nav id="TOC" role="doc-toc">
-<h2 id="toc-title">Table of Contents</h2>
-<ul>
-<li><a href="#creating-a-simple-pipeline-in-bash">Creating a simple pipeline in Bash</a>
+<h1 id="creating-a-simple-pipeline-in-bash">Creating a simple pipeline in Bash</h1>
+<p>Data Intuitive Tuesday - January 26, 2021</p>
 <ul>
 <li><a href="#namespaces">Namespaces</a></li>
 <li><a href="#building-a-namespace">Building a namespace</a></li>
 <li><a href="#manually-running-executables">Manually running executables</a></li>
 <li><a href="#a-first-pipeline-in-bash">A first pipeline in Bash</a></li>
 <li><a href="#conclusions">Conclusions</a></li>
-</ul></li>
 </ul>
-</nav>
-<h1 id="creating-a-simple-pipeline-in-bash">Creating a simple pipeline in Bash</h1>
-<p>Data Intuitive Tuesday - January 26, 2021</p>
 <p>In this section, we will cover how to build all the Civ6 postgame components and chain them together in a first rudimentary pipeline written in Bash. Before doing so, we first introduce the concept of a <em>namespace</em>.</p>
 <h2 id="namespaces">Namespaces</h2>
 <p>Once you start to develop a number of <a href="https://github.com/data-intuitive/viash">viash</a> components, grouping them (hierarchically) allows to improve maintenance of the components as it allows for separation of concern. In addition, multiple developers could group on different sets of components in parallel and later bring them together in a larger project. We call a group of components a <em>namespace</em>.</p>
@@ -288,7 +282,7 @@
 <span id="cb9-48"><a href="#cb9-48" aria-hidden="true"></a><span class="ex">Stream</span> mapping:</span>
 <span id="cb9-49"><a href="#cb9-49" aria-hidden="true"></a>  <span class="ex">Stream</span> #0:0 -<span class="op">&gt;</span> #0:0 (png (native) <span class="ex">-</span><span class="op">&gt;</span> vp9 (libvpx-vp9))</span>
 <span id="cb9-50"><a href="#cb9-50" aria-hidden="true"></a><span class="ex">Press</span> [q] to stop, [?] for help</span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true"></a>[<span class="ex">libvpx-vp9</span> @ 0x1e9eb40] v1.8.0</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true"></a>[<span class="ex">libvpx-vp9</span> @ 0xa3ab40] v1.8.0</span>
 <span id="cb9-52"><a href="#cb9-52" aria-hidden="true"></a><span class="ex">Output</span> #0, webm, to <span class="st">&#39;/viash_automount&lt;...&gt;/workspace/di/viash_workshop_1/output/movie.webm&#39;</span>:</span>
 <span id="cb9-53"><a href="#cb9-53" aria-hidden="true"></a>  <span class="ex">Metadata</span>:</span>
 <span id="cb9-54"><a href="#cb9-54" aria-hidden="true"></a>    <span class="ex">encoder</span>         : Lavf58.20.100</span>
@@ -297,7 +291,7 @@
 <span id="cb9-57"><a href="#cb9-57" aria-hidden="true"></a>      <span class="ex">encoder</span>         : Lavc58.35.100 libvpx-vp9</span>
 <span id="cb9-58"><a href="#cb9-58" aria-hidden="true"></a>    <span class="ex">Side</span> data:</span>
 <span id="cb9-59"><a href="#cb9-59" aria-hidden="true"></a>      <span class="ex">cpb</span>: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: -1</span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true"></a><span class="va">frame=</span>    <span class="ex">5</span> fps=3.1 q=0.0 Lsize=     144kB time=00:00:04.00 bitrate= 295.5kbits/s speed=2.45x    </span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true"></a><span class="va">frame=</span>    <span class="ex">5</span> fps=3.1 q=0.0 Lsize=     144kB time=00:00:04.00 bitrate= 295.5kbits/s speed=2.52x    </span>
 <span id="cb9-61"><a href="#cb9-61" aria-hidden="true"></a><span class="ex">video</span>:143kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.840692%</span>
 <span id="cb9-62"><a href="#cb9-62" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><span class="ex">DONE</span></span></code></pre></div>
 <h2 id="conclusions">Conclusions</h2>
