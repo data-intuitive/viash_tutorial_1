@@ -17,8 +17,9 @@ knitr::opts_chunk$set(
   comment = "",
   collapse = TRUE,
   prompt = TRUE
-  # engine.opts = list(bash = "-l")
 )
+
+# knitr::opts_knit$set(root.dir = '..')
 ```
 
 > blabla
