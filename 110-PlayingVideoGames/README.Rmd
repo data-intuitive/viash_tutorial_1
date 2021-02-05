@@ -20,8 +20,6 @@ knitr::opts_chunk$set(
 knitr::opts_knit$set(root.dir = '..')
 ```
 
-# Use case: playing video games
-
 The application domain of [viash] is not limited to just biomedical research. In this tutorial, we will solve one of our pet peeves in a video game called Sid Meier's Civilization.
 
 ## Background on Civilization
@@ -33,7 +31,6 @@ Civilization is a series of six video strategy games where players oversee the d
 Multiplayer games can take a few hours to finish -- anywhere between 2 to 10 hours, depending on who you're playing with. 
 That's why a perfect way of closing a session of Civilization V is by being able to watch a 'postgame map replay' of which owner owned which time at any given point in time.
 
-^
 [![](img/civ5_victory_.png)](img/civ5_victory_.webm)
 
 However, for whatever reason, this feature did not make it in Civilization VI. This made a lot of people very angry and been widely regarded as a bad move. <!-- quoting Douglas Adams here -->

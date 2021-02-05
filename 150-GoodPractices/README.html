@@ -102,6 +102,7 @@
 </ul>
 </nav>
 <h1 id="good-practices">Good practices</h1>
+<p>Data Intuitive Tuesday - January 26, 2021</p>
 <blockquote>
 <p>blabla</p>
 </blockquote>
@@ -199,10 +200,10 @@
 <h2 id="running-the-tests">Running the tests</h2>
 <p>In order to run the tests using the default platform (<code>docker</code> in our current example), we can simply run:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> test src/civ6_save_renderer/convert_plot/config.vsh.yaml</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_convert_plot16477321339600600791&#39;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_convert_plot106216272389067370&#39;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>====================================================================</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot16477321339600600791/build_executable/convert_plot ---setup</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> build -t civ6_save_renderer/convert_plot:1.0 <span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viashsetupdocker-convert_plot-uAQcjN</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot106216272389067370/build_executable/convert_plot ---setup</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> build -t civ6_save_renderer/convert_plot:1.0 <span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viashsetupdocker-convert_plot-3wur95</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="ex">Sending</span> build context to Docker daemon  17.41kB</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="ex">Step</span> 1/2 : FROM dpokidov/imagemagick</span>
@@ -213,7 +214,7 @@
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="ex">Successfully</span> built a92be5886a41</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="ex">Successfully</span> tagged civ6_save_renderer/convert_plot:1.0</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>====================================================================</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot16477321339600600791/test_run_test.sh/run_test.sh</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_convert_plot106216272389067370/test_run_test.sh/run_test.sh</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a><span class="ex">+</span> convert_plot -i dummy.pdf -o dummy.png</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="ex">convert</span>: profile <span class="st">&#39;icc&#39;</span>: <span class="st">&#39;RGB &#39;</span>: RGB color space not permitted on grayscale PNG <span class="kw">`</span><span class="ex">dummy.png</span><span class="st">&#39; @ warning/png.c/MagickPNGWarningHandler/1748.</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="st">+ [[ ! -f dummy.png ]]</span></span>
@@ -222,8 +223,8 @@
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a><span class="st">Warning: Invalid resolution 0 dpi. Using 70 instead.</span></span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a><span class="st">Estimating resolution as 157</span></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a><span class="st">++ grep Dummy dummy-ocr.txt</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a><span class="st">&gt;&gt;&gt; Test finished successfully</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a><span class="st">+ [[ ! -n Dummy PDF file ]]</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a><span class="st">+ [[ ! -n Dummy PDF file ]]</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a><span class="st">&gt;&gt;&gt; Test finished successfully</span></span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a><span class="st">+ echo &#39;</span><span class="op">&gt;&gt;&gt;</span> Test finished successfully<span class="st">&#39;</span></span>
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a><span class="st">====================================================================</span></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a><span class="st">SUCCESS! All 1 out of 1 test scripts succeeded!</span></span>
@@ -311,9 +312,9 @@
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&gt;&gt;&gt; Test finished successfully&quot;</span></span></code></pre></div>
 <p>We added the <code>tests</code> and point to the frames explicitly. The test script basically generates a command line instructions (list of <code>png</code> files) based on the images that have been downloaded as resources.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">viash</span> test src/civ6_save_renderer/combine_plots/config.vsh.yaml</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_combine_plots15362605724189863133&#39;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">Running</span> tests in temporary directory: <span class="st">&#39;&lt;...&gt;/workspace/viash_temp/viash_test_combine_plots4921270052339625520&#39;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>====================================================================</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots15362605724189863133/build_executable/combine_plots ---setup</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots4921270052339625520/build_executable/combine_plots ---setup</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="ex">docker</span> pull jrottenberg/ffmpeg</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="ex">Using</span> default tag: latest</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="ex">latest</span>: Pulling from jrottenberg/ffmpeg</span>
@@ -321,7 +322,7 @@
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="ex">Status</span>: Image is up to date for jrottenberg/ffmpeg:latest</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="ex">docker.io/jrottenberg</span>/ffmpeg:<span class="ex">latest</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>====================================================================</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots15362605724189863133/test_run_test.sh/run_test.sh</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="ex">+</span><span class="op">&lt;</span>...<span class="op">&gt;</span>/workspace/viash_temp/viash_test_combine_plots4921270052339625520/test_run_test.sh/run_test.sh</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="ex">ffmpeg</span> version 4.1 Copyright (c) <span class="ex">2000-2018</span> the FFmpeg developers</span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>  <span class="ex">built</span> with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) <span class="ex">20160609</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>  <span class="ex">configuration</span>: --disable-debug --disable-doc --disable-ffplay --enable-shared --enable-avresample --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-gpl --enable-libass --enable-libfreetype --enable-libvidstab --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx265 --enable-libxvid --enable-libx264 --enable-nonfree --enable-openssl --enable-libfdk_aac --enable-libkvazaar --enable-libaom --extra-libs=-lpthread --enable-postproc --enable-small --enable-version3 --extra-cflags=-I/opt/ffmpeg/include --extra-ldflags=-L/opt/ffmpeg/lib --extra-libs=-ldl --prefix=/opt/ffmpeg</span>
@@ -340,7 +341,7 @@
 <span id="cb7-28"><a href="#cb7-28" aria-hidden="true"></a><span class="ex">Stream</span> mapping:</span>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true"></a>  <span class="ex">Stream</span> #0:0 -<span class="op">&gt;</span> #0:0 (png (native) <span class="ex">-</span><span class="op">&gt;</span> vp9 (libvpx-vp9))</span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true"></a><span class="ex">Press</span> [q] to stop, [?] for help</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a>[<span class="ex">libvpx-vp9</span> @ 0x1182580] v1.8.0</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a>[<span class="ex">libvpx-vp9</span> @ 0x14e4580] v1.8.0</span>
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true"></a><span class="ex">Output</span> #0, webm, to <span class="st">&#39;output.webm&#39;</span>:</span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true"></a>  <span class="ex">Metadata</span>:</span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true"></a>    <span class="ex">encoder</span>         : Lavf58.20.100</span>

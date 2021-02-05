@@ -8,7 +8,6 @@ monobackgroundcolor: lightgrey
 title: "Conclusion"
 ---
 
-# Conclusion
 ```{r setup, include = FALSE}
 # set default chunk options
 knitr::opts_chunk$set(

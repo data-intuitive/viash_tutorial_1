@@ -1,21 +1,21 @@
 Good practices
-==============
+================
+Data Intuitive
+Tuesday - January 26, 2021
 
 > blabla
 
 We will introduce testing using the same components we used earlier to
 introduce the [viash](https://github.com/data-intuitive/viash) approach:
 
--   `convert_plot`
--   `combine_plots`
+  - `convert_plot`
+  - `combine_plots`
 
-`convert_plot`
-==============
+# `convert_plot`
 
 `convert_plot` converts a PDF (map) into a `.png` version.
 
-The viash configuration
------------------------
+## The viash configuration
 
 We covered the functionality of this component already in the previous
 sections. In this section, we show how to add (unit) tests to the
@@ -23,7 +23,7 @@ component. Let see what the directory structure of the (updated)
 component looks like. We put the components in the `civ6_save_renderer`
 namespace now that we know how this works:
 
-``` {.sh}
+``` sh
 > tree src/civ6_save_renderer/convert_plot
 src/civ6_save_renderer/convert_plot
 ├── config.vsh.yaml
@@ -42,7 +42,7 @@ look at both of these:
 
 `src/civ6_save_renderer/convert_plot/config.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: convert_plot
   namespace: civ6_save_renderer
@@ -86,7 +86,7 @@ platforms:
 
 `src/civ6_save_renderer/convert_plot/test/run_test.sh`:
 
-``` {.sh}
+``` sh
 #!/usr/bin/env bash
 
 set -ex
@@ -137,18 +137,17 @@ performs the OCR.
 The only difference with the `platforms` definition earlier is the
 installation of an additional package in the container.
 
-Running the tests
------------------
+## Running the tests
 
 In order to run the tests using the default platform (`docker` in our
 current example), we can simply run:
 
-``` {.sh}
+``` sh
 > viash test src/civ6_save_renderer/convert_plot/config.vsh.yaml
-Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_convert_plot16477321339600600791'
+Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_convert_plot106216272389067370'
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_convert_plot16477321339600600791/build_executable/convert_plot ---setup
-> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-uAQcjN
++<...>/workspace/viash_temp/viash_test_convert_plot106216272389067370/build_executable/convert_plot ---setup
+> docker build -t civ6_save_renderer/convert_plot:1.0 <...>/workspace/viash_temp/viashsetupdocker-convert_plot-3wur95
 Sending build context to Docker daemon  17.41kB
 
 Step 1/2 : FROM dpokidov/imagemagick
@@ -159,7 +158,7 @@ Step 2/2 : RUN apt-get update &&   apt-get install -y tesseract-ocr &&   rm -rf 
 Successfully built a92be5886a41
 Successfully tagged civ6_save_renderer/convert_plot:1.0
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_convert_plot16477321339600600791/test_run_test.sh/run_test.sh
++<...>/workspace/viash_temp/viash_test_convert_plot106216272389067370/test_run_test.sh/run_test.sh
 + convert_plot -i dummy.pdf -o dummy.png
 convert: profile 'icc': 'RGB ': RGB color space not permitted on grayscale PNG `dummy.png' @ warning/png.c/MagickPNGWarningHandler/1748.
 + [[ ! -f dummy.png ]]
@@ -168,8 +167,8 @@ Tesseract Open Source OCR Engine v4.0.0 with Leptonica
 Warning: Invalid resolution 0 dpi. Using 70 instead.
 Estimating resolution as 157
 ++ grep Dummy dummy-ocr.txt
->>> Test finished successfully
 + [[ ! -n Dummy PDF file ]]
+>>> Test finished successfully
 + echo '>>> Test finished successfully'
 ====================================================================
 SUCCESS! All 1 out of 1 test scripts succeeded!
@@ -189,8 +188,7 @@ If tests are successful, the temporary directory is removed (unless
 
 This is a quick way to run a test on a component.
 
-`combine_plots`
-===============
+# `combine_plots`
 
 We do something similar for the component that combines different `png`
 (map) files into one `webm` video. Let us see how we can do something
@@ -199,13 +197,12 @@ similar as before so that a test can run on its own.
 We refer to an
 [article](http://hplgit.github.io/animate/doc/pub/video.html) that
 discussed the generation of an animation from `png` image sources and
-does this using ... ImageMagic. We use a selection of the images stored
-on
+does this using … ImageMagic. We use a selection of the images stored on
 [Github](https://github.com/hplgit/animate/tree/master/doc/src/animate/src-animate/testfiles/frames).
 
 `src/civ6_save_renderer/combine_plots/config.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: combine_plots
   namespace: civ6_save_renderer
@@ -260,7 +257,7 @@ platforms:
 
 `src/civ6_save_renderer/combine_plots/test/run_test.sh`:
 
-``` {.sh}
+``` sh
 #!/usr/bin/env bash
 
 set -e
@@ -284,11 +281,11 @@ We added the `tests` and point to the frames explicitly. The test script
 basically generates a command line instructions (list of `png` files)
 based on the images that have been downloaded as resources.
 
-``` {.sh}
+``` sh
 > viash test src/civ6_save_renderer/combine_plots/config.vsh.yaml
-Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_combine_plots15362605724189863133'
+Running tests in temporary directory: '<...>/workspace/viash_temp/viash_test_combine_plots4921270052339625520'
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_combine_plots15362605724189863133/build_executable/combine_plots ---setup
++<...>/workspace/viash_temp/viash_test_combine_plots4921270052339625520/build_executable/combine_plots ---setup
 > docker pull jrottenberg/ffmpeg
 Using default tag: latest
 latest: Pulling from jrottenberg/ffmpeg
@@ -296,7 +293,7 @@ Digest: sha256:21eb739725c43bd7187982e5fa4b5371b495d1d1f6f61ae1719ca794817f8641
 Status: Image is up to date for jrottenberg/ffmpeg:latest
 docker.io/jrottenberg/ffmpeg:latest
 ====================================================================
-+<...>/workspace/viash_temp/viash_test_combine_plots15362605724189863133/test_run_test.sh/run_test.sh
++<...>/workspace/viash_temp/viash_test_combine_plots4921270052339625520/test_run_test.sh/run_test.sh
 ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
   built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 20160609
   configuration: --disable-debug --disable-doc --disable-ffplay --enable-shared --enable-avresample --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-gpl --enable-libass --enable-libfreetype --enable-libvidstab --enable-libmp3lame --enable-libopenjpeg --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx265 --enable-libxvid --enable-libx264 --enable-nonfree --enable-openssl --enable-libfdk_aac --enable-libkvazaar --enable-libaom --extra-libs=-lpthread --enable-postproc --enable-small --enable-version3 --extra-cflags=-I/opt/ffmpeg/include --extra-ldflags=-L/opt/ffmpeg/lib --extra-libs=-ldl --prefix=/opt/ffmpeg
@@ -315,7 +312,7 @@ Input #0, png_pipe, from 'concat:frame_0000.png|frame_0001.png|frame_0002.png|fr
 Stream mapping:
   Stream #0:0 -> #0:0 (png (native) -> vp9 (libvpx-vp9))
 Press [q] to stop, [?] for help
-[libvpx-vp9 @ 0x1182580] v1.8.0
+[libvpx-vp9 @ 0x14e4580] v1.8.0
 Output #0, webm, to 'output.webm':
   Metadata:
     encoder         : Lavf58.20.100
@@ -336,15 +333,14 @@ In order to avoid [viash](https://github.com/data-intuitive/viash)
 deleting the directory when a test succeeds, the `-k` option can be
 used.
 
-Testing a namespace
-===================
+# Testing a namespace
 
 In the previous examples we tested individual components, but we can
 test a suite of components as well. Since we stored the 2 components
 above in the (namespace) `civ6_save_renderer` again, we can do the
 following:
 
-``` {.sh}
+``` sh
 > viash ns test -p docker --parallel --tsv /tmp/report.tsv
            namespace        functionality             platform            test_name exit_code duration               result
   civ6_save_renderer        combine_plots               docker                start                                        
@@ -361,12 +357,12 @@ With the `--parallel` option multiple tests are run in parallel
 The contents of (the optional) `report.tsv` contains a report of the
 test run:
 
-  namespace              functionality    platform   test\_name            exit\_code   duration result
-  ---------------------- ---------------- ---------- ------------------- ------------ ---------- ---------
-  civ6\_save\_renderer   convert\_plot    docker     build\_executable              0          0 SUCCESS
-  civ6\_save\_renderer   convert\_plot    docker     run\_test.sh                   0          4 SUCCESS
-  civ6\_save\_renderer   combine\_plots   docker     build\_executable              0          1 SUCCESS
-  civ6\_save\_renderer   combine\_plots   docker     run\_test.sh                   0          4 SUCCESS
+| namespace            | functionality  | platform | test\_name        | exit\_code | duration | result  |
+| :------------------- | :------------- | :------- | :---------------- | ---------: | -------: | :------ |
+| civ6\_save\_renderer | convert\_plot  | docker   | build\_executable |          0 |        0 | SUCCESS |
+| civ6\_save\_renderer | convert\_plot  | docker   | run\_test.sh      |          0 |        4 | SUCCESS |
+| civ6\_save\_renderer | combine\_plots | docker   | build\_executable |          0 |        1 | SUCCESS |
+| civ6\_save\_renderer | combine\_plots | docker   | run\_test.sh      |          0 |        4 | SUCCESS |
 
 For each component, you see the 2 steps from above: 1) build the
 executable and 2) run the actual test.

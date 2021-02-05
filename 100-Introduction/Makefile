@@ -5,7 +5,7 @@ all: $(FILE).pdf $(FILE).html
 
 $(FILE).md: $(FILE).Rmd
 	# Use viash component from viash_docs
-	knit $(FILE).Rmd --variant markdown --preserve_yaml false
+	knit $(FILE).Rmd --format=github_document
 	# Strip local paths
 	$(SED) -i 's|/\([/a-zA-Z0-9]*\)/work|<...>/work|g' $(FILE).md
 	$(SED) -i -r "s/[[:cntrl:]]\[[0-9]{1,3}m//g" $(FILE).md

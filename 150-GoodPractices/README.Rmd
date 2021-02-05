@@ -8,8 +8,6 @@ monobackgroundcolor: lightgrey
 title: "Good practices"
 ---
 
-# Good practices
-
 ```{r setup, include = FALSE}
 # set default chunk options
 knitr::opts_chunk$set(

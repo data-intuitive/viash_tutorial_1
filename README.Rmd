@@ -1,7 +1,7 @@
 ---
 output: 
-  md_document:
-    variant: markdown
+  github_document:
+    html_preview: false
 ---
 
 # viash tutorial - part 1
@@ -42,3 +42,7 @@ Recommended attribution:
 
 > "viash tutorial part 1" by Data Intuitive is licensed under CC BY 4.0. Available at    
 > https://github.com/data-intuitive/viash_workshop_1/blob/main/LICENSE.md
+
+
+
+[viash]: https://github.com/data-intuitive/viash

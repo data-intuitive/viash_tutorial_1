@@ -8,8 +8,6 @@ monobackgroundcolor: lightgrey
 title: "Introduction"
 ---
 
-# Introduction
-
 This tutorial is all about viash! What is viash? 
 
 viash is software that helps you turn a script into a reusable component, 

@@ -1,15 +1,7 @@
----
-author: Data Intuitive
-date: 'Tuesday - January 26, 2021'
-mainfont: Roboto Condensed
-monobackgroundcolor: lightgrey
-monofont: Source Code Pro
-monofontoptions: Scale=0.7
-title: Intro to viash
----
-
 Intro to viash
-==============
+================
+Data Intuitive
+Tuesday - January 26, 2021
 
 A step in the rendering of the video contains of one aspect that can be
 considered on its own. Understanding the logic of a step, however, is
@@ -19,39 +11,38 @@ environment in which the step has to be performed.
 In other words, we need to understand *what* needs to run and *how* it
 should run. `combine_plots`, for instance, takes as input a number of
 plots (`png` images) and combines them into a plot. As introduced
-earlier, we can use `ffmpeg` for this and it's then just a matter of
-getting the proper arguments for the tool right. That's basically what
+earlier, we can use `ffmpeg` for this and it’s then just a matter of
+getting the proper arguments for the tool right. That’s basically what
 we did in the previous section. But it did not stop there, we had to
 explicitly install the tool in order to run it.
 [viash](https://github.com/data-intuitive/viash) allows to do exactly
 this: specify the *what* and the *how*.
 
 Before actually porting the Civilization postgame scripts to viash,
-let's first look at some small examples to gradually demonstrate how
-[viash](https://github.com/data-intuitive/viash) works. Let's start by
+let’s first look at some small examples to gradually demonstrate how
+[viash](https://github.com/data-intuitive/viash) works. Let’s start by
 installing the latest release of
-[viash](https://github.com/data-intuitive/viash)!
+[viash](https://github.com/data-intuitive/viash)\!
 
-Installing viash
-----------------
+## Installing viash
 
 Installation of [viash](https://github.com/data-intuitive/viash) is
 explained in
 [here](http://www.data-intuitive.com/viash_docs/getting_started/installation/).
 
 Since we want to keep this tutorial self-contained, we will download and
-install the latest (binary) release and install it locally. You'll need
+install the latest (binary) release and install it locally. You’ll need
 the following for htis:
 
--   Access to a Linux, UNIX, Mac system or Windows with WSL(2)
--   A terminal application with a Bash shell
--   Java 8 or higher installed
+  - Access to a Linux, UNIX, Mac system or Windows with WSL(2)
+  - A terminal application with a Bash shell
+  - Java 8 or higher installed
 
 You can install [viash](https://github.com/data-intuitive/viash) for
-your current user by downloading it and placing it in the 'bin'
+your current user by downloading it and placing it in the ‘bin’
 directory in your home folder.
 
-``` {.sh}
+``` sh
 mkdir -p ~/bin/
 wget https://github.com/data-intuitive/viash/releases/download/v0.3.1/viash -qO ~/bin/viash
 chmod +x ~/bin/viash
@@ -61,7 +52,7 @@ If [viash](https://github.com/data-intuitive/viash) is installed
 correctly, you should be able to invoke the help message by executing
 the following:
 
-``` {.sh}
+``` sh
 > viash -h
 viash 0.3.2 (c) 2020 Data Intuitive
 
@@ -91,8 +82,7 @@ Subcommands:
   ns
 ```
 
-Example 1: a minimal viash config file
---------------------------------------
+## Example 1: a minimal viash config file
 
 A core concept in [viash](https://github.com/data-intuitive/viash) is
 the [viash config](https://www.data-intuitive.com/viash_docs/config),
@@ -106,7 +96,7 @@ all files in a directory.
 
 `src/intro_example1.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: intro_example1
   resources:
@@ -119,11 +109,13 @@ a command for running a component as defined by the [viash
 config](https://www.data-intuitive.com/viash_docs/config). You can run
 it as follows:
 
-``` {.sh}
+``` sh
 > viash run src/intro_example1.vsh.yaml
+bin
 Makefile
 README.html
 README.md
+README.pdf
 README.Rmd
 src
 ```
@@ -133,19 +125,18 @@ which in this case is where
 [viash](https://github.com/data-intuitive/viash) is running. This
 example, while illustrative, does not capture what
 [viash](https://github.com/data-intuitive/viash) is and can be used for.
-It's just a wrapper around the `ls` command.
+It’s just a wrapper around the `ls` command.
 
-Let's go one step further.
+Let’s go one step further.
 
-Example 2: adding some arguments
---------------------------------
+## Example 2: adding some arguments
 
 Software components are (usually) not useful unless they have some
 arguments which you can specify and change.
 
 `src/intro_example2.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: intro_example2
   arguments:
@@ -166,11 +157,13 @@ This is what happens when you run
 [viash](https://github.com/data-intuitive/viash) in a few different
 scenarios:
 
-``` {.sh}
+``` sh
 > viash run src/intro_example2.vsh.yaml
+bin
 Makefile
 README.html
 README.md
+README.pdf
 README.Rmd
 src
 ```
@@ -178,13 +171,15 @@ src
 There is no difference with the previous version of the component. Now,
 let us pass the argument `-l` to `intro_example2`:
 
-``` {.sh}
+``` sh
 > viash run src/intro_example2.vsh.yaml -- -l
-total 120
--rw-rw-r--. 1 rcannood rcannood   665 Feb  4 16:40 Makefile
--rw-rw-r--. 1 rcannood rcannood 78273 Feb  4 06:11 README.html
--rw-rw-r--. 1 rcannood rcannood 22946 Feb  4 06:11 README.md
--rw-r--r--. 1 rcannood rcannood 10602 Feb  4 15:41 README.Rmd
+total 152
+drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 01:27 bin
+-rw-rw-r--. 1 rcannood rcannood   728 Feb  5 01:24 Makefile
+-rw-rw-r--. 1 rcannood rcannood 60891 Feb  5 01:27 README.html
+-rw-rw-r--. 1 rcannood rcannood 19333 Feb  5 01:27 README.md
+-rw-rw-r--. 1 rcannood rcannood 54178 Feb  5 01:27 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10584 Feb  5 01:31 README.Rmd
 drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
 ```
 
@@ -192,8 +187,7 @@ Please note that options *before* the `--` are considered for
 [viash](https://github.com/data-intuitive/viash) while options after the
 `--` are for the tool that is wrapped (in this case `ls`).
 
-Example 3: setting different argument types
--------------------------------------------
+## Example 3: setting different argument types
 
 Not all arguments are boolean flags such as specified in the previous
 example. In this [viash
@@ -202,7 +196,7 @@ extra argument that corresponds to the path which we want to *list*.
 
 `src/intro_example3.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: intro_example3
   arguments:
@@ -221,19 +215,21 @@ functionality:
 Running this component will still list the contents of the current
 directory (like before).
 
-``` {.sh}
+``` sh
 > viash run src/intro_example3.vsh.yaml -- -l
-total 120
--rw-rw-r--. 1 rcannood rcannood   665 Feb  4 16:40 Makefile
--rw-rw-r--. 1 rcannood rcannood 78273 Feb  4 06:11 README.html
--rw-rw-r--. 1 rcannood rcannood 22946 Feb  4 06:11 README.md
--rw-r--r--. 1 rcannood rcannood 10602 Feb  4 15:41 README.Rmd
+total 152
+drwxrwxr-x. 1 rcannood rcannood    56 Feb  5 01:27 bin
+-rw-rw-r--. 1 rcannood rcannood   728 Feb  5 01:24 Makefile
+-rw-rw-r--. 1 rcannood rcannood 60891 Feb  5 01:27 README.html
+-rw-rw-r--. 1 rcannood rcannood 19333 Feb  5 01:27 README.md
+-rw-rw-r--. 1 rcannood rcannood 54178 Feb  5 01:27 README.pdf
+-rw-r--r--. 1 rcannood rcannood 10584 Feb  5 01:31 README.Rmd
 drwxr-xr-x. 1 rcannood rcannood   294 Jan 28 08:35 src
 ```
 
 However, we can now also list the contents of a different directory.
 
-``` {.sh}
+``` sh
 > viash run src/intro_example3.vsh.yaml -- src/ -l
 total 28
 -rw-r--r--. 1 rcannood rcannood  89 Jan 28 08:35 intro_example1.vsh.yaml
@@ -248,7 +244,7 @@ total 28
 You can always retrieve information about the component by requesting
 the included help.
 
-``` {.sh}
+``` sh
 > viash run src/intro_example3.vsh.yaml -- -h
 
 
@@ -270,16 +266,15 @@ regarding the
 [functionality](https://www.data-intuitive.com/viash_docs/config/functionality)
 specifications.
 
-Example 4: adding documentation
--------------------------------
+## Example 4: adding documentation
 
 The help from the last `intro_example3` does not show a lot of useful
-information. Let's add some documentation regarding the component and
+information. Let’s add some documentation regarding the component and
 its parameters.
 
 `src/intro_example4.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: intro_example4
   version: 0.4
@@ -305,7 +300,7 @@ functionality:
 In doing so, the help message becomes a lot more useful in reminding
 yourself and other users how to use the components.
 
-``` {.sh}
+``` sh
 > viash run src/intro_example4.vsh.yaml -- -h
 List information about the files (the current directory by default) 
 in alphabetical order.
@@ -324,24 +319,23 @@ Options:
         Which directory to list the contents of.
 ```
 
-Example 4 part 2: building an *executable*
-------------------------------------------
+## Example 4 part 2: building an *executable*
 
 Suppose `intro_example4` from above is exactly what we need as
 standalone tool for ourselves or other people to use. Obviously,
 providing everyone access to
 [viash](https://github.com/data-intuitive/viash) and then letting them
 access the `intro_example4.vsh.yaml` file in order to run the above
-commands would not simplify things at all!
+commands would not simplify things at all\!
 
 Time to introduce a second
-[viash](https://github.com/data-intuitive/viash) command, namely
-[`viash build`](https://www.data-intuitive.com/viash_docs/commands/run).
-This command takes a [viash
+[viash](https://github.com/data-intuitive/viash) command, namely [`viash
+build`](https://www.data-intuitive.com/viash_docs/commands/run). This
+command takes a [viash
 config](https://www.data-intuitive.com/viash_docs/config) as input, and
 generates an executable as output.
 
-``` {.sh}
+``` sh
 > viash build src/intro_example4.vsh.yaml -o bin
 ```
 
@@ -349,7 +343,7 @@ After running the above command, viash will have generated a file at
 `bin/intro_example4`. It contains all the functionality that we saw in
 the above examples:
 
-``` {.sh}
+``` sh
 > bin/intro_example4 -h
 List information about the files (the current directory by default) 
 in alphabetical order.
@@ -368,7 +362,7 @@ Options:
         Which directory to list the contents of.
 ```
 
-``` {.sh}
+``` sh
 > bin/intro_example4 src/ -l
 total 28
 -rw-r--r--. 1 rcannood rcannood  89 Jan 28 08:35 intro_example1.vsh.yaml
@@ -383,8 +377,7 @@ total 28
 You can now share this `bin/intro_example4` file with others, or add it
 to your `~/bin` directory to turn it into a system-wide command.
 
-Example 5: running the component inside a Docker container
-----------------------------------------------------------
+## Example 5: running the component inside a Docker container
 
 In the above examples, we ran the components on our local system. This
 is simple as long as the wrapped tool at hand (`ls` in this case) is
@@ -394,14 +387,14 @@ only supports running components on the native system, but can also run
 components inside a Docker container.
 
 To make use of this functionality, we need to get into the the
-'platforms' section of the [viash
+‘platforms’ section of the [viash
 config](https://www.data-intuitive.com/viash_docs/config), which can
 contain one or more execution platforms. In this case, we defined
 platforms: a *native* one (local machine) and a *docker* one.
 
 `src/intro_example5.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: intro_example5
   version: 0.5
@@ -434,19 +427,19 @@ config](https://www.data-intuitive.com/viash_docs/config), which in this
 case the native platform. In order to build an executable which uses
 Docker in the backend, we need to pass this information as follows:
 
-``` {.sh}
+``` sh
 > viash build src/intro_example5.vsh.yaml -o bin -p docker
 ```
 
 The executable `bin/intro_example5` now automatically runs inside
 Docker.
 
-``` {.sh}
+``` sh
 > bin/intro_example5 / -l
 total 20
 lrwxrwxrwx.   1 root root    7 Jul 27  2020 bin -> usr/bin
 dr-xr-xr-x.   7 root root 4096 Feb  3 13:26 boot
-drwxr-xr-x.  24 root root 5200 Feb  4 12:12 dev
+drwxr-xr-x.  24 root root 5200 Feb  4 23:37 dev
 drwxr-xr-x.   1 root root 5336 Feb  4 15:58 etc
 drwxr-xr-x.   1 root root   16 Dec 13 05:08 home
 lrwxrwxrwx.   1 root root    7 Jul 27  2020 lib -> usr/lib
@@ -455,13 +448,13 @@ drwx------.   1 root root    0 Oct 19 23:33 lost+found
 drwxr-xr-x.   1 root root    0 Jul 27  2020 media
 drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
 drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
-dr-xr-xr-x. 703 root root    0 Feb  3 14:15 proc
+dr-xr-xr-x. 742 root root    0 Feb  3 14:15 proc
 dr-xr-x---.   1 root root  270 Feb  3 13:24 root
 drwxr-xr-x.  55 root root 1500 Feb  4 15:58 run
 lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
 drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
 dr-xr-xr-x.  13 root root    0 Feb  3 13:15 sys
-drwxrwxrwt.  59 root root 1640 Feb  4 16:04 tmp
+drwxrwxrwt.  59 root root 1680 Feb  5 00:33 tmp
 drwxr-xr-x.   1 root root  106 Jan 31 05:50 usr
 drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
 ```
@@ -474,12 +467,12 @@ would have if you ran on your local system.
 Please note that if you wanted to do this exact thing by using Docker
 itself, you would have to use a CLI instruction like
 
-``` {.sh}
+``` sh
 > docker run --rm -v /:/mount ubuntu:latest ls /mount/ -l
 total 20
 lrwxrwxrwx.   1 root root    7 Jul 27  2020 bin -> usr/bin
 dr-xr-xr-x.   7 root root 4096 Feb  3 13:26 boot
-drwxr-xr-x.  24 root root 5200 Feb  4 12:12 dev
+drwxr-xr-x.  24 root root 5200 Feb  4 23:37 dev
 drwxr-xr-x.   1 root root 5336 Feb  4 15:58 etc
 drwxr-xr-x.   1 root root   16 Dec 13 05:08 home
 lrwxrwxrwx.   1 root root    7 Jul 27  2020 lib -> usr/lib
@@ -488,13 +481,13 @@ drwx------.   1 root root    0 Oct 19 23:33 lost+found
 drwxr-xr-x.   1 root root    0 Jul 27  2020 media
 drwxr-xr-x.   1 root root   16 Jan  4 12:13 mnt
 drwxr-xr-x.   1 root root  188 Jan 20 09:58 opt
-dr-xr-xr-x. 720 root root    0 Feb  3 14:15 proc
+dr-xr-xr-x. 745 root root    0 Feb  3 14:15 proc
 dr-xr-x---.   1 root root  270 Feb  3 13:24 root
 drwxr-xr-x.  55 root root 1500 Feb  4 15:58 run
 lrwxrwxrwx.   1 root root    8 Jul 27  2020 sbin -> usr/sbin
 drwxr-xr-x.   1 root root    0 Jul 27  2020 srv
 dr-xr-xr-x.  13 root root    0 Feb  3 13:15 sys
-drwxrwxrwt.  59 root root 1640 Feb  4 16:04 tmp
+drwxrwxrwt.  59 root root 1680 Feb  5 00:33 tmp
 drwxr-xr-x.   1 root root  106 Jan 31 05:50 usr
 drwxr-xr-x.   1 root root  208 Jan  7 14:11 var
 ```
@@ -504,8 +497,7 @@ complicated, but that is for a later section. In what follows, we will
 also come back not only to running inside a container but also
 generating a container (based on a base image), tagging and versioning.
 
-Example 6: Wrapping a script
-----------------------------
+## Example 6: Wrapping a script
 
 While running a command wrapped as a
 [viash](https://github.com/data-intuitive/viash) component could be
@@ -517,7 +509,7 @@ a simple CLI instruction that we put in a script:
 
 `src/script.sh`:
 
-``` {.sh}
+``` sh
 #!/bin/bash
 
 eval "ls \"$par_path\" | grep '$par_filter'"
@@ -528,7 +520,7 @@ config](https://www.data-intuitive.com/viash_docs/config):
 
 `src/intro_example6.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: intro_example6
   version: 0.6
@@ -555,7 +547,7 @@ platforms:
 
 We get results like this:
 
-``` {.sh}
+``` sh
 > viash run src/intro_example6.vsh.yaml -p docker -- /etc --filter "^h.*"
 host.conf
 hostname
@@ -564,12 +556,12 @@ hp
 httpd
 ```
 
-A lot is happening here at once, so let's unwrap this. We did not
-*build* the executable in this example, but just run
-[`viash run`](https://www.data-intuitive.com/viash_docs/commands/run) on
-on the [viash config](https://www.data-intuitive.com/viash_docs/config).
-This config contains a pointer (relative path) to the `script.sh` file
-that contains parameters. Those parameters are defined in the [viash
+A lot is happening here at once, so let’s unwrap this. We did not
+*build* the executable in this example, but just run [`viash
+run`](https://www.data-intuitive.com/viash_docs/commands/run) on on the
+[viash config](https://www.data-intuitive.com/viash_docs/config). This
+config contains a pointer (relative path) to the `script.sh` file that
+contains parameters. Those parameters are defined in the [viash
 config](https://www.data-intuitive.com/viash_docs/config) and are
 automatically resolved and parsed when running the wrapped
 [viash](https://github.com/data-intuitive/viash) version of the script.

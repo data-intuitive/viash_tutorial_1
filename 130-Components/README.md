@@ -1,12 +1,13 @@
 Creating components with viash
-==============================
+================
+Data Intuitive
+Tuesday - January 26, 2021
 
 With the information from the previous section, we will wrap two
 components from the Civ6 use case in more detail (`convert_plot` and
-`plot_map`). Let's start with the easiest of the two.
+`plot_map`). Let’s start with the easiest of the two.
 
-`convert_plot` - a simple bash script
--------------------------------------
+## `convert_plot` - a simple bash script
 
 If you recall, `convert_plot` is responsible to converting the game map
 pdf to a png using \[ImageMagick\]. We will wrap this component first it
@@ -17,13 +18,13 @@ wrapping a tool in a simple bash script.
 
 Installing \[ImageMagick\] on a Debian-based system very easy.
 
-``` {.bash}
+``` bash
 sudo apt-get install imagemagick
 ```
 
 Converting a pdf to a png is a simple one-line command.
 
-``` {.bash}
+``` bash
 #!/bin/bash
 
 par_input=data/AutoSave_0159.pdf
@@ -36,7 +37,7 @@ Additional arguments can be provided, but are not required since
 \[ImageMagick\] is pretty good at getting the defaults right.
 
 In order to wrap this script as a viash component, we need to write a
-viash config file. Let's start by describing the functionality in a yaml
+viash config file. Let’s start by describing the functionality in a yaml
 file.
 
 ### Step 1: Functionality
@@ -45,7 +46,7 @@ The functionality describes what the component is expected to do, with
 which arguments, and with which resources (files). For now, we provided
 a description on what the component does and who wrote it.
 
-``` {.yaml}
+``` yaml
 functionality:
   name: convert_plot
   namespace: civ6_save_renderer
@@ -63,9 +64,9 @@ functionality:
 ### Step 2: Functionality arguments
 
 Defining the arguments is also relatively simple, as there is only a
-single 'input' and a single 'output' file.
+single ‘input’ and a single ‘output’ file.
 
-``` {.yaml}
+``` yaml
   arguments:
     - name: "--input"
       alternatives: [-i]
@@ -86,21 +87,21 @@ single 'input' and a single 'output' file.
 Arguments have many optional fields which allow to fine tweak their
 behaviour.
 
--   `alternatives: [-i]` - Alternative (shorter) flags to pass parameter
+  - `alternatives: [-i]` - Alternative (shorter) flags to pass parameter
     values with.
--   `type: file` - The value for this argument is either a file or a
+  - `type: file` - The value for this argument is either a file or a
     directory.
--   `required: true` - A parameter value needs to be passed when the
+  - `required: true` - A parameter value needs to be passed when the
     component is invoked.
--   `default: "input.pdf"` - Sets a default value. This is irrelevant
+  - `default: "input.pdf"` - Sets a default value. This is irrelevant
     when required is true, but the value will still be used when
     rendering the CLI help page.
--   `must_exist: true` - This file needs to exist when the component is
+  - `must_exist: true` - This file needs to exist when the component is
     invoked.
--   `direction: output` - This file is an output file, not an input
+  - `direction: output` - This file is an output file, not an input
     file. If this value is not specified, then `"input"` is assumed by
     default.
--   `description: "..."` - A human-readable description of this
+  - `description: "..."` - A human-readable description of this
     argument. Note that multiline strings can be used, if desired.
 
 ### Step 3: Bash script
@@ -108,7 +109,7 @@ behaviour.
 There is only a single Bash script called `script.sh`. We can specify
 its existence as follows:
 
-``` {.yaml}
+``` yaml
   resources:
     - type: bash_script
       path: script.sh
@@ -122,7 +123,7 @@ same?
 
 `src/civ6_save_renderer/convert_plot/script.sh`:
 
-``` {.sh}
+``` sh
 #!/bin/bash
 
 ## VIASH START
@@ -157,7 +158,7 @@ Hub for running \[ImageMagick\], namely
 [dpokidov/imagemagick](https://hub.docker.com/r/dpokidov/imagemagick).
 We can thus specify the platforms as follows:
 
-``` {.yaml}
+``` yaml
 platforms:
   - type: docker
     image: dpokidov/imagemagick
@@ -167,7 +168,7 @@ platforms:
 Note that had this not been the case, the solution would have been to
 use a standard container (e.g. Ubuntu) and install ImageMagick manually:
 
-``` {.yaml}
+``` yaml
 platforms:
   - type: native
   - type: docker
@@ -177,7 +178,7 @@ platforms:
         packages: imagemagick
 ```
 
-Luckily, we didn't need to resort to such drastic measures.
+Luckily, we didn’t need to resort to such drastic measures.
 
 ### Step 5: Final config
 
@@ -185,7 +186,7 @@ This is the final viash config for this component in its entirety.
 
 `src/civ6_save_renderer/convert_plot/config.vsh.yaml`:
 
-``` {.yaml}
+``` yaml
 functionality:
   name: convert_plot
   namespace: civ6_save_renderer
@@ -231,7 +232,7 @@ Building an executable can be done just like before. We assume
 \[ImageMagick\] is not installed on the local system and thus build the
 Docker version:
 
-``` {.sh}
+``` sh
 > viash build src/civ6_save_renderer/convert_plot/config.vsh.yaml -o bin -p docker
 ```
 
@@ -243,7 +244,7 @@ directory.
 We ask the generated executable to run the necessary setup. In this
 case, it means *pulling* the appropriate docker image from Docker Hub.
 
-``` {.sh}
+``` sh
 > bin/convert_plot ---setup
 > docker pull dpokidov/imagemagick
 Using default tag: latest
@@ -255,7 +256,7 @@ docker.io/dpokidov/imagemagick:latest
 
 We can display the help page of the component as follows:
 
-``` {.sh}
+``` sh
 > bin/convert_plot -h
 Convert a plot from pdf to png.
 
@@ -276,13 +277,13 @@ Let us first generate a simple PDF file with the help of
 [viash](https://github.com/data-intuitive/viash). We start by preparing
 a directory to store the data:
 
-``` {.sh}
+``` sh
 > mkdir -p output/
 ```
 
 We can generate a png file from a pdf file as follows.
 
-``` {.sh}
+``` sh
 > bin/convert_plot -i data/AutoSave_0159.pdf -o data/AutoSave_0159.png
 ```
 
@@ -298,13 +299,13 @@ a Docker container. If we would want to achieve this without
 [viash](https://github.com/data-intuitive/viash), we would need
 something like this:
 
-``` {.sh}
+``` sh
 docker run -i -v `pwd`:/mount dpokidov/ImageMagick /mount/data/input.pdf -flatten /mount/data/output.png
 ```
 
 This requires some mental bookkeeping to understand the difference
-between the host's file system and the one inside the container. It also
-requires one to know how the container's commands are parsed. In this
+between the host’s file system and the one inside the container. It also
+requires one to know how the container’s commands are parsed. In this
 case the `convert` command from \[ImageMagick\] is automatically called
 with the options we provide. But that may be different for every
 container and depends on the contents of the `Dockerfile`.
@@ -327,8 +328,7 @@ In other words:
 > greatly simplified and wrapped in one executable, command-line parsing
 > comes for free.
 
-`plot_map` - a more complicated R script
-----------------------------------------
+## `plot_map` - a more complicated R script
 
 This component is a great example of a script which is a bit more
 complicated. Currently, viash supports wrapping the following scripting
@@ -339,17 +339,17 @@ it from a Bash script.
 The `plot_map` component takes a `yaml` and a `tsv` file as input and
 outputs a map view of the information as a pdf. Note that the output of
 this component is actually the input of the previously mentioned
-component, `convert_plot`. That's okay; you can develop viash components
-in any order you like!
+component, `convert_plot`. That’s okay; you can develop viash components
+in any order you like\!
 
-Let's start by defining the functionality-part of the viash config.
+Let’s start by defining the functionality-part of the viash config.
 
 ### Step 1: Functionality
 
 The functionality metadata is largely the same when compared to that of
 the previous component.
 
-``` {.yaml}
+``` yaml
 functionality:
   name: plot_map
   namespace: civ6_save_renderer
@@ -400,7 +400,7 @@ how this script works:
 
 `src/civ6_save_renderer/plot_map/script.R`:
 
-``` {.r}
+``` r
 # load helper functions 'read_header()', 'read_map()', and 'make_map_plot()'
 source(paste0(resources_dir, "/helper.R"))
 
@@ -446,7 +446,7 @@ We can start from the
 container, which already contains all of the tidyverse packages, but
 some extra dependencies need to be installed.
 
-``` {.yaml}
+``` yaml
 platforms:
   - type: docker
     image: "rocker/tidyverse:4.0.3"
@@ -479,13 +479,13 @@ building the executable without much effort. Unfortunately, installing R
 packages can take a lot of time, so this command might take a while to
 run.
 
-``` {.sh}
+``` sh
 > viash build src/civ6_save_renderer/plot_map/config.vsh.yaml -o bin -p docker --setup > /dev/null
 ```
 
 This is the corresponding generated help page.
 
-``` {.sh}
+``` sh
 > bin/plot_map -h
 Use the settings yaml and the map tsv to generate a plot (as PDF).
 
@@ -505,15 +505,14 @@ Options:
 
 Finally, we can run the component as follows.
 
-``` {.sh}
+``` sh
 > bin/plot_map \
 +   --yaml data/AutoSave_0159.yaml \
 +   --tsv data/AutoSave_0159.tsv \
 +   --output data/AutoSave_0159.pdf
 ```
 
-Conclusion
-----------
+## Conclusion
 
 In this part of the tutorial, we learned how to wrap Bash and R scripts
 from scratch.

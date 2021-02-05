@@ -8,8 +8,6 @@ monobackgroundcolor: lightgrey
 title: "Creating components with viash"
 ---
 
-# Creating components with viash
-
 ```{r setup, include = FALSE}
 # set default chunk options
 knitr::opts_chunk$set(

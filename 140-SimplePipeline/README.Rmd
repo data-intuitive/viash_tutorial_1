@@ -8,8 +8,6 @@ monobackgroundcolor: lightgrey
 title: "Creating a simple pipeline in Bash"
 ---
 
-# Creating a simple pipeline in Bash
-
 ```{r setup, include = FALSE}
 # set default chunk options
 knitr::opts_chunk$set(
