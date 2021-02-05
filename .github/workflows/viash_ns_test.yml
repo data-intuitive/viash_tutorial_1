@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         config: 
-        - {name: 'main', os: ubuntu-latest, r: '3.6.1', python: '3.8' }
+        - {name: 'main', os: ubuntu-latest }
 
     steps:
     - uses: actions/checkout@v2
